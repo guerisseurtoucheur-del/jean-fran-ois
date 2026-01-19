@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle } from 'lucide-react';
+import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail } from 'lucide-react';
 
 const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const [step, setStep] = useState(1);
@@ -10,6 +10,8 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     firstName: '',
     lastName: '',
     birthDate: '',
+    phone: '',
+    email: '',
     explanation: '',
     photo: null as string | null
   });
@@ -34,7 +36,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
     try {
       // Utilisation de FormSubmit.co pour l'envoi d'email sans backend
-      // Note : Lors du premier envoi, FormSubmit enverra un mail de confirmation à guerisseurtoucheur@gmail.com
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
         headers: { 
@@ -46,6 +47,8 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           Prenom: formData.firstName,
           Nom: formData.lastName,
           Date_Naissance: formData.birthDate,
+          Telephone: formData.phone,
+          Email: formData.email,
           Explications: formData.explanation,
           Photo_Data: formData.photo, // L'image est envoyée en format Base64
           _honey: "", // Honeypot contre le spam
@@ -56,7 +59,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       if (response.ok) {
         setLoading(false);
         setStep(3);
-        // On laisse l'utilisateur voir le message de succès avant de rediriger
         setTimeout(onSuccess, 5000);
       } else {
         throw new Error("Erreur serveur");
@@ -67,6 +69,15 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       console.error("Submission error:", err);
     }
   };
+
+  // Validation des champs obligatoires de l'étape 1
+  const isStep1Valid = 
+    formData.firstName.trim() !== '' && 
+    formData.lastName.trim() !== '' && 
+    formData.birthDate !== '' && 
+    formData.phone.trim() !== '' && 
+    formData.email.trim() !== '' && 
+    formData.explanation.trim() !== '';
 
   return (
     <div className="max-w-2xl mx-auto p-8 md:p-12 bg-white rounded-[4rem] border border-stone-100 shadow-2xl my-10 relative overflow-hidden">
@@ -94,7 +105,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
                   value={formData.firstName}
                   onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                   className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                  placeholder="Ex: Marie"
+                  placeholder="Marie"
                 />
               </div>
               <div className="space-y-2">
@@ -106,20 +117,47 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
                   value={formData.lastName}
                   onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                   className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                  placeholder="Ex: Dupont"
+                  placeholder="Dupont"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
+                  <Calendar size={12} /> Date de naissance
+                </label>
+                <input 
+                  type="date" 
+                  value={formData.birthDate}
+                  onChange={(e) => setFormData({...formData, birthDate: e.target.value})}
+                  className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
+                  <Phone size={12} /> Téléphone
+                </label>
+                <input 
+                  type="tel" 
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
+                  placeholder="06 00 00 00 00"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <Calendar size={12} /> Date de naissance
+                <Mail size={12} /> Adresse Email
               </label>
               <input 
-                type="date" 
-                value={formData.birthDate}
-                onChange={(e) => setFormData({...formData, birthDate: e.target.value})}
+                type="email" 
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
+                placeholder="votre@email.com"
               />
             </div>
 
@@ -137,7 +175,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           </div>
 
           <button 
-            disabled={!formData.firstName || !formData.lastName || !formData.birthDate || !formData.explanation}
+            disabled={!isStep1Valid}
             onClick={() => setStep(2)}
             className="w-full py-6 bg-stone-900 text-white rounded-3xl font-bold text-xl hover:bg-black transition-all disabled:opacity-30 shadow-xl"
           >
@@ -150,7 +188,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10">
           <div className="text-center space-y-4">
             <h2 className="text-4xl font-serif font-bold italic text-indigo-600">Le support visuel</h2>
-            <p className="text-stone-500">Une photo récente (votre visage ou la zone à traiter) m'aide à canaliser l'énergie.</p>
+            <p className="text-stone-500">Une photo récente (visage ou zone à traiter) m'aide à canaliser l'énergie.</p>
           </div>
 
           {error && (

@@ -4,21 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jean-François - Magnétiseur Guérisseur</title>
+    <title>Jean-François | Magnétiseur Guérisseur à Distance Toute France</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Jean-François, magnétiseur guérisseur. Soins à distance sur photo partout en France. Spécialiste zona, eczéma, brûlures (coupeur de feu) et douleurs chroniques par le souffle.">
+    <meta name="keywords" content="magnétiseur à distance, guérisseur photo, coupeur de feu zona, soin énergétique france, magnétiseur alençon, magnétisme brûlure, Jean-François magnétiseur">
+    <meta name="author" content="Jean-François">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://votre-site.vercel.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://votre-site.vercel.app/">
+    <meta property="og:title" content="Jean-François | Magnétiseur Guérisseur à Distance">
+    <meta property="og:description" content="Soulagez vos maux par le magnétisme et le souffle, peu importe votre ville en France. Soin sur photo bienveillant.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://votre-site.vercel.app/">
+    <meta property="twitter:title" content="Jean-François | Magnétiseur Guérisseur">
+    <meta property="twitter:description" content="Soin énergétique et magnétisme à distance sur toute la France. Spécialiste zona et brûlures.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HealthAndBeautyBusiness",
+      "name": "Jean-François Magnétiseur Guérisseur",
+      "description": "Magnétiseur spécialisé dans les soins à distance sur photo pour zona, brûlures et douleurs.",
+      "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
+      "telephone": "0955554462",
+      "url": "https://votre-site.vercel.app/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Alençon",
+        "addressRegion": "Normandie",
+        "postalCode": "61000",
+        "addressCountry": "FR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.4311,
+        "longitude": 0.0911
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "19:00"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "France"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
-        // Système de diagnostic pour l'écran blanc
         window.onerror = function(msg, url, line, col, error) {
             const errorDiv = document.createElement('div');
             errorDiv.style = 'position:fixed;top:0;left:0;width:100%;padding:15px;background:#fef2f2;color:#991b1b;border-bottom:2px solid #ef4444;z-index:9999;font-size:12px;font-family:monospace';
             errorDiv.innerHTML = '<strong>Erreur détectée :</strong> ' + msg + ' <br><small>' + url + ' (ligne ' + line + ')</small>';
             document.body.appendChild(errorDiv);
         };
-
-        // Polyfill pour éviter les plantages si la clé API n'est pas encore configurée
         window.process = window.process || { env: { API_KEY: "" } };
     </script>
     <style>
@@ -34,18 +95,18 @@
 <body class="bg-white text-stone-900">
     <div id="root"></div>
     <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.2.3",
-    "react-dom": "https://esm.sh/react-dom@19.2.3",
-    "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.37.0",
-    "lucide-react": "https://esm.sh/lucide-react@0.462.0?external=react",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.2.3",
+        "react-dom": "https://esm.sh/react-dom@19.2.3",
+        "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
+        "@google/genai": "https://esm.sh/@google/genai@1.37.0",
+        "lucide-react": "https://esm.sh/lucide-react@0.462.0?external=react",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/"
+      }
+    }
+    </script>
     <script type="module" src="./index.tsx"></script>
 </body>
 </html>

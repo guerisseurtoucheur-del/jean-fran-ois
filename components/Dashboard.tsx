@@ -1,16 +1,41 @@
 
-import React from 'react';
-import { Clock, CheckCircle, Wind, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, CheckCircle, Wind, User, Sparkles, Loader2 } from 'lucide-react';
+import { GoogleGenAI } from "@google/genai";
 
 const Dashboard: React.FC = () => {
+  const [dailyWisdom, setDailyWisdom] = useState<string>('');
+  const [loadingWisdom, setLoadingWisdom] = useState(true);
+
   const treatments = [
     { id: 1, type: 'Soin Zona', status: 'En cours', date: 'Aujourd\'hui', progress: 65 },
     { id: 2, type: 'Inflammation Dos', status: 'Terminé', date: 'Il y a 2 jours', progress: 100 },
   ];
 
+  useEffect(() => {
+    const fetchWisdom = async () => {
+      try {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const response = await ai.models.generateContent({
+          model: 'gemini-3-flash-preview',
+          contents: "Génère un court message intuitif et bienveillant (max 2 lignes) pour un patient qui vient voir son magnétiseur. Parle d'énergie, de souffle ou de lumière.",
+          config: {
+            systemInstruction: "Tu es Jean-François, un magnétiseur bienveillant. Ton message doit être poétique et apaisant."
+          }
+        });
+        setDailyWisdom(response.text || "La lumière du souffle vous accompagne aujourd'hui.");
+      } catch (err) {
+        setDailyWisdom("Votre énergie est votre plus belle alliée.");
+      } finally {
+        setLoadingWisdom(false);
+      }
+    };
+    fetchWisdom();
+  }, []);
+
   return (
     <div className="max-w-6xl mx-auto p-12 space-y-12 page-fade">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="space-y-2">
           <h1 className="text-5xl font-serif font-bold">Bonjour.</h1>
           <p className="text-stone-500">Voici l'historique de vos connexions énergétiques.</p>
@@ -21,9 +46,30 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Daily Wisdom Card */}
+      <div className="relative p-10 bg-indigo-600 rounded-[3.5rem] text-white overflow-hidden shadow-2xl shadow-indigo-200">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div className="relative z-10 space-y-6">
+          <div className="flex items-center gap-3">
+             <Sparkles size={20} className="text-indigo-200" />
+             <span className="text-xs font-bold uppercase tracking-widest opacity-80">Vibration du moment</span>
+          </div>
+          {loadingWisdom ? (
+            <div className="flex items-center gap-3 text-indigo-100 italic">
+              <Loader2 size={20} className="animate-spin" />
+              <span>Réception du souffle...</span>
+            </div>
+          ) : (
+            <p className="text-3xl font-serif italic leading-relaxed">
+              "{dailyWisdom}"
+            </p>
+          )}
+        </div>
+      </div>
+
       <div className="grid md:grid-cols-2 gap-8">
         {treatments.map((t) => (
-          <div key={t.id} className="p-8 bg-stone-50 rounded-[3rem] border border-stone-100 hover:shadow-xl transition-all group">
+          <div key={t.id} className="p-8 bg-stone-50 rounded-[3rem] border border-stone-100 hover:shadow-xl transition-all group bg-white">
             <div className="flex justify-between items-start mb-8">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">{t.date}</span>

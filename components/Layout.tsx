@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard, Wind, Clock, Users } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,20 +9,74 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [liveUsers, setLiveUsers] = useState(14);
+
+  // Horloge en temps réel
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Simulation de fluctuation du compteur "En direct" (entre 12 et 19)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLiveUsers(prev => {
+        const change = Math.random() > 0.5 ? 1 : -1;
+        const next = prev + change;
+        return next >= 10 && next <= 20 ? next : prev;
+      });
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const navItems = [
     { id: 'home', label: 'Accueil', icon: Home },
     { id: 'chat', label: 'Questions', icon: MessageCircle },
     { id: 'healing', label: 'Soin Photo', icon: Heart },
+    { id: 'soin-express', label: 'Soin Express', icon: Wind },
     { id: 'payment', label: 'Règlement', icon: CreditCard },
     { id: 'dashboard', label: 'Mon Espace', icon: LayoutDashboard },
   ];
 
+  const formattedDate = currentTime.toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  const formattedTime = currentTime.toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-100">
-        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+      {/* Top Bar - Date, Heure et Live */}
+      <div className="bg-stone-900 text-white/70 py-2 px-6 text-[10px] font-bold uppercase tracking-[0.2em] flex flex-col md:flex-row justify-between items-center gap-2 z-[60]">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <Clock size={12} className="text-indigo-400" />
+            <span>{formattedDate} — {formattedTime}</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <Users size={12} className="text-emerald-400" />
+            <span className="text-white">{liveUsers} personnes en direct</span>
+          </div>
+        </div>
+      </div>
+
+      <header className="fixed top-0 md:top-8 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-100">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div 
             className="flex flex-col cursor-pointer group"
             onClick={() => setActiveTab('home')}
@@ -35,12 +89,12 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             </span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-10">
+          <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`text-sm font-bold uppercase tracking-widest transition-all ${
+                className={`text-[11px] font-bold uppercase tracking-widest transition-all ${
                   activeTab === item.id ? 'text-indigo-600' : 'text-stone-400 hover:text-stone-900'
                 }`}
               >
@@ -49,7 +103,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             ))}
             <a 
               href="tel:0955554462" 
-              className="flex items-center gap-2 px-6 py-3 bg-stone-900 text-white rounded-full text-sm font-bold hover:bg-black transition-all"
+              className="flex items-center gap-2 px-6 py-3 bg-stone-900 text-white rounded-full text-[11px] font-bold hover:bg-black transition-all"
             >
               <Phone size={14} />
               09.55.55.44.62
@@ -63,7 +117,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-24 left-0 w-full bg-white border-b border-stone-100 p-6 space-y-4 shadow-xl animate-in slide-in-from-top duration-300">
+          <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-stone-100 p-6 space-y-4 shadow-xl animate-in slide-in-from-top duration-300">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -83,7 +137,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
         )}
       </header>
 
-      <main className="flex-1 pt-24">
+      <main className="flex-1 pt-20 md:pt-28">
         {children}
       </main>
 

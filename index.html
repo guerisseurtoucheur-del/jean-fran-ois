@@ -10,40 +10,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script>
-        // Sécurité pour éviter l'écran blanc lié à process.env dans le navigateur
+        // Système de diagnostic pour l'écran blanc
+        window.onerror = function(msg, url, line, col, error) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style = 'position:fixed;top:0;left:0;width:100%;padding:15px;background:#fef2f2;color:#991b1b;border-bottom:2px solid #ef4444;z-index:9999;font-size:12px;font-family:monospace';
+            errorDiv.innerHTML = '<strong>Erreur détectée :</strong> ' + msg + ' <br><small>' + url + ' (ligne ' + line + ')</small>';
+            document.body.appendChild(errorDiv);
+        };
+
+        // Polyfill pour éviter les plantages si la clé API n'est pas encore configurée
         window.process = window.process || { env: { API_KEY: "" } };
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .page-fade {
-            animation: fadeIn 0.8s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .energy-field {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            z-index: 0;
-            pointer-events: none;
-            animation: float 15s infinite alternate ease-in-out;
-        }
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 20px) scale(1.1); }
-        }
-        .btn-glow:hover {
-            box-shadow: 0 0 25px rgba(79, 70, 229, 0.4);
-        }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .page-fade { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .energy-field { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: 0; pointer-events: none; animation: float 15s infinite alternate ease-in-out; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 20px) scale(1.1); } }
+        .btn-glow:hover { box-shadow: 0 0 25px rgba(79, 70, 229, 0.4); }
     </style>
 </head>
 <body class="bg-white text-stone-900">
@@ -55,7 +40,7 @@
     "react-dom": "https://esm.sh/react-dom@19.2.3",
     "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
     "@google/genai": "https://esm.sh/@google/genai@1.37.0",
-    "lucide-react": "https://esm.sh/lucide-react@0.462.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.462.0?external=react",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/"
   }

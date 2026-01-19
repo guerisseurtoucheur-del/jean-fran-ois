@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail, Sparkles } from 'lucide-react';
+import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail, Sparkles, CreditCard, ArrowRight } from 'lucide-react';
 
 const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const [step, setStep] = useState(1);
@@ -54,7 +54,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
               else reject(new Error("Erreur de compression"));
             },
             'image/jpeg',
-            0.6 // Compression équilibrée pour garantir la réception
+            0.6 
           );
         };
       };
@@ -98,7 +98,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       submissionData.append("Message", formData.explanation);
       
       if (fileToSend) {
-        // "attachment" est le nom de champ recommandé pour FormSubmit
         submissionData.append("attachment", fileToSend, "photo_soin.jpg");
       }
       
@@ -119,8 +118,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       }
     } catch (err) {
       setLoading(false);
-      setError("Le souffle a été interrompu. Vérifiez que la photo n'est pas trop lourde ou essayez une autre image.");
-      console.error("Submission error:", err);
+      setError("Le souffle a été interrompu. Vérifiez votre connexion et réessayez.");
     }
   };
 
@@ -279,22 +277,32 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       )}
 
       {step === 3 && (
-        <div className="py-12 text-center space-y-8 animate-in zoom-in duration-500">
+        <div className="py-12 text-center space-y-10 animate-in zoom-in duration-500">
           <div className="w-24 h-24 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 size={56} />
           </div>
           <div className="space-y-4">
-            <h2 className="text-4xl font-serif font-bold text-stone-900">Demande Transmise</h2>
-            <p className="text-stone-500 max-w-sm mx-auto">
-              Jean-François a bien reçu votre demande. Il se connectera à votre vibration dès que possible.
+            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Demande Transmise</h2>
+            <p className="text-stone-500 max-w-sm mx-auto italic">
+              Merci {formData.firstName}. Jean-François a bien reçu votre demande et va s'y connecter.
             </p>
           </div>
-          <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 text-left space-y-3">
-             <p className="text-xs font-bold text-amber-800 uppercase tracking-widest">⚠️ Rappel important :</p>
-             <p className="text-[11px] text-amber-700 leading-relaxed">
-               Si vous ne recevez pas les photos, assurez-vous d'avoir cliqué sur le bouton <strong>"Activate Form"</strong> dans le tout premier mail envoyé par <strong>FormSubmit</strong>. 
-               Sans cette étape, les pièces jointes sont bloquées par sécurité.
+
+          <div className="p-8 bg-indigo-50 rounded-[2.5rem] border border-indigo-100 space-y-6">
+             <div className="flex items-center gap-3 justify-center text-indigo-700">
+                <CreditCard size={24} />
+                <span className="font-bold uppercase tracking-widest text-xs">Finaliser votre démarche</span>
+             </div>
+             <p className="text-sm text-stone-600 leading-relaxed">
+               Pour compléter votre soin, vous pouvez maintenant accéder à l'espace règlement pour effectuer votre participation libre.
              </p>
+             <button 
+               onClick={onSuccess}
+               className="w-full py-5 bg-indigo-600 text-white rounded-[1.5rem] font-bold flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all"
+             >
+               Accéder au règlement PayPal
+               <ArrowRight size={18} />
+             </button>
           </div>
         </div>
       )}

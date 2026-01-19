@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard } from 'lucide-react';
+import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,6 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
     { id: 'home', label: 'Accueil', icon: Home },
     { id: 'chat', label: 'Questions', icon: MessageCircle },
     { id: 'healing', label: 'Soin Photo', icon: Heart },
+    { id: 'payment', label: 'Règlement', icon: CreditCard },
     { id: 'dashboard', label: 'Mon Espace', icon: LayoutDashboard },
   ];
 
@@ -29,7 +30,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             <span className="text-2xl font-serif font-bold tracking-tight text-stone-900 group-hover:text-indigo-600 transition-colors">
               Jean-François
             </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-stone-400">Magnétiseur • Guérisseur</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-500 flex items-center gap-1">
+              <Globe size={10} /> Soin à distance • Toute la France
+            </span>
           </div>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -88,16 +91,16 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-2 space-y-6">
             <h2 className="text-3xl font-serif font-bold italic">L'énergie au service de votre santé.</h2>
-            <p className="text-stone-400 max-w-sm">Pratique ancestrale et bienveillante pour vous accompagner vers la guérison physique et émotionnelle.</p>
+            <p className="text-stone-400 max-w-sm">Pratique ancestrale et bienveillante disponible partout en France par le magnétisme sur photo.</p>
           </div>
           <div className="space-y-4">
-            <h4 className="font-bold text-stone-200">Contact</h4>
-            <p className="text-stone-500">Alençon, Orne (61)<br/>Disponible par téléphone</p>
+            <h4 className="font-bold text-stone-200">Contact National</h4>
+            <p className="text-stone-500">Alençon (61) & France entière<br/>Consultations à distance</p>
             <p className="text-stone-500 font-bold">09.55.55.44.62</p>
           </div>
           <div className="space-y-4">
             <h4 className="font-bold text-stone-200">Mentions</h4>
-            <p className="text-stone-500 text-sm italic">Le magnétisme ne se substitue pas à un avis médical. Ne jamais arrêter un traitement sans l'accord de votre médecin.</p>
+            <p className="text-stone-500 text-sm italic">Le magnétisme ne se substitue pas à un avis médical. L'action à distance complète les soins traditionnels sans les remplacer.</p>
           </div>
         </div>
       </footer>

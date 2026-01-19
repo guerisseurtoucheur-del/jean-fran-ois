@@ -1,0 +1,5 @@
+{
+  "name": "Project Context Manager",
+  "description": "A developer tool to organize and re-import code from GitHub or local files into AI sessions for seamless context restoration.",
+  "requestFramePermissions": []
+}

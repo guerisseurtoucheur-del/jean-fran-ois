@@ -3,8 +3,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectFile } from "../types";
 
 export const analyzeProject = async (files: ProjectFile[]) => {
-  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : '';
-  const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+  // Always use process.env.API_KEY directly and initialize a new instance before making an API call.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const filesContext = files.map(f => `File: ${f.path}\nContent:\n${f.content}`).join('\n\n---\n\n');
   
@@ -40,6 +40,7 @@ export const analyzeProject = async (files: ProjectFile[]) => {
       }
     });
 
+    // Access the .text property directly.
     const jsonStr = response.text?.trim() || "{}";
     return JSON.parse(jsonStr);
   } catch (error) {

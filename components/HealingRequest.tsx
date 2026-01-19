@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail } from 'lucide-react';
+import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail, Sparkles } from 'lucide-react';
 
 const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const [step, setStep] = useState(1);
@@ -17,13 +17,55 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     photoFile: null as File | null
   });
 
+  // Fonction pour compresser l'image avant l'envoi
+  const compressImage = (file: File): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 1200; // Taille suffisante pour un soin
+          const MAX_HEIGHT = 1200;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          
+          canvas.toBlob(
+            (blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error("Erreur de compression"));
+            },
+            'image/jpeg',
+            0.7 // Qualité 70% pour un poids plume
+          );
+        };
+      };
+      reader.onerror = (err) => reject(err);
+    });
+  };
+
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { 
-        setError("La photo est trop lourde (5Mo max). Veuillez en choisir une plus petite.");
-        return;
-      }
       setError(null);
       setFormData({ ...formData, photoFile: file });
       
@@ -38,6 +80,17 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     setError(null);
 
     try {
+      let fileToSend: Blob | File | null = formData.photoFile;
+      
+      // Compression de l'image si elle est présente
+      if (formData.photoFile) {
+        try {
+          fileToSend = await compressImage(formData.photoFile);
+        } catch (e) {
+          console.error("Échec compression, envoi original", e);
+        }
+      }
+
       const submissionData = new FormData();
       submissionData.append("_subject", `✨ NOUVEAU SOIN : ${formData.firstName} ${formData.lastName}`);
       submissionData.append("Prenom", formData.firstName);
@@ -45,14 +98,16 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       submissionData.append("Date_Naissance", formData.birthDate);
       submissionData.append("Telephone", formData.phone);
       submissionData.append("Email", formData.email);
-      submissionData.append("Message", formData.explanation);
+      submissionData.append("Description", formData.explanation);
       
-      if (formData.photoFile) {
-        submissionData.append("Photo_Support", formData.photoFile);
+      if (fileToSend) {
+        // Le nom "attachment" aide souvent les serveurs à traiter le fichier comme pièce jointe
+        submissionData.append("attachment", fileToSend, "photo_patient.jpg");
       }
       
-      submissionData.append("_honey", ""); // Anti-spam
-      submissionData.append("_captcha", "false"); // Désactive le captcha pour plus de fluidité
+      submissionData.append("_honey", ""); 
+      submissionData.append("_captcha", "false");
+      submissionData.append("_template", "table");
 
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
@@ -62,14 +117,13 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       if (response.ok) {
         setLoading(false);
         setStep(3);
-        // On laisse l'utilisateur sur la page de succès
       } else {
-        throw new Error("Le service d'envoi est momentanément indisponible.");
+        throw new Error("Erreur lors de l'envoi");
       }
     } catch (err) {
       setLoading(false);
-      setError("Désolé, l'envoi a échoué. Vérifiez votre connexion internet.");
-      console.error("Form error:", err);
+      setError("Le lien a été rompu lors de l'envoi. Réessayez.");
+      console.error("Form submission error:", err);
     }
   };
 
@@ -91,8 +145,8 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
             <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-indigo-600">
               <Heart size={40} className="animate-pulse" />
             </div>
-            <h2 className="text-4xl font-serif font-bold">Votre identité</h2>
-            <p className="text-stone-500">Ces informations me permettent de diriger le souffle vers vous.</p>
+            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Vibration Personnelle</h2>
+            <p className="text-stone-500">Ces éléments sont nécessaires pour que je puisse me connecter à votre énergie.</p>
           </div>
 
           <div className="space-y-6">
@@ -149,25 +203,27 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <Mail size={12} /> Email
+                <Mail size={12} /> Email de contact
               </label>
               <input 
                 type="email" 
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
+                placeholder="votre@email.com"
               />
             </div>
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <FileText size={12} /> Description de votre mal
+                <FileText size={12} /> Expliquez brièvement votre besoin
               </label>
               <textarea 
+                rows={4}
                 value={formData.explanation}
                 onChange={(e) => setFormData({...formData, explanation: e.target.value})}
-                className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm h-32 resize-none"
-                placeholder="Expliquez-moi où vous avez mal..."
+                className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm resize-none"
+                placeholder="Décrivez vos symptômes ou votre situation..."
               />
             </div>
           </div>
@@ -175,71 +231,96 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           <button 
             disabled={!isStep1Valid}
             onClick={() => setStep(2)}
-            className="w-full py-6 bg-stone-900 text-white rounded-3xl font-bold text-xl hover:bg-black transition-all disabled:opacity-30 shadow-xl"
+            className="w-full py-5 bg-indigo-600 text-white rounded-[2rem] font-bold text-lg hover:bg-indigo-700 transition-all disabled:opacity-30 flex items-center justify-center gap-3"
           >
-            Passer à la photo
+            Continuer vers la photo
           </button>
         </div>
       )}
 
       {step === 2 && (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10">
+        <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500 relative z-10">
           <div className="text-center space-y-4">
-            <h2 className="text-4xl font-serif font-bold italic text-indigo-600">Photo du support</h2>
-            <p className="text-stone-500">Une photo de vous ou de la zone douloureuse pour canaliser l'énergie.</p>
+            <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-indigo-600">
+              <Camera size={40} />
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Votre Photo</h2>
+            <p className="text-stone-500">Une photo de face, récente, où l'on voit bien vos yeux. Elle sert de support vibratoire.</p>
+          </div>
+
+          <div className="flex flex-col items-center gap-6">
+            <div 
+              onClick={() => document.getElementById('photo-input')?.click()}
+              className="w-full aspect-square md:aspect-video bg-stone-50 border-2 border-dashed border-stone-200 rounded-[3rem] flex flex-col items-center justify-center cursor-pointer hover:bg-stone-100 hover:border-indigo-300 transition-all overflow-hidden relative group"
+            >
+              {formData.photoPreview ? (
+                <>
+                  <img src={formData.photoPreview} alt="Aperçu" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <p className="text-white font-bold">Changer la photo</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Upload size={48} className="text-stone-300 mb-4" />
+                  <p className="text-stone-400 font-medium">Cliquez pour ajouter une photo</p>
+                  <p className="text-[10px] uppercase tracking-widest text-stone-300 mt-2">JPG, PNG supportés</p>
+                </>
+              )}
+            </div>
+            <input 
+              id="photo-input"
+              type="file" 
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              className="hidden"
+            />
           </div>
 
           {error && (
-            <div className="flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl border border-red-100 text-sm">
-              <AlertCircle size={18} />
-              {error}
+            <div className="flex items-center gap-2 text-red-500 text-sm bg-red-50 p-4 rounded-2xl">
+              <AlertCircle size={16} />
+              <span>{error}</span>
             </div>
           )}
 
-          <div className="aspect-square bg-stone-50 border-4 border-dashed border-stone-100 rounded-[3rem] overflow-hidden relative group cursor-pointer flex flex-col items-center justify-center shadow-inner">
-            {formData.photoPreview ? (
-              <img src={formData.photoPreview} className="w-full h-full object-cover" alt="Soin" />
-            ) : (
-              <div className="flex flex-col items-center gap-4 text-stone-300">
-                <div className="p-8 bg-white rounded-full shadow-sm"><Camera size={48} /></div>
-                <span className="font-bold text-sm uppercase tracking-widest">Prendre la photo</span>
-              </div>
-            )}
-            <input type="file" accept="image/*" onChange={handlePhotoUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-          </div>
-
-          <div className="flex gap-4">
-            <button onClick={() => setStep(1)} className="flex-1 py-5 bg-stone-100 text-stone-500 rounded-3xl font-bold">Retour</button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button 
+              onClick={() => setStep(1)}
+              className="flex-1 py-5 border border-stone-200 text-stone-600 rounded-[2rem] font-bold hover:bg-stone-50 transition-all"
+            >
+              Retour
+            </button>
             <button 
               onClick={handleSubmit}
-              disabled={!formData.photoFile || loading}
-              className="flex-[2] py-5 bg-indigo-600 text-white rounded-3xl font-bold text-xl hover:bg-indigo-700 transition-all flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg shadow-indigo-100"
+              disabled={loading || !formData.photoFile}
+              className="flex-[2] py-5 bg-stone-900 text-white rounded-[2rem] font-bold hover:bg-black transition-all disabled:opacity-30 flex items-center justify-center gap-3"
             >
-              {loading ? <Loader2 className="animate-spin" /> : <Upload size={20} />}
-              {loading ? 'Envoi...' : 'Transmettre pour le soin'}
+              {loading ? <Loader2 className="animate-spin" /> : <Sparkles size={20} className="text-indigo-400" />}
+              {loading ? 'Connexion en cours...' : 'Envoyer ma demande'}
             </button>
           </div>
         </div>
       )}
 
       {step === 3 && (
-        <div className="text-center space-y-8 py-10 animate-in zoom-in duration-700">
-          <div className="w-24 h-24 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-100">
-            <CheckCircle2 size={56} />
+        <div className="py-12 text-center space-y-8 animate-in zoom-in duration-500 relative z-10">
+          <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500">
+            <CheckCircle2 size={48} className="animate-bounce" />
           </div>
           <div className="space-y-4">
-            <h2 className="text-4xl font-serif font-bold text-stone-900">Demande envoyée !</h2>
-            <p className="text-lg text-stone-500 max-w-sm mx-auto">
-              Merci {formData.firstName}. Jean-François traitera votre demande par le souffle dès réception.
+            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">L'énergie est transmise</h2>
+            <p className="text-stone-500 max-w-sm mx-auto">
+              Merci {formData.firstName}. J'ai bien reçu votre demande. Je vais m'y connecter dès que possible. <br/>
+              Un email de confirmation vous a été envoyé.
             </p>
           </div>
-          <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 text-left space-y-2">
-             <p className="text-xs font-bold text-amber-800 uppercase tracking-widest">⚠️ Note pour Jean-François :</p>
-             <p className="text-[11px] text-amber-700 leading-relaxed">
-               Si vous ne recevez rien sur <strong>guerisseurtoucheur@gmail.com</strong>, vérifiez vos SPAMS. 
-               Cherchez un mail de <strong>FormSubmit</strong> pour confirmer l'activation du formulaire la première fois.
-             </p>
-          </div>
+          <button 
+            onClick={onSuccess}
+            className="px-12 py-5 bg-indigo-600 text-white rounded-[2rem] font-bold hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100"
+          >
+            Voir mon espace
+          </button>
         </div>
       )}
     </div>

@@ -29,8 +29,8 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : '';
-      const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+      // Create a new GoogleGenAI instance right before making an API call to ensure it always uses the most up-to-date API key.
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
@@ -40,6 +40,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
         },
       });
 
+      // Extract text from GenerateContentResponse using the .text property.
       setMessages(prev => [...prev, { role: 'bot', text: response.text || "Je n'ai pas pu recevoir votre message par le souffle, réessayez s'il vous plaît." }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'bot', text: "Le lien énergétique est perturbé. N'hésitez pas à m'appeler directement." }]);

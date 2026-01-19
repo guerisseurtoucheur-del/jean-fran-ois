@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import Layout from './components/Layout';
-import ChatRoom from './components/ChatRoom';
-import HealingRequest from './components/HealingRequest';
-import Dashboard from './components/Dashboard';
+import Layout from './components/Layout.tsx';
+import ChatRoom from './components/ChatRoom.tsx';
+import HealingRequest from './components/HealingRequest.tsx';
+import Dashboard from './components/Dashboard.tsx';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');

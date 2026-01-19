@@ -1,5 +1,7 @@
 {
-  "name": "Project Context Manager",
-  "description": "A developer tool to organize and re-import code from GitHub or local files into AI sessions for seamless context restoration.",
-  "requestFramePermissions": []
+  "name": "Jean-François - Magnétiseur Guérisseur",
+  "description": "Site professionnel pour Jean-François, magnétiseur guérisseur à Alençon. Demandes de soins par le souffle et magnétisme sur photo.",
+  "requestFramePermissions": [
+    "camera"
+  ]
 }

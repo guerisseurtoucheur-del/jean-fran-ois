@@ -49,6 +49,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           Date_Naissance: formData.birthDate,
           Telephone: formData.phone,
           Email: formData.email,
+          _replyto: formData.email, // Permet à Jean-François de répondre directement au client depuis son mail
           Explications: formData.explanation,
           Photo_Data: formData.photo, // L'image est envoyée en format Base64
           _honey: "", // Honeypot contre le spam

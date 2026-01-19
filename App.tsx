@@ -46,7 +46,6 @@ const App: React.FC = () => {
     };
     document.title = titles[activeTab] || "Jean-François Magnétiseur";
     
-    // Petite incrémentation aléatoire pour simuler de nouvelles visites
     if (activeTab === 'home') {
       const timer = setTimeout(() => {
         setVisitorCount(prev => prev + Math.floor(Math.random() * 3));
@@ -78,7 +77,6 @@ const App: React.FC = () => {
                       <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600">Soin à distance • Toute la France</span>
                     </div>
                     
-                    {/* Visitor Count Badge */}
                     <div className="flex items-center gap-3 text-stone-400 text-xs font-medium">
                       <Users size={14} className="text-stone-300" />
                       <span>Plus de <strong className="text-stone-900">{visitorCount.toLocaleString()}</strong> personnes accompagnées avec succès</span>
@@ -106,7 +104,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="relative hidden md:block">
                   <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-inner relative group border-8 border-stone-50">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" alt="Jean-François Magnétiseur" className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 scale-110 group-hover:scale-100" />
+                    <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=1200" alt="Énergie Vibratoire" className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 scale-110 group-hover:scale-100" />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
                     <div className="absolute bottom-12 left-12 right-12 p-8 bg-white/95 backdrop-blur-md rounded-3xl border border-white shadow-2xl">
                       <div className="flex items-center gap-2 mb-3">
@@ -133,7 +131,7 @@ const App: React.FC = () => {
                     { name: "Sophie M.", city: "Lyon", text: "Jean-François m'a aidé pour un zona très douloureux. En deux séances à distance, le feu s'est éteint. Incroyable.", subject: "Zona" },
                     { name: "Marc D.", city: "Paris", text: "Mes douleurs de dos chroniques ont disparu après l'envoi de ma photo. Un vrai soulagement.", subject: "Douleurs de dos" },
                     { name: "Élise L.", city: "Bordeaux", text: "Une bienveillance rare. On ressent l'énergie même à des centaines de kilomètres.", subject: "Stress & Anxiété" },
-                    { name: "Thomas R.", city: "Nantes", text: "Brûlure domestique grave, Jean-François ha 'coupé le feu' immédiatement à distance. La cicatrisation a été fulgurante sans laisser de trace.", subject: "Coupeur de feu" },
+                    { name: "Thomas R.", city: "Nantes", text: "Brûlure domestique grave, Jean-François a 'coupé le feu' immédiatement à distance. La cicatrisation a été fulgurante sans laisser de trace.", subject: "Coupeur de feu" },
                     { name: "Julie V.", city: "Strasbourg", text: "Ma fille souffrait d'un eczéma tenace depuis des mois. Après le soin sur photo, sa peau s'est apaisée en quelques jours seulement.", subject: "Eczéma infantile" },
                     { name: "Antoine P.", city: "Marseille", text: "En plein burn-out, j'ai retrouvé une clarté d'esprit et un calme intérieur que je n'espérais plus grâce à son travail énergétique.", subject: "Burn-out / Épuisement" }
                   ].map((t, i) => (
@@ -196,14 +194,14 @@ const App: React.FC = () => {
                  <div className="grid md:grid-cols-2 gap-8">
                     <div className="group cursor-pointer">
                       <div className="aspect-video rounded-[3rem] overflow-hidden mb-6 bg-stone-100">
-                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Respiration calme" />
+                        <img src="https://images.unsplash.com/photo-1536640712247-2121b6a4a9cf?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Énergie Lumineuse" />
                       </div>
                       <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-indigo-600 transition-colors">5 minutes pour calmer le feu intérieur</h3>
                       <p className="text-stone-500 leading-relaxed">Apprenez une technique de respiration simple pour apaiser les inflammations avant un soin...</p>
                     </div>
                     <div className="group cursor-pointer">
                       <div className="aspect-video rounded-[3rem] overflow-hidden mb-6 bg-stone-100">
-                        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Sommeil réparateur" />
+                        <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Sérénité vibratoire" />
                       </div>
                       <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-indigo-600 transition-colors">Sommeil et Énergie : le lien invisible</h3>
                       <p className="text-stone-500 leading-relaxed">Pourquoi la régénération énergétique est-elle plus forte entre 22h et 2h du matin ?</p>

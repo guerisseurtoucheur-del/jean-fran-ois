@@ -5,6 +5,7 @@ import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText,
 const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -17,7 +18,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     photoFile: null as File | null
   });
 
-  // Fonction pour compresser l'image avant l'envoi
   const compressImage = (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -27,20 +27,19 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         img.src = event.target?.result as string;
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 1200; // Taille suffisante pour un soin
-          const MAX_HEIGHT = 1200;
+          const MAX_SIZE = 1000; 
           let width = img.width;
           let height = img.height;
 
           if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
             }
           } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
             }
           }
 
@@ -55,7 +54,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
               else reject(new Error("Erreur de compression"));
             },
             'image/jpeg',
-            0.7 // Qualité 70% pour un poids plume
+            0.6 // Compression équilibrée pour garantir la réception
           );
         };
       };
@@ -68,7 +67,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     if (file) {
       setError(null);
       setFormData({ ...formData, photoFile: file });
-      
       const reader = new FileReader();
       reader.onloadend = () => setFormData(prev => ({ ...prev, photoPreview: reader.result as string }));
       reader.readAsDataURL(file);
@@ -80,29 +78,28 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     setError(null);
 
     try {
+      setLoadingStatus('Préparation de la photo...');
       let fileToSend: Blob | File | null = formData.photoFile;
       
-      // Compression de l'image si elle est présente
       if (formData.photoFile) {
         try {
           fileToSend = await compressImage(formData.photoFile);
         } catch (e) {
-          console.error("Échec compression, envoi original", e);
+          console.error("Échec compression", e);
         }
       }
 
+      setLoadingStatus('Envoi de votre demande...');
       const submissionData = new FormData();
-      submissionData.append("_subject", `✨ NOUVEAU SOIN : ${formData.firstName} ${formData.lastName}`);
-      submissionData.append("Prenom", formData.firstName);
-      submissionData.append("Nom", formData.lastName);
-      submissionData.append("Date_Naissance", formData.birthDate);
-      submissionData.append("Telephone", formData.phone);
-      submissionData.append("Email", formData.email);
-      submissionData.append("Description", formData.explanation);
+      submissionData.append("_subject", `✨ SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
+      submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
+      submissionData.append("Naissance", formData.birthDate);
+      submissionData.append("Contact", `${formData.phone} / ${formData.email}`);
+      submissionData.append("Message", formData.explanation);
       
       if (fileToSend) {
-        // Le nom "attachment" aide souvent les serveurs à traiter le fichier comme pièce jointe
-        submissionData.append("attachment", fileToSend, "photo_patient.jpg");
+        // "attachment" est le nom de champ recommandé pour FormSubmit
+        submissionData.append("attachment", fileToSend, "photo_soin.jpg");
       }
       
       submissionData.append("_honey", ""); 
@@ -118,12 +115,12 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         setLoading(false);
         setStep(3);
       } else {
-        throw new Error("Erreur lors de l'envoi");
+        throw new Error("Erreur serveur");
       }
     } catch (err) {
       setLoading(false);
-      setError("Le lien a été rompu lors de l'envoi. Réessayez.");
-      console.error("Form submission error:", err);
+      setError("Le souffle a été interrompu. Vérifiez que la photo n'est pas trop lourde ou essayez une autre image.");
+      console.error("Submission error:", err);
     }
   };
 
@@ -203,7 +200,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <Mail size={12} /> Email de contact
+                <Mail size={12} /> Email
               </label>
               <input 
                 type="email" 
@@ -216,14 +213,14 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <FileText size={12} /> Expliquez brièvement votre besoin
+                <FileText size={12} /> Votre mal
               </label>
               <textarea 
-                rows={4}
+                rows={3}
                 value={formData.explanation}
                 onChange={(e) => setFormData({...formData, explanation: e.target.value})}
                 className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm resize-none"
-                placeholder="Décrivez vos symptômes ou votre situation..."
+                placeholder="Zona, douleur, brûlure..."
               />
             </div>
           </div>
@@ -231,9 +228,9 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           <button 
             disabled={!isStep1Valid}
             onClick={() => setStep(2)}
-            className="w-full py-5 bg-indigo-600 text-white rounded-[2rem] font-bold text-lg hover:bg-indigo-700 transition-all disabled:opacity-30 flex items-center justify-center gap-3"
+            className="w-full py-5 bg-stone-900 text-white rounded-[2rem] font-bold text-lg hover:bg-black transition-all disabled:opacity-30"
           >
-            Continuer vers la photo
+            Choisir la photo
           </button>
         </div>
       )}
@@ -241,86 +238,64 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       {step === 2 && (
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500 relative z-10">
           <div className="text-center space-y-4">
-            <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-indigo-600">
-              <Camera size={40} />
-            </div>
             <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Votre Photo</h2>
-            <p className="text-stone-500">Une photo de face, récente, où l'on voit bien vos yeux. Elle sert de support vibratoire.</p>
+            <p className="text-stone-500 italic">Une photo nette sert de support pour le travail à distance.</p>
           </div>
 
-          <div className="flex flex-col items-center gap-6">
-            <div 
-              onClick={() => document.getElementById('photo-input')?.click()}
-              className="w-full aspect-square md:aspect-video bg-stone-50 border-2 border-dashed border-stone-200 rounded-[3rem] flex flex-col items-center justify-center cursor-pointer hover:bg-stone-100 hover:border-indigo-300 transition-all overflow-hidden relative group"
-            >
-              {formData.photoPreview ? (
-                <>
-                  <img src={formData.photoPreview} alt="Aperçu" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                    <p className="text-white font-bold">Changer la photo</p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Upload size={48} className="text-stone-300 mb-4" />
-                  <p className="text-stone-400 font-medium">Cliquez pour ajouter une photo</p>
-                  <p className="text-[10px] uppercase tracking-widest text-stone-300 mt-2">JPG, PNG supportés</p>
-                </>
-              )}
-            </div>
-            <input 
-              id="photo-input"
-              type="file" 
-              accept="image/*"
-              onChange={handlePhotoUpload}
-              className="hidden"
-            />
+          <div 
+            onClick={() => document.getElementById('photo-input')?.click()}
+            className="w-full aspect-square bg-stone-50 border-2 border-dashed border-stone-200 rounded-[3rem] flex flex-col items-center justify-center cursor-pointer hover:bg-stone-100 transition-all overflow-hidden relative"
+          >
+            {formData.photoPreview ? (
+              <img src={formData.photoPreview} alt="Aperçu" className="w-full h-full object-cover" />
+            ) : (
+              <div className="text-center space-y-3">
+                <div className="p-6 bg-white rounded-full shadow-sm inline-block"><Camera size={40} className="text-indigo-600" /></div>
+                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-widest">Cliquez pour ajouter</p>
+              </div>
+            )}
+            <input id="photo-input" type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
           </div>
 
           {error && (
-            <div className="flex items-center gap-2 text-red-500 text-sm bg-red-50 p-4 rounded-2xl">
-              <AlertCircle size={16} />
-              <span>{error}</span>
+            <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-sm flex items-center gap-3">
+              <AlertCircle size={18} />
+              {error}
             </div>
           )}
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button 
-              onClick={() => setStep(1)}
-              className="flex-1 py-5 border border-stone-200 text-stone-600 rounded-[2rem] font-bold hover:bg-stone-50 transition-all"
-            >
-              Retour
-            </button>
+            <button onClick={() => setStep(1)} className="flex-1 py-5 border border-stone-200 text-stone-400 rounded-[2rem] font-bold">Retour</button>
             <button 
               onClick={handleSubmit}
               disabled={loading || !formData.photoFile}
-              className="flex-[2] py-5 bg-stone-900 text-white rounded-[2rem] font-bold hover:bg-black transition-all disabled:opacity-30 flex items-center justify-center gap-3"
+              className="flex-[2] py-5 bg-indigo-600 text-white rounded-[2rem] font-bold hover:bg-indigo-700 transition-all disabled:opacity-30 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100"
             >
-              {loading ? <Loader2 className="animate-spin" /> : <Sparkles size={20} className="text-indigo-400" />}
-              {loading ? 'Connexion en cours...' : 'Envoyer ma demande'}
+              {loading ? <Loader2 className="animate-spin" /> : <Sparkles size={20} />}
+              {loading ? loadingStatus : 'Envoyer ma demande'}
             </button>
           </div>
         </div>
       )}
 
       {step === 3 && (
-        <div className="py-12 text-center space-y-8 animate-in zoom-in duration-500 relative z-10">
-          <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-500">
-            <CheckCircle2 size={48} className="animate-bounce" />
+        <div className="py-12 text-center space-y-8 animate-in zoom-in duration-500">
+          <div className="w-24 h-24 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle2 size={56} />
           </div>
           <div className="space-y-4">
-            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">L'énergie est transmise</h2>
+            <h2 className="text-4xl font-serif font-bold text-stone-900">Demande Transmise</h2>
             <p className="text-stone-500 max-w-sm mx-auto">
-              Merci {formData.firstName}. J'ai bien reçu votre demande. Je vais m'y connecter dès que possible. <br/>
-              Un email de confirmation vous a été envoyé.
+              Jean-François a bien reçu votre demande. Il se connectera à votre vibration dès que possible.
             </p>
           </div>
-          <button 
-            onClick={onSuccess}
-            className="px-12 py-5 bg-indigo-600 text-white rounded-[2rem] font-bold hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100"
-          >
-            Voir mon espace
-          </button>
+          <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 text-left space-y-3">
+             <p className="text-xs font-bold text-amber-800 uppercase tracking-widest">⚠️ Rappel important :</p>
+             <p className="text-[11px] text-amber-700 leading-relaxed">
+               Si vous ne recevez pas les photos, assurez-vous d'avoir cliqué sur le bouton <strong>"Activate Form"</strong> dans le tout premier mail envoyé par <strong>FormSubmit</strong>. 
+               Sans cette étape, les pièces jointes sont bloquées par sécurité.
+             </p>
+          </div>
         </div>
       )}
     </div>

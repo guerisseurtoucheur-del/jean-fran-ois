@@ -13,19 +13,22 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     phone: '',
     email: '',
     explanation: '',
-    photo: null as string | null
+    photoPreview: null as string | null,
+    photoFile: null as File | null
   });
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // Limite de 5Mo pour l'envoi par mail
+      if (file.size > 5 * 1024 * 1024) { 
         setError("La photo est trop volumineuse (max 5Mo).");
         return;
       }
       setError(null);
+      setFormData({ ...formData, photoFile: file });
+      
       const reader = new FileReader();
-      reader.onloadend = () => setFormData({ ...formData, photo: reader.result as string });
+      reader.onloadend = () => setFormData(prev => ({ ...prev, photoPreview: reader.result as string }));
       reader.readAsDataURL(file);
     }
   };
@@ -35,43 +38,45 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     setError(null);
 
     try {
-      // Utilisation de FormSubmit.co pour l'envoi d'email sans backend
+      // Utilisation de FormData pour permettre l'envoi de fichiers réels
+      const submissionData = new FormData();
+      submissionData.append("_subject", `Nouvelle demande de soin : ${formData.firstName} ${formData.lastName}`);
+      submissionData.append("Prenom", formData.firstName);
+      submissionData.append("Nom", formData.lastName);
+      submissionData.append("Date_Naissance", formData.birthDate);
+      submissionData.append("Telephone", formData.phone);
+      submissionData.append("Email", formData.email);
+      submissionData.append("_replyto", formData.email);
+      submissionData.append("Explications", formData.explanation);
+      
+      if (formData.photoFile) {
+        submissionData.append("Photo", formData.photoFile);
+      }
+      
+      submissionData.append("_honey", ""); // Honeypot contre le spam
+      submissionData.append("_template", "table");
+
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          _subject: `Nouvelle demande de soin : ${formData.firstName} ${formData.lastName}`,
-          Prenom: formData.firstName,
-          Nom: formData.lastName,
-          Date_Naissance: formData.birthDate,
-          Telephone: formData.phone,
-          Email: formData.email,
-          _replyto: formData.email, // Permet à Jean-François de répondre directement au client depuis son mail
-          Explications: formData.explanation,
-          Photo_Data: formData.photo, // L'image est envoyée en format Base64
-          _honey: "", // Honeypot contre le spam
-          _template: "table"
-        })
+        body: submissionData,
+        // Pas besoin de header Content-Type ici, le navigateur le gère pour FormData
       });
 
       if (response.ok) {
         setLoading(false);
         setStep(3);
-        setTimeout(onSuccess, 5000);
+        setTimeout(onSuccess, 8000); // Un peu plus de temps pour lire le message de succès
       } else {
-        throw new Error("Erreur serveur");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erreur serveur");
       }
     } catch (err) {
       setLoading(false);
-      setError("Le souffle n'a pas pu être transmis. Vérifiez votre connexion ou réessayez.");
+      setError("Le souffle n'a pas pu être transmis. Vérifiez votre connexion ou que la photo n'est pas trop lourde.");
       console.error("Submission error:", err);
     }
   };
 
-  // Validation des champs obligatoires de l'étape 1
   const isStep1Valid = 
     formData.firstName.trim() !== '' && 
     formData.lastName.trim() !== '' && 
@@ -82,7 +87,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
 
   return (
     <div className="max-w-2xl mx-auto p-8 md:p-12 bg-white rounded-[4rem] border border-stone-100 shadow-2xl my-10 relative overflow-hidden">
-      {/* Décoration d'arrière-plan */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
 
       {step === 1 && (
@@ -200,9 +204,9 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           )}
 
           <div className="aspect-square bg-stone-50 border-4 border-dashed border-stone-100 rounded-[3rem] overflow-hidden relative group cursor-pointer hover:border-indigo-200 transition-all flex flex-col items-center justify-center shadow-inner">
-            {formData.photo ? (
+            {formData.photoPreview ? (
               <div className="relative w-full h-full">
-                <img src={formData.photo} className="w-full h-full object-cover" alt="Support de soin" />
+                <img src={formData.photoPreview} className="w-full h-full object-cover" alt="Support de soin" />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <span className="bg-white px-4 py-2 rounded-full text-xs font-bold text-stone-900">Changer la photo</span>
                 </div>
@@ -227,11 +231,11 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
             </button>
             <button 
               onClick={handleSubmit}
-              disabled={!formData.photo || loading}
+              disabled={!formData.photoFile || loading}
               className="flex-[2] py-5 bg-indigo-600 text-white rounded-3xl font-bold text-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center justify-center gap-3 disabled:opacity-50"
             >
               {loading ? <Loader2 className="animate-spin" /> : <Upload size={20} />}
-              {loading ? 'Envoi du message...' : 'Envoyer pour le soin'}
+              {loading ? 'Envoi en cours...' : 'Envoyer pour le soin'}
             </button>
           </div>
         </div>
@@ -245,12 +249,13 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           <div className="space-y-4">
             <h2 className="text-5xl font-serif font-bold italic text-stone-900">C'est envoyé, {formData.firstName}.</h2>
             <p className="text-xl text-stone-500 leading-relaxed max-w-md mx-auto">
-              Votre demande a bien été envoyée à Jean-François sur sa boîte mail. <br/>
-              Il l'étudiera avec toute l'attention nécessaire.
+              Votre demande est en route vers la boîte mail de Jean-François.
             </p>
           </div>
-          <div className="p-6 bg-indigo-50/50 rounded-3xl border border-indigo-100 inline-block">
-             <p className="text-sm font-medium text-indigo-600">Le message est en chemin vers Alençon.</p>
+          <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 max-w-sm mx-auto">
+             <p className="text-xs font-medium text-amber-700">
+               Note pour Jean-François : Si vous ne recevez rien, vérifiez vos SPAMS pour activer le formulaire une première fois.
+             </p>
           </div>
         </div>
       )}

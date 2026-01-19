@@ -3,7 +3,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectFile } from "../types";
 
 export const analyzeProject = async (files: ProjectFile[]) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : '';
+  const ai = new GoogleGenAI({ apiKey: apiKey || '' });
   
   const filesContext = files.map(f => `File: ${f.path}\nContent:\n${f.content}`).join('\n\n---\n\n');
   
@@ -16,7 +17,6 @@ export const analyzeProject = async (files: ProjectFile[]) => {
   `;
 
   try {
-    // Use gemini-3-pro-preview for complex reasoning tasks like code analysis
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
@@ -40,7 +40,6 @@ export const analyzeProject = async (files: ProjectFile[]) => {
       }
     });
 
-    // Access .text property directly as per latest SDK guidelines and trim whitespace
     const jsonStr = response.text?.trim() || "{}";
     return JSON.parse(jsonStr);
   } catch (error) {

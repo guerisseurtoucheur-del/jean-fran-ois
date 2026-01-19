@@ -29,7 +29,9 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : '';
+      const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+      
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMsg,

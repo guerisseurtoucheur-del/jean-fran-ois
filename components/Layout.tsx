@@ -155,6 +155,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           <div className="space-y-4">
             <h4 className="font-bold text-stone-200">Mentions</h4>
             <p className="text-stone-500 text-sm italic">Le magnétisme ne se substitue pas à un avis médical. L'action à distance complète les soins traditionnels sans les remplacer.</p>
+            <div className="pt-4 text-[10px] text-stone-600 uppercase tracking-widest font-bold">
+               Version 2.0 (Correctif Vercel)
+            </div>
           </div>
         </div>
       </footer>

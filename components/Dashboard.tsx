@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle, RefreshCw } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 // Fonction utilitaire centralisée
@@ -30,21 +30,38 @@ const Dashboard: React.FC = () => {
   const [dailyWisdom, setDailyWisdom] = useState<string>('');
   const [loadingWisdom, setLoadingWisdom] = useState(true);
   const [keyStatus, setKeyStatus] = useState<'checking' | 'ok' | 'missing'>('checking');
+  const [testResult, setTestResult] = useState<string | null>(null);
 
   const treatments = [
     { id: 1, type: 'Soin Zona', status: 'En cours', date: 'Aujourd\'hui', progress: 65 },
     { id: 2, type: 'Inflammation Dos', status: 'Terminé', date: 'Il y a 2 jours', progress: 100 },
   ];
 
+  const testConnection = async () => {
+     setTestResult("Test en cours...");
+     try {
+       const key = getApiKey();
+       if (!key) throw new Error("Aucune clé trouvée");
+       
+       const ai = new GoogleGenAI({ apiKey: key });
+       await ai.models.generateContent({
+         model: 'gemini-3-flash-preview',
+         contents: 'ping',
+       });
+       setTestResult("✅ SUCCÈS : Clé valide et connectée à Google.");
+     } catch (e: any) {
+       setTestResult(`❌ ÉCHEC : ${e.message || String(e)}`);
+     }
+  };
+
   useEffect(() => {
     const fetchWisdom = async () => {
       try {
         const apiKey = getApiKey();
         
-        // MODIFICATION : Suppression de la vérification stricte.
+        // Pas de vérification stricte, on essaie juste
         if (!apiKey) {
            setKeyStatus('missing');
-           // Pas de throw ici pour ne pas bloquer tout le composant, on met juste un message par défaut.
            setDailyWisdom("L'énergie est présente, connectez votre clé API pour recevoir le message.");
            setLoadingWisdom(false);
            return;
@@ -144,18 +161,31 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Diagnostic Footer */}
-      <div className="border-t border-stone-100 pt-8 flex justify-center">
+      <div className="border-t border-stone-100 pt-8 flex flex-col items-center gap-4">
         <div className={`px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 border ${
           keyStatus === 'ok' 
             ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
             : keyStatus === 'missing'
-              ? 'bg-stone-50 text-stone-500 border-stone-100' // Moins alarmiste (gris au lieu de rouge)
+              ? 'bg-stone-50 text-stone-500 border-stone-100' 
               : 'bg-stone-50 text-stone-400 border-stone-100'
         }`}>
           {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté</>}
-          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API non détectée (Mode restreint)</>}
+          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API non détectée</>}
           {keyStatus === 'checking' && <><Loader2 size={14} className="animate-spin" /> Vérification...</>}
         </div>
+
+        <button 
+           onClick={testConnection}
+           className="text-xs text-indigo-600 underline flex items-center gap-2 hover:text-indigo-800"
+        >
+           <RefreshCw size={12} /> Tester la connexion Vercel manuellement
+        </button>
+        
+        {testResult && (
+           <div className={`text-xs font-mono p-2 rounded ${testResult.includes('SUCCÈS') ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`}>
+              {testResult}
+           </div>
+        )}
       </div>
     </div>
   );

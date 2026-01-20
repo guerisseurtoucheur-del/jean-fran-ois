@@ -14,8 +14,16 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const fetchWisdom = async () => {
+      // Protection si la clé API n'est pas encore configurée
+      const apiKey = process.env.API_KEY;
+      if (!apiKey || apiKey.includes("API_KEY")) {
+        setDailyWisdom("La lumière du souffle vous accompagne aujourd'hui.");
+        setLoadingWisdom(false);
+        return;
+      }
+
       try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const ai = new GoogleGenAI({ apiKey: apiKey });
         const response = await ai.models.generateContent({
           model: 'gemini-3-flash-preview',
           contents: "Génère un court message intuitif et bienveillant (max 2 lignes) pour un patient qui vient voir son magnétiseur. Parle d'énergie, de souffle ou de lumière.",

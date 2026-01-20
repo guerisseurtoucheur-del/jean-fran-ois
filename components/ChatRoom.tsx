@@ -33,7 +33,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       setMessages(prev => [...prev, { role: 'user', text: input }]);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "⚠️ Attention : Je n'arrive pas à me connecter. Sur Vercel, assurez-vous d'avoir ajouté la variable d'environnement 'API_KEY' dans les réglages de votre projet (Settings > Environment Variables)." 
+        text: "⚠️ CONFIGURATION VERCEL REQUISE : La clé API est manquante. \n1. Allez dans Settings > Environment Variables.\n2. Ajoutez 'API_KEY' avec votre clé.\n3. IMPORTANT : Allez dans 'Deployments' et faites 'Redeploy' pour valider le changement." 
       }]);
       setInput('');
       return;
@@ -88,11 +88,11 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
               m.role === 'user' 
                 ? 'bg-stone-900 text-white rounded-tr-none shadow-xl' 
                 : m.text.includes('⚠️') 
-                  ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-tl-none'
+                  ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-tl-none font-medium'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.text.includes('⚠️') && <AlertCircle size={20} className="mb-2" />}
-              <p className="text-base leading-relaxed">{m.text}</p>
+              {m.text.includes('⚠️') && <AlertCircle size={20} className="mb-2 text-amber-600" />}
+              <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>
         ))}

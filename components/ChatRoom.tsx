@@ -1,57 +1,65 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, User, Sparkles, Loader2, HeartHandshake } from 'lucide-react';
+import { Send, HeartHandshake } from 'lucide-react';
 
 interface Message {
-  role: 'user' | 'bot';
+  role: 'user' | 'model';
   text: string;
 }
 
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'bot', text: 'Bonjour, je suis Jean-François. Posez-moi vos questions sur vos douleurs ou votre besoin de soin. Comment puis-je vous aider aujourd\'hui ?' }
+    { role: 'model', text: 'Bonjour, je suis Jean-François. Posez-moi vos questions sur vos douleurs ou votre besoin de soin. Comment puis-je vous aider aujourd\'hui ?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Défilement automatique vers le bas à chaque nouveau message
   useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  }, [messages]);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
     const userMsg = input;
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
+    const currentMessages: Message[] = [...messages, { role: 'user', text: userMsg }];
+    setMessages(currentMessages);
     setLoading(true);
 
     try {
-      // Initialisation d'une nouvelle instance à chaque appel pour garantir la récupération de la clé API à jour
+      // Initialisation avec la clé d'environnement (exigée par Vercel/GitHub)
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
-      // Utilisation de l'API Chat pour une meilleure gestion du contexte
-      const chat = ai.chats.create({
+      // On envoie l'historique complet pour que Jean-François se souvienne du début de la conversation
+      const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
+        contents: currentMessages.map(m => ({
+          role: m.role,
+          parts: [{ text: m.text }]
+        })),
         config: {
           systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante. Ne parle pas de technique informatique, reste dans ton rôle de guérisseur.",
         },
       });
 
-      const response = await chat.sendMessage({ message: userMsg });
+      const responseText = response.text;
 
-      if (response && response.text) {
-        setMessages(prev => [...prev, { role: 'bot', text: response.text }]);
+      if (responseText) {
+        setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
         throw new Error("Réponse vide");
       }
     } catch (error) {
-      console.error("Erreur Chat:", error);
+      console.error("Erreur détaillée du Chat:", error);
       setMessages(prev => [...prev, { 
-        role: 'bot', 
-        text: "Le lien énergétique est momentanément perturbé. Je vous prie de m'excuser. N'hésitez pas à me contacter directement par téléphone au 09.55.55.44.62 pour que nous puissions échanger de vive voix." 
+        role: 'model', 
+        text: "Le lien énergétique est un peu perturbé en ce moment. Je vous prie de m'excuser. Pourriez-vous reformuler votre message ou me contacter directement au 09.55.55.44.62 pour que nous puissions échanger de vive voix ?" 
       }]);
     } finally {
       setLoading(false);
@@ -95,6 +103,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Posez votre question à Jean-François..."
             className="flex-1 bg-transparent border-none outline-none px-6 py-4 text-stone-800"
+            disabled={loading}
           />
           <button 
             onClick={handleSend}
@@ -111,7 +120,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
             className="group flex items-center gap-3 px-8 py-4 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold hover:bg-indigo-100 transition-all border border-indigo-100/50"
           >
             <HeartHandshake size={18} className="group-hover:scale-110 transition-transform" />
-            <span>Passer directement à la demande de soin (Photo & Identité)</span>
+            <span>Passer à la demande de soin (Photo)</span>
           </button>
         </div>
       </div>

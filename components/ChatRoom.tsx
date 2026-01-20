@@ -1,37 +1,40 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, HeartHandshake, AlertCircle } from 'lucide-react';
+import { Send, HeartHandshake, AlertCircle, Terminal } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'model';
   text: string;
+  isError?: boolean;
 }
 
-// Fonction utilitaire pour trouver la clé peu importe son nom
+// Fonction utilitaire robuste pour trouver la clé
 const getApiKey = (): string => {
-  // 1. Essai via process.env (compatibilité Create React App / Next.js)
+  let key = '';
+  
+  // 1. Essai via process.env
   if (typeof process !== 'undefined' && process.env) {
-    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
-    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
-    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
-    if (process.env.API_KEY) return process.env.API_KEY;
+    if (process.env.VITE_API_KEY) key = process.env.VITE_API_KEY;
+    else if (process.env.REACT_APP_API_KEY) key = process.env.REACT_APP_API_KEY;
+    else if (process.env.NEXT_PUBLIC_API_KEY) key = process.env.NEXT_PUBLIC_API_KEY;
+    else if (process.env.API_KEY) key = process.env.API_KEY;
   }
   
-  // 2. Essai via import.meta.env (compatibilité Vite standard)
-  try {
-    // @ts-ignore
-    if (typeof import.meta !== 'undefined' && import.meta.env) {
+  // 2. Essai via import.meta.env (Vite)
+  if (!key) {
+    try {
       // @ts-ignore
-      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
-      // @ts-ignore
-      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
-    }
-  } catch (e) {
-    // ignore errors
+      if (typeof import.meta !== 'undefined' && import.meta.env) {
+        // @ts-ignore
+        if (import.meta.env.VITE_API_KEY) key = import.meta.env.VITE_API_KEY;
+        // @ts-ignore
+        else if (import.meta.env.API_KEY) key = import.meta.env.API_KEY;
+      }
+    } catch (e) {}
   }
   
-  return '';
+  return key;
 };
 
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
@@ -42,7 +45,6 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Défilement automatique vers le bas à chaque nouveau message
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -61,21 +63,24 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     try {
       const apiKey = getApiKey();
       
-      // Si la clé est vide ou est le placeholder par défaut, on lance une erreur explicite
-      if (!apiKey || apiKey.includes("API_KEY")) {
-         throw new Error("MISSING_KEY");
+      // DIAGNOSTIC : On vérifie si la clé est trouvée
+      if (!apiKey) {
+         throw new Error("Clé API introuvable (Empty Key).");
+      }
+      if (apiKey.includes("API_KEY") && !apiKey.startsWith("AIza")) {
+         throw new Error("Clé API invalide (Placeholder détecté).");
       }
       
       const ai = new GoogleGenAI({ apiKey: apiKey });
       
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
-        contents: currentMessages.map(m => ({
+        contents: currentMessages.filter(m => !m.isError).map(m => ({
           role: m.role,
           parts: [{ text: m.text }]
         })),
         config: {
-          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante. Ne parle pas de technique informatique, reste dans ton rôle de guérisseur.",
+          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante.",
         },
       });
 
@@ -84,21 +89,33 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       if (responseText) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
-        throw new Error("Réponse vide");
+        throw new Error("Réponse de l'IA vide (Empty Response)");
       }
     } catch (error: any) {
       console.error("Erreur détaillée du Chat:", error);
       
-      let errorMessage = "Le lien énergétique est momentanément perturbé. Veuillez réessayer.";
+      // On affiche l'erreur technique exacte pour déboguer
+      const technicalError = error instanceof Error ? error.message : String(error);
       
-      // Message spécifique pour le problème de variable Vercel
-      if (error.message === "MISSING_KEY" || error.message?.includes('API key') || error.toString().includes('403')) {
-        errorMessage = "⚠️ PROBLÈME DE SÉCURITÉ VERCEL DÉTECTÉ\n\nVercel masque 'API_KEY' au site web par sécurité.\n\nSOLUTION :\n1. Sur Vercel, allez dans Settings > Environment Variables.\n2. Créez une nouvelle variable nommée 'VITE_API_KEY' avec votre clé.\n3. Redéployez le projet.";
+      let userMessage = "Le lien énergétique est momentanément perturbé.";
+      let detailMessage = technicalError;
+
+      // Traduction des erreurs courantes pour l'utilisateur
+      if (technicalError.includes('403') || technicalError.includes('API key')) {
+        userMessage = "⚠️ Erreur d'Authentification (Clé API)";
+        detailMessage = "La clé API est rejetée par Google. Vérifiez qu'elle est bien copiée dans Vercel (Settings > Env Vars) sous le nom 'VITE_API_KEY'.";
+      } else if (technicalError.includes('404') || technicalError.includes('not found')) {
+        userMessage = "⚠️ Modèle indisponible";
+        detailMessage = "Le modèle d'IA semble indisponible actuellement.";
+      } else if (technicalError.includes('fetch')) {
+         userMessage = "⚠️ Erreur de connexion";
+         detailMessage = "Impossible de joindre le serveur de Google. Vérifiez votre connexion internet.";
       }
 
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: errorMessage
+        text: `${userMessage}\n\n[Détail technique : ${detailMessage}]`,
+        isError: true
       }]);
     } finally {
       setLoading(false);
@@ -113,11 +130,11 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
             <div className={`max-w-[85%] md:max-w-[70%] p-6 rounded-[2rem] ${
               m.role === 'user' 
                 ? 'bg-stone-900 text-white rounded-tr-none shadow-xl' 
-                : m.text.includes('⚠️') 
-                  ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-tl-none font-medium'
+                : m.isError 
+                  ? 'bg-red-50 text-red-800 border border-red-200 rounded-tl-none font-medium'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.text.includes('⚠️') && <AlertCircle size={24} className="mb-3 text-amber-600" />}
+              {m.isError && <Terminal size={20} className="mb-2 text-red-600" />}
               <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>
@@ -143,7 +160,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Posez votre question à Jean-François..."
+            placeholder="Posez votre question..."
             className="flex-1 bg-transparent border-none outline-none px-6 py-4 text-stone-800"
             disabled={loading}
           />

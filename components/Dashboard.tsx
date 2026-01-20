@@ -3,24 +3,27 @@ import React, { useState, useEffect } from 'react';
 import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
-// Fonction utilitaire
+// Fonction utilitaire centralisée
 const getApiKey = (): string => {
+  let key = '';
   if (typeof process !== 'undefined' && process.env) {
-    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
-    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
-    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
-    if (process.env.API_KEY) return process.env.API_KEY;
+    if (process.env.VITE_API_KEY) key = process.env.VITE_API_KEY;
+    else if (process.env.REACT_APP_API_KEY) key = process.env.REACT_APP_API_KEY;
+    else if (process.env.NEXT_PUBLIC_API_KEY) key = process.env.NEXT_PUBLIC_API_KEY;
+    else if (process.env.API_KEY) key = process.env.API_KEY;
   }
-  try {
-    // @ts-ignore
-    if (typeof import.meta !== 'undefined' && import.meta.env) {
+  if (!key) {
+    try {
       // @ts-ignore
-      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
-      // @ts-ignore
-      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
-    }
-  } catch (e) {}
-  return '';
+      if (typeof import.meta !== 'undefined' && import.meta.env) {
+        // @ts-ignore
+        if (import.meta.env.VITE_API_KEY) key = import.meta.env.VITE_API_KEY;
+        // @ts-ignore
+        else if (import.meta.env.API_KEY) key = import.meta.env.API_KEY;
+      }
+    } catch (e) {}
+  }
+  return key;
 };
 
 const Dashboard: React.FC = () => {
@@ -38,8 +41,7 @@ const Dashboard: React.FC = () => {
       try {
         const apiKey = getApiKey();
         
-        // Vérification du statut de la clé pour le diagnostic
-        if (!apiKey || apiKey.includes("API_KEY")) {
+        if (!apiKey || (apiKey.includes("API_KEY") && !apiKey.startsWith("AIza"))) {
            setKeyStatus('missing');
            throw new Error("No API Key");
         } else {
@@ -147,7 +149,7 @@ const Dashboard: React.FC = () => {
               : 'bg-stone-50 text-stone-400 border-stone-100'
         }`}>
           {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté (Clé API Active)</>}
-          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API manquante (Ajoutez VITE_API_KEY sur Vercel)</>}
+          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API manquante ou invalide (Ajoutez VITE_API_KEY)</>}
           {keyStatus === 'checking' && <><Loader2 size={14} className="animate-spin" /> Vérification...</>}
         </div>
       </div>

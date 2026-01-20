@@ -29,21 +29,30 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      // Create a new GoogleGenAI instance right before making an API call to ensure it always uses the most up-to-date API key.
+      // Initialisation d'une nouvelle instance à chaque appel pour garantir la récupération de la clé API à jour
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
-      const response = await ai.models.generateContent({
+      // Utilisation de l'API Chat pour une meilleure gestion du contexte
+      const chat = ai.chats.create({
         model: 'gemini-3-flash-preview',
-        contents: userMsg,
         config: {
-          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante.",
+          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante. Ne parle pas de technique informatique, reste dans ton rôle de guérisseur.",
         },
       });
 
-      // Extract text from GenerateContentResponse using the .text property.
-      setMessages(prev => [...prev, { role: 'bot', text: response.text || "Je n'ai pas pu recevoir votre message par le souffle, réessayez s'il vous plaît." }]);
+      const response = await chat.sendMessage({ message: userMsg });
+
+      if (response && response.text) {
+        setMessages(prev => [...prev, { role: 'bot', text: response.text }]);
+      } else {
+        throw new Error("Réponse vide");
+      }
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'bot', text: "Le lien énergétique est perturbé. N'hésitez pas à m'appeler directement." }]);
+      console.error("Erreur Chat:", error);
+      setMessages(prev => [...prev, { 
+        role: 'bot', 
+        text: "Le lien énergétique est momentanément perturbé. Je vous prie de m'excuser. N'hésitez pas à me contacter directement par téléphone au 09.55.55.44.62 pour que nous puissions échanger de vive voix." 
+      }]);
     } finally {
       setLoading(false);
     }
@@ -71,7 +80,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
                 <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
                 <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
               </div>
-              Jean-François est à votre écoute...
+              Jean-François se connecte à votre message...
             </div>
           </div>
         )}
@@ -83,8 +92,8 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Écrivez votre message..."
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            placeholder="Posez votre question à Jean-François..."
             className="flex-1 bg-transparent border-none outline-none px-6 py-4 text-stone-800"
           />
           <button 

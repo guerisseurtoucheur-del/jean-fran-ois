@@ -156,7 +156,7 @@ const Dashboard: React.FC = () => {
               <div className="bg-white p-6 rounded-2xl border border-red-100 shadow-sm relative overflow-hidden">
                  <span className="absolute top-0 right-0 bg-red-100 text-red-600 px-3 py-1 rounded-bl-xl font-bold text-xs">ÉTAPE 3 (CRUCIAL)</span>
                  <p className="font-bold text-stone-800 mb-2">Redéployez !</p>
-                 <p className="text-stone-600">Pour que cela marche, il faut refaire un déploiement. Allez dans l'onglet <strong>Deployments</strong>, cliquez sur les 3 points à droite du dernier déploiement > <strong>Redeploy</strong>.</p>
+                 <p className="text-stone-600">Pour que cela marche, il faut refaire un déploiement. Allez dans l'onglet <strong>Deployments</strong>, cliquez sur les 3 points à droite du dernier déploiement &gt; <strong>Redeploy</strong>.</p>
               </div>
            </div>
         </div>

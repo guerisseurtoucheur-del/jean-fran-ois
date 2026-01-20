@@ -1,11 +1,32 @@
 
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle, Wind, User, Sparkles, Loader2 } from 'lucide-react';
+import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
+
+// Fonction utilitaire
+const getApiKey = (): string => {
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
+    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
+    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
+    if (process.env.API_KEY) return process.env.API_KEY;
+  }
+  try {
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
+      // @ts-ignore
+      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
+      // @ts-ignore
+      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
+    }
+  } catch (e) {}
+  return '';
+};
 
 const Dashboard: React.FC = () => {
   const [dailyWisdom, setDailyWisdom] = useState<string>('');
   const [loadingWisdom, setLoadingWisdom] = useState(true);
+  const [keyStatus, setKeyStatus] = useState<'checking' | 'ok' | 'missing'>('checking');
 
   const treatments = [
     { id: 1, type: 'Soin Zona', status: 'En cours', date: 'Aujourd\'hui', progress: 65 },
@@ -15,9 +36,15 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchWisdom = async () => {
       try {
-        const apiKey = process.env.API_KEY;
-        // Si pas de clé, on passe directement au bloc catch/finally via une exception simulée ou on met une valeur par défaut
-        if (!apiKey) throw new Error("No API Key");
+        const apiKey = getApiKey();
+        
+        // Vérification du statut de la clé pour le diagnostic
+        if (!apiKey || apiKey.includes("API_KEY")) {
+           setKeyStatus('missing');
+           throw new Error("No API Key");
+        } else {
+           setKeyStatus('ok');
+        }
 
         const ai = new GoogleGenAI({ apiKey: apiKey });
         const response = await ai.models.generateContent({
@@ -29,7 +56,6 @@ const Dashboard: React.FC = () => {
         });
         setDailyWisdom(response.text || "La lumière du souffle vous accompagne aujourd'hui.");
       } catch (err) {
-        // Fallback gracieux en cas d'erreur ou d'absence de clé
         setDailyWisdom("Votre énergie est votre plus belle alliée.");
       } finally {
         setLoadingWisdom(false);
@@ -109,6 +135,21 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Diagnostic Footer */}
+      <div className="border-t border-stone-100 pt-8 flex justify-center">
+        <div className={`px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 border ${
+          keyStatus === 'ok' 
+            ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
+            : keyStatus === 'missing'
+              ? 'bg-red-50 text-red-600 border-red-100'
+              : 'bg-stone-50 text-stone-400 border-stone-100'
+        }`}>
+          {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté (Clé API Active)</>}
+          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API manquante (Ajoutez VITE_API_KEY sur Vercel)</>}
+          {keyStatus === 'checking' && <><Loader2 size={14} className="animate-spin" /> Vérification...</>}
+        </div>
       </div>
     </div>
   );

@@ -8,6 +8,32 @@ interface Message {
   text: string;
 }
 
+// Fonction utilitaire pour trouver la clé peu importe son nom
+const getApiKey = (): string => {
+  // 1. Essai via process.env (compatibilité Create React App / Next.js)
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
+    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
+    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
+    if (process.env.API_KEY) return process.env.API_KEY;
+  }
+  
+  // 2. Essai via import.meta.env (compatibilité Vite standard)
+  try {
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
+      // @ts-ignore
+      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
+      // @ts-ignore
+      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
+    }
+  } catch (e) {
+    // ignore errors
+  }
+  
+  return '';
+};
+
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
   const [messages, setMessages] = useState<Message[]>([
     { role: 'model', text: 'Bonjour, je suis Jean-François. Posez-moi vos questions sur vos douleurs ou votre besoin de soin. Comment puis-je vous aider aujourd\'hui ?' }
@@ -33,9 +59,12 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      // On tente de récupérer la clé, mais on ne bloque pas si elle est absente pour l'instant
-      // Cela permet de ne pas crasher l'interface
-      const apiKey = process.env.API_KEY || '';
+      const apiKey = getApiKey();
+      
+      // Si la clé est vide ou est le placeholder par défaut, on lance une erreur explicite
+      if (!apiKey || apiKey.includes("API_KEY")) {
+         throw new Error("MISSING_KEY");
+      }
       
       const ai = new GoogleGenAI({ apiKey: apiKey });
       
@@ -60,12 +89,11 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     } catch (error: any) {
       console.error("Erreur détaillée du Chat:", error);
       
-      // Message d'erreur personnalisé selon le problème
       let errorMessage = "Le lien énergétique est momentanément perturbé. Veuillez réessayer.";
       
-      // Détection spécifique d'une erreur de clé API (400, 403 ou message explicite)
-      if (error.message?.includes('API key') || error.toString().includes('403') || !process.env.API_KEY) {
-        errorMessage = "⚠️ Configuration requise : La clé API n'est pas détectée.\n\n• Sur Vercel : Ajoutez 'API_KEY' dans les réglages et redéployez.\n• En local : Vérifiez votre fichier .env.";
+      // Message spécifique pour le problème de variable Vercel
+      if (error.message === "MISSING_KEY" || error.message?.includes('API key') || error.toString().includes('403')) {
+        errorMessage = "⚠️ PROBLÈME DE SÉCURITÉ VERCEL DÉTECTÉ\n\nVercel masque 'API_KEY' au site web par sécurité.\n\nSOLUTION :\n1. Sur Vercel, allez dans Settings > Environment Variables.\n2. Créez une nouvelle variable nommée 'VITE_API_KEY' avec votre clé.\n3. Redéployez le projet.";
       }
 
       setMessages(prev => [...prev, { 
@@ -86,10 +114,10 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
               m.role === 'user' 
                 ? 'bg-stone-900 text-white rounded-tr-none shadow-xl' 
                 : m.text.includes('⚠️') 
-                  ? 'bg-red-50 text-red-800 border border-red-100 rounded-tl-none font-medium'
+                  ? 'bg-amber-50 text-amber-900 border border-amber-200 rounded-tl-none font-medium'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.text.includes('⚠️') && <AlertCircle size={20} className="mb-2 text-red-600" />}
+              {m.text.includes('⚠️') && <AlertCircle size={24} className="mb-3 text-amber-600" />}
               <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>

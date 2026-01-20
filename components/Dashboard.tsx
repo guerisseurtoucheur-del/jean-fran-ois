@@ -41,9 +41,10 @@ const Dashboard: React.FC = () => {
       try {
         const apiKey = getApiKey();
         
-        if (!apiKey || (apiKey.includes("API_KEY") && !apiKey.startsWith("AIza"))) {
+        // Vérification stricte du format Google (AIza...)
+        if (!apiKey || !apiKey.startsWith("AIza")) {
            setKeyStatus('missing');
-           throw new Error("No API Key");
+           throw new Error("Invalid Key Format");
         } else {
            setKeyStatus('ok');
         }
@@ -149,7 +150,7 @@ const Dashboard: React.FC = () => {
               : 'bg-stone-50 text-stone-400 border-stone-100'
         }`}>
           {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté (Clé API Active)</>}
-          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API manquante ou invalide (Ajoutez VITE_API_KEY)</>}
+          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé invalide sur Vercel (Doit commencer par AIza...)</>}
           {keyStatus === 'checking' && <><Loader2 size={14} className="animate-spin" /> Vérification...</>}
         </div>
       </div>

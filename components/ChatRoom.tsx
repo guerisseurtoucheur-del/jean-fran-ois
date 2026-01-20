@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, HeartHandshake, AlertCircle, Terminal } from 'lucide-react';
+import { Send, HeartHandshake, AlertCircle, Terminal, Settings } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'model';
@@ -63,12 +63,9 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     try {
       const apiKey = getApiKey();
       
-      // DIAGNOSTIC : On vérifie si la clé est trouvée
-      if (!apiKey) {
-         throw new Error("Clé API introuvable (Empty Key).");
-      }
-      if (apiKey.includes("API_KEY") && !apiKey.startsWith("AIza")) {
-         throw new Error("Clé API invalide (Placeholder détecté).");
+      // VÉRIFICATION STRICTE : Une vraie clé Google commence TOUJOURS par "AIza"
+      if (!apiKey || !apiKey.startsWith("AIza")) {
+         throw new Error("INVALID_KEY_FORMAT");
       }
       
       const ai = new GoogleGenAI({ apiKey: apiKey });
@@ -89,32 +86,29 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       if (responseText) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
-        throw new Error("Réponse de l'IA vide (Empty Response)");
+        throw new Error("EMPTY_RESPONSE");
       }
     } catch (error: any) {
-      console.error("Erreur détaillée du Chat:", error);
+      console.error("Erreur Chat:", error);
       
-      // On affiche l'erreur technique exacte pour déboguer
       const technicalError = error instanceof Error ? error.message : String(error);
-      
-      let userMessage = "Le lien énergétique est momentanément perturbé.";
-      let detailMessage = technicalError;
+      let userMessage = "";
+      let isConfigError = false;
 
-      // Traduction des erreurs courantes pour l'utilisateur
-      if (technicalError.includes('403') || technicalError.includes('API key')) {
-        userMessage = "⚠️ Erreur d'Authentification (Clé API)";
-        detailMessage = "La clé API est rejetée par Google. Vérifiez qu'elle est bien copiée dans Vercel (Settings > Env Vars) sous le nom 'VITE_API_KEY'.";
-      } else if (technicalError.includes('404') || technicalError.includes('not found')) {
-        userMessage = "⚠️ Modèle indisponible";
-        detailMessage = "Le modèle d'IA semble indisponible actuellement.";
-      } else if (technicalError.includes('fetch')) {
-         userMessage = "⚠️ Erreur de connexion";
-         detailMessage = "Impossible de joindre le serveur de Google. Vérifiez votre connexion internet.";
+      // Gestion spécifique des erreurs pour guider l'utilisateur
+      if (technicalError === "INVALID_KEY_FORMAT") {
+        isConfigError = true;
+        userMessage = `🔴 ACTION REQUISE SUR VERCEL\n\nLe site ne trouve pas votre clé Google (elle doit commencer par "AIza").\n\n1. Allez sur Vercel > Settings > Environment Variables\n2. Ajoutez la clé : VITE_API_KEY\n3. Mettez votre clé commençant par "AIza..."\n4. Redéployez le projet.`;
+      } else if (technicalError.includes('403') || technicalError.includes('API key')) {
+        isConfigError = true;
+        userMessage = `⚠️ Clé API rejetée par Google.\nVérifiez qu'elle est bien copiée dans Vercel sans espaces.`;
+      } else {
+        userMessage = "Le lien énergétique est momentanément perturbé. Veuillez réessayer dans quelques instants.";
       }
 
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: `${userMessage}\n\n[Détail technique : ${detailMessage}]`,
+        text: userMessage,
         isError: true
       }]);
     } finally {
@@ -131,10 +125,10 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
               m.role === 'user' 
                 ? 'bg-stone-900 text-white rounded-tr-none shadow-xl' 
                 : m.isError 
-                  ? 'bg-red-50 text-red-800 border border-red-200 rounded-tl-none font-medium'
+                  ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none font-bold shadow-sm'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.isError && <Terminal size={20} className="mb-2 text-red-600" />}
+              {m.isError && <Settings size={24} className="mb-3 text-red-600" />}
               <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>

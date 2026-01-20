@@ -1,17 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle, RefreshCw, Terminal } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 // Fonction utilitaire centralisée
 const getApiKey = (): string => {
   let key = '';
+  // Vérification standard
   if (typeof process !== 'undefined' && process.env) {
     if (process.env.VITE_API_KEY) key = process.env.VITE_API_KEY;
     else if (process.env.REACT_APP_API_KEY) key = process.env.REACT_APP_API_KEY;
     else if (process.env.NEXT_PUBLIC_API_KEY) key = process.env.NEXT_PUBLIC_API_KEY;
     else if (process.env.API_KEY) key = process.env.API_KEY;
   }
+  // Vérification Vite (plus fiable pour Vercel)
   if (!key) {
     try {
       // @ts-ignore
@@ -31,17 +33,39 @@ const Dashboard: React.FC = () => {
   const [loadingWisdom, setLoadingWisdom] = useState(true);
   const [keyStatus, setKeyStatus] = useState<'checking' | 'ok' | 'missing'>('checking');
   const [testResult, setTestResult] = useState<string | null>(null);
+  
+  // États pour le diagnostic détaillé
+  const [diagInfo, setDiagInfo] = useState({
+    viteKeyFound: false,
+    stdKeyFound: false,
+    mode: 'unknown'
+  });
 
   const treatments = [
     { id: 1, type: 'Soin Zona', status: 'En cours', date: 'Aujourd\'hui', progress: 65 },
     { id: 2, type: 'Inflammation Dos', status: 'Terminé', date: 'Il y a 2 jours', progress: 100 },
   ];
 
+  useEffect(() => {
+    // Diagnostic au chargement
+    try {
+      // @ts-ignore
+      const vKey = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_KEY;
+      // @ts-ignore
+      const mode = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.MODE : 'unknown';
+      setDiagInfo({
+        viteKeyFound: !!vKey,
+        stdKeyFound: !!getApiKey(),
+        mode: mode
+      });
+    } catch(e) {}
+  }, []);
+
   const testConnection = async () => {
      setTestResult("Test en cours...");
      try {
        const key = getApiKey();
-       if (!key) throw new Error("Aucune clé trouvée");
+       if (!key) throw new Error("Aucune clé trouvée dans les variables.");
        
        const ai = new GoogleGenAI({ apiKey: key });
        await ai.models.generateContent({
@@ -59,7 +83,6 @@ const Dashboard: React.FC = () => {
       try {
         const apiKey = getApiKey();
         
-        // Pas de vérification stricte, on essaie juste
         if (!apiKey) {
            setKeyStatus('missing');
            setDailyWisdom("L'énergie est présente, connectez votre clé API pour recevoir le message.");
@@ -161,7 +184,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Diagnostic Footer */}
-      <div className="border-t border-stone-100 pt-8 flex flex-col items-center gap-4">
+      <div className="border-t border-stone-100 pt-8 flex flex-col items-center gap-6">
         <div className={`px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 border ${
           keyStatus === 'ok' 
             ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
@@ -186,6 +209,33 @@ const Dashboard: React.FC = () => {
               {testResult}
            </div>
         )}
+
+        {/* Panneau de Diagnostic Vercel */}
+        <div className="w-full max-w-md bg-stone-900 text-stone-300 p-6 rounded-2xl text-xs font-mono space-y-3 shadow-lg">
+          <div className="flex items-center gap-2 border-b border-stone-700 pb-2 mb-2">
+            <Terminal size={14} className="text-stone-400" />
+            <span className="font-bold text-white uppercase tracking-wider">Diagnostic Vercel</span>
+          </div>
+          
+          <div className="flex justify-between">
+             <span>VITE_API_KEY :</span>
+             <span className={diagInfo.viteKeyFound ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>
+               {diagInfo.viteKeyFound ? "✅ PRÉSENTE" : "❌ ABSENTE"}
+             </span>
+          </div>
+          
+          {!diagInfo.viteKeyFound && (
+             <p className="text-amber-400 mt-2 p-2 bg-amber-900/20 rounded border border-amber-900/50">
+               <strong>Action requise sur Vercel :</strong><br/>
+               Allez dans <em>Settings {'>'} Environment Variables</em> et ajoutez une clé nommée exactement <strong>VITE_API_KEY</strong>.
+             </p>
+          )}
+
+          <div className="pt-2 border-t border-stone-700 text-stone-500 flex justify-between">
+            <span>Environnement : {diagInfo.mode}</span>
+            <span>Statut global : {diagInfo.stdKeyFound ? "Opérationnel" : "Configuration requise"}</span>
+          </div>
+        </div>
       </div>
     </div>
   );

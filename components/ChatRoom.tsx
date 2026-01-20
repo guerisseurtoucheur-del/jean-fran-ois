@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, HeartHandshake, AlertCircle, Terminal, Settings } from 'lucide-react';
+import { Send, HeartHandshake, AlertCircle, Terminal, Settings, ArrowRight } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'model';
@@ -9,32 +9,28 @@ interface Message {
   isError?: boolean;
 }
 
-// Fonction utilitaire robuste pour trouver la clé
+// Fonction utilitaire robuste pour trouver la clé (Version optimisée)
 const getApiKey = (): string => {
-  let key = '';
-  
-  // 1. Essai via process.env
-  if (typeof process !== 'undefined' && process.env) {
-    if (process.env.VITE_API_KEY) key = process.env.VITE_API_KEY;
-    else if (process.env.REACT_APP_API_KEY) key = process.env.REACT_APP_API_KEY;
-    else if (process.env.NEXT_PUBLIC_API_KEY) key = process.env.NEXT_PUBLIC_API_KEY;
-    else if (process.env.API_KEY) key = process.env.API_KEY;
-  }
-  
-  // 2. Essai via import.meta.env (Vite)
-  if (!key) {
-    try {
+  // 1. Priorité Vite (standard React moderne)
+  try {
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
       // @ts-ignore
-      if (typeof import.meta !== 'undefined' && import.meta.env) {
-        // @ts-ignore
-        if (import.meta.env.VITE_API_KEY) key = import.meta.env.VITE_API_KEY;
-        // @ts-ignore
-        else if (import.meta.env.API_KEY) key = import.meta.env.API_KEY;
-      }
-    } catch (e) {}
+      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
+      // @ts-ignore
+      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
+    }
+  } catch (e) {}
+  
+  // 2. Fallback process.env
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
+    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
+    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
+    if (process.env.API_KEY) return process.env.API_KEY;
   }
   
-  return key;
+  return '';
 };
 
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
@@ -63,10 +59,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     try {
       const apiKey = getApiKey();
       
-      // MODIFICATION : Suppression de la vérification stricte "AIza".
-      // On laisse le SDK Google gérer la validation de la clé.
       if (!apiKey) {
-         // Si vraiment aucune clé n'est présente, on lève une erreur simple
          throw new Error("NO_API_KEY_FOUND");
       }
       
@@ -97,9 +90,9 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       let userMessage = "";
       
       if (technicalError === "NO_API_KEY_FOUND") {
-        userMessage = "⚠️ Aucune clé API détectée. Veuillez configurer VITE_API_KEY dans Vercel.";
+        userMessage = "⚠️ JE NE PEUX PAS RÉPONDRE (Problème de configuration Vercel).\n\nVotre site ne trouve pas la clé API. Veuillez aller dans l'onglet 'Mon Espace' pour voir comment corriger ce problème simple.";
       } else if (technicalError.includes('403') || technicalError.includes('API key')) {
-        userMessage = "⚠️ La clé API semble incorrecte (Erreur Google 403).";
+        userMessage = "⚠️ La clé API semble incorrecte. Vérifiez qu'elle est bien copiée sans espace.";
       } else {
         userMessage = "Le lien énergétique est momentanément perturbé. (Erreur technique)";
       }
@@ -126,7 +119,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
                   ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none font-bold shadow-sm'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.isError && <Settings size={24} className="mb-3 text-red-600" />}
+              {m.isError && <AlertCircle size={24} className="mb-3 text-red-600" />}
               <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>

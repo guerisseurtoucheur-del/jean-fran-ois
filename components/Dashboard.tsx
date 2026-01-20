@@ -1,31 +1,29 @@
 
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle, RefreshCw, Terminal } from 'lucide-react';
+import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle, RefreshCw, Terminal, ArrowRight, Settings } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
-// Fonction utilitaire centralisée
+// Fonction utilitaire centralisée et optimisée pour Vite/Vercel
 const getApiKey = (): string => {
-  let key = '';
-  // Vérification standard
-  if (typeof process !== 'undefined' && process.env) {
-    if (process.env.VITE_API_KEY) key = process.env.VITE_API_KEY;
-    else if (process.env.REACT_APP_API_KEY) key = process.env.REACT_APP_API_KEY;
-    else if (process.env.NEXT_PUBLIC_API_KEY) key = process.env.NEXT_PUBLIC_API_KEY;
-    else if (process.env.API_KEY) key = process.env.API_KEY;
-  }
-  // Vérification Vite (plus fiable pour Vercel)
-  if (!key) {
-    try {
+  // 1. Priorité absolue à Vite (import.meta.env)
+  try {
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
       // @ts-ignore
-      if (typeof import.meta !== 'undefined' && import.meta.env) {
-        // @ts-ignore
-        if (import.meta.env.VITE_API_KEY) key = import.meta.env.VITE_API_KEY;
-        // @ts-ignore
-        else if (import.meta.env.API_KEY) key = import.meta.env.API_KEY;
-      }
-    } catch (e) {}
+      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
+      // @ts-ignore
+      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
+    }
+  } catch (e) {}
+
+  // 2. Fallback process.env (Node/System)
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
+    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
+    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
+    if (process.env.API_KEY) return process.env.API_KEY;
   }
-  return key;
+  return '';
 };
 
 const Dashboard: React.FC = () => {
@@ -38,7 +36,7 @@ const Dashboard: React.FC = () => {
   const [diagInfo, setDiagInfo] = useState({
     viteKeyFound: false,
     stdKeyFound: false,
-    mode: 'unknown'
+    isVercel: false
   });
 
   const treatments = [
@@ -49,14 +47,14 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     // Diagnostic au chargement
     try {
+      const isVercel = window.location.hostname.includes('vercel.app');
       // @ts-ignore
       const vKey = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_KEY;
-      // @ts-ignore
-      const mode = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.MODE : 'unknown';
+      
       setDiagInfo({
         viteKeyFound: !!vKey,
         stdKeyFound: !!getApiKey(),
-        mode: mode
+        isVercel: isVercel
       });
     } catch(e) {}
   }, []);
@@ -85,7 +83,7 @@ const Dashboard: React.FC = () => {
         
         if (!apiKey) {
            setKeyStatus('missing');
-           setDailyWisdom("L'énergie est présente, connectez votre clé API pour recevoir le message.");
+           setDailyWisdom("⚠️ Configuration requise : La connexion énergétique (API) n'est pas établie.");
            setLoadingWisdom(false);
            return;
         } else {
@@ -111,17 +109,58 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto p-12 space-y-12 page-fade">
+    <div className="max-w-6xl mx-auto p-6 md:p-12 space-y-12 page-fade">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="space-y-2">
-          <h1 className="text-5xl font-serif font-bold">Bonjour.</h1>
-          <p className="text-stone-500">Voici l'historique de vos connexions énergétiques.</p>
+          <h1 className="text-4xl md:text-5xl font-serif font-bold">Bonjour.</h1>
+          <p className="text-stone-500">Espace de contrôle énergétique.</p>
         </div>
-        <div className="flex items-center gap-3 px-6 py-3 bg-indigo-50 rounded-full border border-indigo-100 text-indigo-600">
-          <Wind size={20} className="animate-pulse" />
-          <span className="text-sm font-bold uppercase tracking-widest">Énergie Active</span>
+        <div className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all ${
+           keyStatus === 'ok' 
+             ? 'bg-indigo-50 border-indigo-100 text-indigo-600'
+             : 'bg-red-50 border-red-100 text-red-600 animate-pulse'
+        }`}>
+          {keyStatus === 'ok' ? <Wind size={20} className="" /> : <AlertTriangle size={20} />}
+          <span className="text-sm font-bold uppercase tracking-widest">
+            {keyStatus === 'ok' ? 'Énergie Active' : 'Connexion Rompue'}
+          </span>
         </div>
       </div>
+
+      {/* Guide de dépannage Vercel - Visible seulement si la clé manque */}
+      {keyStatus === 'missing' && (
+        <div className="bg-red-50 border-2 border-red-100 rounded-[2rem] p-8 space-y-6 shadow-xl animate-in fade-in slide-in-from-top-4">
+           <div className="flex items-start gap-4">
+              <div className="p-3 bg-white rounded-full text-red-500 shadow-sm"><Settings size={24} /></div>
+              <div>
+                 <h2 className="text-2xl font-bold text-red-900">Ça ne marche pas sur Vercel ? C'est normal !</h2>
+                 <p className="text-red-700 mt-2">Vous devez ajouter votre Clé API dans les réglages de Vercel. Suivez ces étapes simples :</p>
+              </div>
+           </div>
+
+           <div className="grid md:grid-cols-3 gap-4 text-sm">
+              <div className="bg-white p-6 rounded-2xl border border-red-100 shadow-sm relative overflow-hidden">
+                 <span className="absolute top-0 right-0 bg-red-100 text-red-600 px-3 py-1 rounded-bl-xl font-bold text-xs">ÉTAPE 1</span>
+                 <p className="font-bold text-stone-800 mb-2">Allez sur Vercel.com</p>
+                 <p className="text-stone-600">Connectez-vous, cliquez sur votre projet, puis cliquez sur l'onglet <strong>Settings</strong> en haut.</p>
+              </div>
+              <div className="bg-white p-6 rounded-2xl border border-red-100 shadow-sm relative overflow-hidden">
+                 <span className="absolute top-0 right-0 bg-red-100 text-red-600 px-3 py-1 rounded-bl-xl font-bold text-xs">ÉTAPE 2</span>
+                 <p className="font-bold text-stone-800 mb-2">Environment Variables</p>
+                 <p className="text-stone-600">Dans le menu de gauche, choisissez <strong>Environment Variables</strong>. Ajoutez une nouvelle variable :</p>
+                 <ul className="mt-2 space-y-1 font-mono text-xs bg-stone-100 p-2 rounded">
+                    <li><strong>Key:</strong> VITE_API_KEY</li>
+                    <li><strong>Value:</strong> (Collez votre clé Google ici)</li>
+                 </ul>
+              </div>
+              <div className="bg-white p-6 rounded-2xl border border-red-100 shadow-sm relative overflow-hidden">
+                 <span className="absolute top-0 right-0 bg-red-100 text-red-600 px-3 py-1 rounded-bl-xl font-bold text-xs">ÉTAPE 3 (CRUCIAL)</span>
+                 <p className="font-bold text-stone-800 mb-2">Redéployez !</p>
+                 <p className="text-stone-600">Pour que cela marche, il faut refaire un déploiement. Allez dans l'onglet <strong>Deployments</strong>, cliquez sur les 3 points à droite du dernier déploiement > <strong>Redeploy</strong>.</p>
+              </div>
+           </div>
+        </div>
+      )}
 
       {/* Daily Wisdom Card */}
       <div className="relative p-10 bg-indigo-600 rounded-[3.5rem] text-white overflow-hidden shadow-2xl shadow-indigo-200">
@@ -189,7 +228,7 @@ const Dashboard: React.FC = () => {
           keyStatus === 'ok' 
             ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
             : keyStatus === 'missing'
-              ? 'bg-stone-50 text-stone-500 border-stone-100' 
+              ? 'bg-red-50 text-red-500 border-red-100' 
               : 'bg-stone-50 text-stone-400 border-stone-100'
         }`}>
           {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté</>}
@@ -201,7 +240,7 @@ const Dashboard: React.FC = () => {
            onClick={testConnection}
            className="text-xs text-indigo-600 underline flex items-center gap-2 hover:text-indigo-800"
         >
-           <RefreshCw size={12} /> Tester la connexion Vercel manuellement
+           <RefreshCw size={12} /> Tester la connexion Google manuellement
         </button>
         
         {testResult && (
@@ -210,30 +249,19 @@ const Dashboard: React.FC = () => {
            </div>
         )}
 
-        {/* Panneau de Diagnostic Vercel */}
-        <div className="w-full max-w-md bg-stone-900 text-stone-300 p-6 rounded-2xl text-xs font-mono space-y-3 shadow-lg">
-          <div className="flex items-center gap-2 border-b border-stone-700 pb-2 mb-2">
-            <Terminal size={14} className="text-stone-400" />
-            <span className="font-bold text-white uppercase tracking-wider">Diagnostic Vercel</span>
+        {/* Panneau de Diagnostic Technique Discret */}
+        <div className="w-full max-w-md bg-stone-100 text-stone-400 p-4 rounded-xl text-[10px] font-mono space-y-2 opacity-50 hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-2 border-b border-stone-200 pb-1 mb-1">
+            <Terminal size={10} />
+            <span className="font-bold uppercase">Debug Info</span>
           </div>
-          
           <div className="flex justify-between">
-             <span>VITE_API_KEY :</span>
-             <span className={diagInfo.viteKeyFound ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>
-               {diagInfo.viteKeyFound ? "✅ PRÉSENTE" : "❌ ABSENTE"}
-             </span>
+             <span>VITE_API_KEY Detectée ?</span>
+             <span>{diagInfo.viteKeyFound ? "OUI" : "NON"}</span>
           </div>
-          
-          {!diagInfo.viteKeyFound && (
-             <p className="text-amber-400 mt-2 p-2 bg-amber-900/20 rounded border border-amber-900/50">
-               <strong>Action requise sur Vercel :</strong><br/>
-               Allez dans <em>Settings {'>'} Environment Variables</em> et ajoutez une clé nommée exactement <strong>VITE_API_KEY</strong>.
-             </p>
-          )}
-
-          <div className="pt-2 border-t border-stone-700 text-stone-500 flex justify-between">
-            <span>Environnement : {diagInfo.mode}</span>
-            <span>Statut global : {diagInfo.stdKeyFound ? "Opérationnel" : "Configuration requise"}</span>
+          <div className="flex justify-between">
+             <span>Platforme :</span>
+             <span>{diagInfo.isVercel ? "Vercel / Cloud" : "Localhost / Autre"}</span>
           </div>
         </div>
       </div>

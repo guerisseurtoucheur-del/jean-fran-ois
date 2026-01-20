@@ -63,9 +63,11 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     try {
       const apiKey = getApiKey();
       
-      // VÉRIFICATION STRICTE : Une vraie clé Google commence TOUJOURS par "AIza"
-      if (!apiKey || !apiKey.startsWith("AIza")) {
-         throw new Error("INVALID_KEY_FORMAT");
+      // MODIFICATION : Suppression de la vérification stricte "AIza".
+      // On laisse le SDK Google gérer la validation de la clé.
+      if (!apiKey) {
+         // Si vraiment aucune clé n'est présente, on lève une erreur simple
+         throw new Error("NO_API_KEY_FOUND");
       }
       
       const ai = new GoogleGenAI({ apiKey: apiKey });
@@ -93,17 +95,13 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       
       const technicalError = error instanceof Error ? error.message : String(error);
       let userMessage = "";
-      let isConfigError = false;
-
-      // Gestion spécifique des erreurs pour guider l'utilisateur
-      if (technicalError === "INVALID_KEY_FORMAT") {
-        isConfigError = true;
-        userMessage = `🔴 ACTION REQUISE SUR VERCEL\n\nLe site ne trouve pas votre clé Google (elle doit commencer par "AIza").\n\n1. Allez sur Vercel > Settings > Environment Variables\n2. Ajoutez la clé : VITE_API_KEY\n3. Mettez votre clé commençant par "AIza..."\n4. Redéployez le projet.`;
+      
+      if (technicalError === "NO_API_KEY_FOUND") {
+        userMessage = "⚠️ Aucune clé API détectée. Veuillez configurer VITE_API_KEY dans Vercel.";
       } else if (technicalError.includes('403') || technicalError.includes('API key')) {
-        isConfigError = true;
-        userMessage = `⚠️ Clé API rejetée par Google.\nVérifiez qu'elle est bien copiée dans Vercel sans espaces.`;
+        userMessage = "⚠️ La clé API semble incorrecte (Erreur Google 403).";
       } else {
-        userMessage = "Le lien énergétique est momentanément perturbé. Veuillez réessayer dans quelques instants.";
+        userMessage = "Le lien énergétique est momentanément perturbé. (Erreur technique)";
       }
 
       setMessages(prev => [...prev, { 

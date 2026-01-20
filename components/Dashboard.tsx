@@ -41,10 +41,13 @@ const Dashboard: React.FC = () => {
       try {
         const apiKey = getApiKey();
         
-        // Vérification stricte du format Google (AIza...)
-        if (!apiKey || !apiKey.startsWith("AIza")) {
+        // MODIFICATION : Suppression de la vérification stricte.
+        if (!apiKey) {
            setKeyStatus('missing');
-           throw new Error("Invalid Key Format");
+           // Pas de throw ici pour ne pas bloquer tout le composant, on met juste un message par défaut.
+           setDailyWisdom("L'énergie est présente, connectez votre clé API pour recevoir le message.");
+           setLoadingWisdom(false);
+           return;
         } else {
            setKeyStatus('ok');
         }
@@ -146,11 +149,11 @@ const Dashboard: React.FC = () => {
           keyStatus === 'ok' 
             ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
             : keyStatus === 'missing'
-              ? 'bg-red-50 text-red-600 border-red-100'
+              ? 'bg-stone-50 text-stone-500 border-stone-100' // Moins alarmiste (gris au lieu de rouge)
               : 'bg-stone-50 text-stone-400 border-stone-100'
         }`}>
-          {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté (Clé API Active)</>}
-          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé invalide sur Vercel (Doit commencer par AIza...)</>}
+          {keyStatus === 'ok' && <><ShieldCheck size={14} /> Système Connecté</>}
+          {keyStatus === 'missing' && <><AlertTriangle size={14} /> Clé API non détectée (Mode restreint)</>}
           {keyStatus === 'checking' && <><Loader2 size={14} className="animate-spin" /> Vérification...</>}
         </div>
       </div>

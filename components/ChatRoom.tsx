@@ -26,19 +26,6 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
-    // Vérification de sécurité pour la clé API
-    // Sur Vercel, assurez-vous d'avoir ajouté API_KEY dans les Environment Variables
-    const apiKey = process.env.API_KEY;
-    if (!apiKey || apiKey.includes("API_KEY")) {
-      setMessages(prev => [...prev, { role: 'user', text: input }]);
-      setMessages(prev => [...prev, { 
-        role: 'model', 
-        text: "⚠️ CONFIGURATION VERCEL REQUISE : La clé API est manquante. \n1. Allez dans Settings > Environment Variables.\n2. Ajoutez 'API_KEY' avec votre clé.\n3. IMPORTANT : Allez dans 'Deployments' et faites 'Redeploy' pour valider le changement." 
-      }]);
-      setInput('');
-      return;
-    }
-
     const userMsg = input;
     setInput('');
     const currentMessages: Message[] = [...messages, { role: 'user', text: userMsg }];
@@ -46,10 +33,12 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      // Initialisation avec la clé d'environnement
+      // On tente de récupérer la clé, mais on ne bloque pas si elle est absente pour l'instant
+      // Cela permet de ne pas crasher l'interface
+      const apiKey = process.env.API_KEY || '';
+      
       const ai = new GoogleGenAI({ apiKey: apiKey });
       
-      // On envoie l'historique complet pour que Jean-François se souvienne du début de la conversation
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: currentMessages.map(m => ({
@@ -68,11 +57,20 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       } else {
         throw new Error("Réponse vide");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erreur détaillée du Chat:", error);
+      
+      // Message d'erreur personnalisé selon le problème
+      let errorMessage = "Le lien énergétique est momentanément perturbé. Veuillez réessayer.";
+      
+      // Détection spécifique d'une erreur de clé API (400, 403 ou message explicite)
+      if (error.message?.includes('API key') || error.toString().includes('403') || !process.env.API_KEY) {
+        errorMessage = "⚠️ Configuration requise : La clé API n'est pas détectée.\n\n• Sur Vercel : Ajoutez 'API_KEY' dans les réglages et redéployez.\n• En local : Vérifiez votre fichier .env.";
+      }
+
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Le lien énergétique est momentanément perturbé (Erreur technique). Veuillez vérifier votre connexion ou réessayer plus tard." 
+        text: errorMessage
       }]);
     } finally {
       setLoading(false);
@@ -88,10 +86,10 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
               m.role === 'user' 
                 ? 'bg-stone-900 text-white rounded-tr-none shadow-xl' 
                 : m.text.includes('⚠️') 
-                  ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-tl-none font-medium'
+                  ? 'bg-red-50 text-red-800 border border-red-100 rounded-tl-none font-medium'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.text.includes('⚠️') && <AlertCircle size={20} className="mb-2 text-amber-600" />}
+              {m.text.includes('⚠️') && <AlertCircle size={20} className="mb-2 text-red-600" />}
               <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>

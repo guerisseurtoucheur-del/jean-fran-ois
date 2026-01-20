@@ -14,15 +14,11 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const fetchWisdom = async () => {
-      // Protection si la clé API n'est pas encore configurée
-      const apiKey = process.env.API_KEY;
-      if (!apiKey || apiKey.includes("API_KEY")) {
-        setDailyWisdom("La lumière du souffle vous accompagne aujourd'hui.");
-        setLoadingWisdom(false);
-        return;
-      }
-
       try {
+        const apiKey = process.env.API_KEY;
+        // Si pas de clé, on passe directement au bloc catch/finally via une exception simulée ou on met une valeur par défaut
+        if (!apiKey) throw new Error("No API Key");
+
         const ai = new GoogleGenAI({ apiKey: apiKey });
         const response = await ai.models.generateContent({
           model: 'gemini-3-flash-preview',
@@ -33,6 +29,7 @@ const Dashboard: React.FC = () => {
         });
         setDailyWisdom(response.text || "La lumière du souffle vous accompagne aujourd'hui.");
       } catch (err) {
+        // Fallback gracieux en cas d'erreur ou d'absence de clé
         setDailyWisdom("Votre énergie est votre plus belle alliée.");
       } finally {
         setLoadingWisdom(false);

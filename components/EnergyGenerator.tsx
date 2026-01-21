@@ -16,10 +16,10 @@ const EnergyCalculator: React.FC = () => {
   const globalFrequency = Math.round((scores.physical + scores.emotional + scores.mental) / 3);
 
   const getFrequencyLabel = (freq: number) => {
-    if (freq < 30) return "Fréquence Basse - Besoin de régénération";
-    if (freq < 60) return "Fréquence Neutre - Équilibre à consolider";
-    if (freq < 85) return "Fréquence Harmonieuse - Flux fluide";
-    return "Fréquence Élevée - Rayonnement optimal";
+    if (freq < 30) return "Vitalité Basse - Besoin de repos";
+    if (freq < 60) return "Équilibre Moyen - À surveiller";
+    if (freq < 85) return "Bonne Vitalité - Énergie fluide";
+    return "Excellente Vitalité - État optimal";
   };
 
   const analyzeEnergy = async () => {
@@ -29,20 +29,21 @@ const EnergyCalculator: React.FC = () => {
 
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const prompt = `En tant que Jean-François, magnétiseur bienveillant, analyse ces scores énergétiques (sur 100) : 
+      // Modification du prompt pour un ton plus pragmatique et moins spirituel
+      const prompt = `En tant que Jean-François, magnétiseur pragmatique et bienveillant, analyse ces scores de vitalité sur 100 : 
       Physique: ${scores.physical}, Émotionnel: ${scores.emotional}, Mental: ${scores.mental}. 
-      Donne une lecture intuitive très courte (2-3 phrases) et un conseil spirituel pour remonter ou stabiliser la vibration. 
-      Utilise un ton apaisant et poétique.`;
+      Donne un constat concret sur l'état général et un conseil de bien-être pratique (repos, hydratation, grand air, déconnexion) pour améliorer ou maintenir ces scores. 
+      Reste simple, direct et terre-à-terre. Évite le langage trop mystique, ésotérique ou spirituel. Maximum 2 phrases.`;
 
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: prompt,
       });
 
-      setReading(response.text || "Le souffle de vie circule en vous. Prenez un instant pour respirer profondément.");
+      setReading(response.text || "Prenez simplement le temps de respirer et de vous reposer aujourd'hui.");
     } catch (err) {
       console.error("Erreur d'analyse:", err);
-      setError("Le canal énergétique est encombré. Fiez-vous à votre propre ressenti un instant.");
+      setError("Impossible d'analyser les données pour le moment.");
     } finally {
       setLoading(false);
     }
@@ -57,18 +58,17 @@ const EnergyCalculator: React.FC = () => {
           <div className="space-y-10">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 rounded-full text-indigo-600 text-[10px] font-bold uppercase tracking-widest">
-                <Activity size={14} /> Diagnostic Vibratoire
+                <Activity size={14} /> Diagnostic de Vitalité
               </div>
               <h2 className="text-5xl font-serif font-bold text-stone-900 leading-tight">
-                Calculez votre <span className="text-indigo-600 italic">état fréquentiel</span>
+                Calculez votre <span className="text-indigo-600 italic">état de forme</span>
               </h2>
               <p className="text-stone-500 text-lg leading-relaxed">
-                Le magnétisme agit sur vos différents corps. Découvrez votre signature vibratoire du moment.
+                Évaluez vos niveaux de fatigue et de stress pour obtenir un conseil adapté à votre état actuel.
               </p>
             </div>
 
             <div className="space-y-8">
-              {/* Phrase d'instruction ajoutée ici */}
               <div className="flex items-center gap-3 text-indigo-600/70 animate-bounce-subtle">
                 <ChevronDown size={18} />
                 <p className="text-sm font-medium italic">
@@ -96,7 +96,7 @@ const EnergyCalculator: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-600">
-                      <Heart size={14} className="text-rose-500" /> Paix Émotionnelle
+                      <Heart size={14} className="text-rose-500" /> Équilibre Émotionnel
                     </label>
                     <span className="text-indigo-600 font-serif font-bold">{scores.emotional}%</span>
                   </div>
@@ -111,7 +111,7 @@ const EnergyCalculator: React.FC = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-600">
-                      <Brain size={14} className="text-blue-500" /> Clarté Mentale
+                      <Brain size={14} className="text-blue-500" /> Charge Mentale
                     </label>
                     <span className="text-indigo-600 font-serif font-bold">{scores.mental}%</span>
                   </div>
@@ -128,7 +128,7 @@ const EnergyCalculator: React.FC = () => {
                   className="w-full py-5 bg-stone-900 text-white rounded-2xl font-bold text-lg hover:bg-black transition-all shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 mt-4"
                 >
                   {loading ? <Loader2 className="animate-spin" /> : <Sparkles size={20} />}
-                  {loading ? 'Analyse du souffle...' : 'Analyser mon énergie'}
+                  {loading ? 'Analyse en cours...' : 'Analyser ma vitalité'}
                 </button>
               </div>
             </div>
@@ -152,7 +152,7 @@ const EnergyCalculator: React.FC = () => {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-5xl font-serif font-bold text-stone-900">{globalFrequency}</span>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-stone-400">Hz/Vibe</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-stone-400">Indice</span>
                 </div>
                 {/* Aura pulsante */}
                 <div className="absolute inset-0 bg-indigo-400/20 rounded-full blur-2xl animate-pulse -z-10" style={{ transform: `scale(${1 + globalFrequency/200})` }}></div>
@@ -165,8 +165,8 @@ const EnergyCalculator: React.FC = () => {
                 
                 {reading ? (
                   <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                    <p className="text-xl font-serif italic text-stone-700 leading-relaxed">
-                      "{reading}"
+                    <p className="text-xl font-serif text-stone-700 leading-relaxed">
+                      {reading}
                     </p>
                     <div className="pt-8 flex justify-center">
                       <div className="h-px w-12 bg-stone-200"></div>
@@ -174,16 +174,16 @@ const EnergyCalculator: React.FC = () => {
                   </div>
                 ) : (
                   <p className="text-stone-400 italic">
-                    {loading ? "Jean-François se connecte à vos données..." : "Actionnez les réglages pour recevoir votre lecture intuitive."}
+                    {loading ? "Jean-François analyse vos réponses..." : "Actionnez les réglages pour recevoir un conseil personnalisé."}
                   </p>
                 )}
               </div>
 
               {reading && (
                 <div className="mt-10 animate-in fade-in duration-1000 delay-500">
-                   <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-4">Besoin d'un rééquilibrage ?</p>
+                   <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-4">Besoin d'un accompagnement ?</p>
                    <button className="flex items-center gap-2 text-indigo-600 font-bold hover:gap-4 transition-all group">
-                      Faire une demande de soin <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                      Demander un soin complet <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                    </button>
                 </div>
               )}

@@ -3,8 +3,9 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectFile } from "../types";
 
 export const analyzeProject = async (files: ProjectFile[]) => {
-  // Always use process.env.API_KEY directly and initialize a new instance before making an API call.
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Détection robuste de la clé API pour Vite/Vercel
+  const apiKey = (import.meta as any).env?.VITE_API_KEY || process.env.API_KEY || "";
+  const ai = new GoogleGenAI({ apiKey });
   
   const filesContext = files.map(f => `File: ${f.path}\nContent:\n${f.content}`).join('\n\n---\n\n');
   
@@ -40,7 +41,6 @@ export const analyzeProject = async (files: ProjectFile[]) => {
       }
     });
 
-    // Access the .text property directly.
     const jsonStr = response.text?.trim() || "{}";
     return JSON.parse(jsonStr);
   } catch (error) {

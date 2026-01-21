@@ -12,14 +12,24 @@ const Dashboard: React.FC = () => {
     { id: 2, type: 'Inflammation Dos', status: 'Terminé', date: 'Il y a 2 jours', progress: 100 },
   ];
 
+  const getApiKey = (): string => {
+    const viteEnv = (import.meta as any).env;
+    if (viteEnv?.VITE_API_KEY) return viteEnv.VITE_API_KEY;
+    if (viteEnv?.API_KEY) return viteEnv.API_KEY;
+    if (typeof process !== 'undefined' && process.env) {
+      if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
+      if (process.env.API_KEY) return process.env.API_KEY;
+    }
+    return "";
+  };
+
   useEffect(() => {
     const fetchWisdom = async () => {
       try {
-        // Utilisation de la clé API standard
-        const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY;
+        const apiKey = getApiKey();
         
         if (!apiKey) {
-           setDailyWisdom("L'énergie est présente. (Configuration de la clé requise sur Vercel)");
+           setDailyWisdom("L'énergie est présente. (Activez votre clé sur Vercel pour le message personnalisé)");
            setLoadingWisdom(false);
            return;
         }

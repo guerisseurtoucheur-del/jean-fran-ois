@@ -23,6 +23,23 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     }
   }, [messages, loading]);
 
+  const getApiKey = (): string => {
+    // 1. Cherche dans l'environnement Vite (standard Vercel/Vite)
+    const viteEnv = (import.meta as any).env;
+    if (viteEnv?.VITE_API_KEY) return viteEnv.VITE_API_KEY;
+    if (viteEnv?.API_KEY) return viteEnv.API_KEY;
+
+    // 2. Cherche dans process.env (Standard Node/Vercel)
+    if (typeof process !== 'undefined' && process.env) {
+      if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
+      if (process.env.API_KEY) return process.env.API_KEY;
+      if ((process.env as any).REACT_APP_API_KEY) return (process.env as any).REACT_APP_API_KEY;
+    }
+
+    // 3. Cherche dans les variables globales (Dernier recours)
+    return (window as any).VITE_API_KEY || (window as any).API_KEY || "";
+  };
+
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
@@ -33,11 +50,10 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      // Récupération robuste de la clé API
-      const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY;
+      const apiKey = getApiKey();
       
       if (!apiKey) {
-         throw new Error("Clé API introuvable. Veuillez la configurer sur Vercel.");
+         throw new Error("La clé de connexion est absente des réglages Vercel.");
       }
       
       const ai = new GoogleGenAI({ apiKey });
@@ -58,17 +74,17 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       if (responseText) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
-        throw new Error("Réponse vide du serveur.");
+        throw new Error("Réponse vide.");
       }
     } catch (error: any) {
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Le lien énergétique est momentanément perturbé. (Vérifiez la clé API sur Vercel si ce message persiste)",
+        text: "Le lien énergétique est momentanément perturbé sur Vercel. Assurez-vous d'avoir ajouté 'VITE_API_KEY' dans vos Environment Variables sur Vercel.",
         isError: true
       }]);
     } finally {
-      loading && setLoading(false);
+      setLoading(false);
     }
   };
 

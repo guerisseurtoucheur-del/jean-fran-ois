@@ -3,9 +3,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectFile } from "../types";
 
 export const analyzeProject = async (files: ProjectFile[]) => {
-  // Détection robuste de la clé API pour Vite/Vercel
-  const apiKey = (import.meta as any).env?.VITE_API_KEY || process.env.API_KEY || "";
-  const ai = new GoogleGenAI({ apiKey });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const filesContext = files.map(f => `File: ${f.path}\nContent:\n${f.content}`).join('\n\n---\n\n');
   

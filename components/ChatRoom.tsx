@@ -23,23 +23,6 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     }
   }, [messages, loading]);
 
-  const getApiKey = (): string => {
-    // 1. Cherche dans l'environnement Vite (standard Vercel/Vite)
-    const viteEnv = (import.meta as any).env;
-    if (viteEnv?.VITE_API_KEY) return viteEnv.VITE_API_KEY;
-    if (viteEnv?.API_KEY) return viteEnv.API_KEY;
-
-    // 2. Cherche dans process.env (Standard Node/Vercel)
-    if (typeof process !== 'undefined' && process.env) {
-      if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
-      if (process.env.API_KEY) return process.env.API_KEY;
-      if ((process.env as any).REACT_APP_API_KEY) return (process.env as any).REACT_APP_API_KEY;
-    }
-
-    // 3. Cherche dans les variables globales (Dernier recours)
-    return (window as any).VITE_API_KEY || (window as any).API_KEY || "";
-  };
-
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
@@ -50,20 +33,22 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const apiKey = getApiKey();
+      // Utilisation stricte de la variable d'environnement comme requis
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
-      if (!apiKey) {
-         throw new Error("La clé de connexion est absente des réglages Vercel.");
-      }
-      
-      const ai = new GoogleGenAI({ apiKey });
-      
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: currentMessages.filter(m => !m.isError).map(m => ({
+      // On prépare l'historique en commençant par le premier message utilisateur 
+      // pour garantir la compatibilité avec tous les environnements.
+      const conversationHistory = currentMessages
+        .filter(m => !m.isError)
+        .slice(1) // On ignore le message de bienvenue initial pour l'API
+        .map(m => ({
           role: m.role,
           parts: [{ text: m.text }]
-        })),
+        }));
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: conversationHistory,
         config: {
           systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante.",
         },
@@ -80,7 +65,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Le lien énergétique est momentanément perturbé sur Vercel. Assurez-vous d'avoir ajouté 'VITE_API_KEY' dans vos Environment Variables sur Vercel.",
+        text: "Le lien énergétique est momentanément perturbé. Si vous êtes sur Vercel, assurez-vous que la variable 'API_KEY' est bien renseignée dans vos paramètres.",
         isError: true
       }]);
     } finally {

@@ -33,14 +33,11 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      // Utilisation stricte de la variable d'environnement comme requis
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
-      // On prépare l'historique en commençant par le premier message utilisateur 
-      // pour garantir la compatibilité avec tous les environnements.
       const conversationHistory = currentMessages
         .filter(m => !m.isError)
-        .slice(1) // On ignore le message de bienvenue initial pour l'API
+        .slice(1) 
         .map(m => ({
           role: m.role,
           parts: [{ text: m.text }]
@@ -50,7 +47,8 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
         model: 'gemini-3-flash-preview',
         contents: conversationHistory,
         config: {
-          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante.",
+          temperature: 1.1, // Augmentation de la créativité pour des réponses variées
+          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. IMPORTANT : Ne réponds JAMAIS deux fois de la même manière. Varie tes tournures de phrases, ton vocabulaire et tes conseils. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante.",
         },
       });
 

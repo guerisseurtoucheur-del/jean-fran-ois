@@ -74,6 +74,7 @@ const App: React.FC = () => {
               <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center relative z-10">
                 <div className="space-y-10">
                   <div className="flex flex-col gap-4">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-stone-900 ml-1">Jean-François Magnétiseur Guérisseur</span>
                     <div className="inline-flex items-center gap-3 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-full w-fit">
                       <span className="flex h-2 w-2 rounded-full bg-indigo-600 animate-pulse"></span>
                       <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600">Soin à distance • Toute la France</span>

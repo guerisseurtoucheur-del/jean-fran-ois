@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard, Wind, Clock, Users } from 'lucide-react';
+import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard, Wind, Clock, Users, Mail, ArrowDown } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,13 +13,13 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
   const [currentTime, setCurrentTime] = useState(new Date());
   const [liveUsers, setLiveUsers] = useState(14);
 
-  // Horloge en temps réel
+  // Horloge en temps réel ultra-précise
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Simulation de fluctuation du compteur "En direct" (entre 12 et 19)
+  // Simulation de fluctuation du compteur "En direct"
   useEffect(() => {
     const interval = setInterval(() => {
       setLiveUsers(prev => {
@@ -53,39 +53,68 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
     second: '2-digit'
   });
 
+  const scrollToNav = () => {
+    const header = document.querySelector('header');
+    if (header) {
+      header.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Top Bar - Date, Heure et Live */}
-      <div className="bg-stone-900 text-white/70 py-2 px-6 text-[10px] font-bold uppercase tracking-[0.2em] flex flex-col md:flex-row justify-between items-center gap-2 z-[60]">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5">
-            <Clock size={12} className="text-indigo-400" />
-            <span>{formattedDate} — {formattedTime}</span>
-          </div>
+      {/* Top Bar - Contact, Date, Heure et Live */}
+      <div className="bg-stone-900 text-white/70 py-2.5 px-6 text-[10px] font-bold uppercase tracking-[0.2em] flex flex-col lg:flex-row justify-between items-center gap-4 z-[60] border-b border-white/5">
+        <div className="flex flex-wrap items-center justify-center gap-8">
+          <a href="tel:0955554462" className="flex items-center gap-2 hover:text-indigo-400 transition-colors">
+            <Phone size={12} className="text-indigo-400" />
+            <span>09.55.55.44.62</span>
+          </a>
+          <a href="mailto:guerisseurtoucheur@gmail.com" className="flex items-center gap-2 hover:text-indigo-400 transition-colors lowercase tracking-normal">
+            <Mail size={12} className="text-indigo-400" />
+            <span>guerisseurtoucheur@gmail.com</span>
+          </a>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full border border-white/5">
+
+        {/* Horloge précise et visible */}
+        <div className="hidden lg:flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-full border border-white/10 text-white shadow-sm">
+          <div className="relative flex h-2 w-2 mr-1">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+          </div>
+          <Clock size={12} className="text-indigo-400" />
+          <span className="font-mono tabular-nums">{formattedDate} — {formattedTime}</span>
+        </div>
+
+        <div className="flex items-center gap-6">
+          <button 
+            onClick={scrollToNav}
+            className="flex items-center gap-2 px-4 py-1.5 bg-white/5 rounded-full hover:bg-indigo-600 hover:text-white transition-all text-white border border-white/10 group"
+          >
+            <ArrowDown size={10} className="group-hover:translate-y-0.5 transition-transform" />
+            <span>Accéder au Menu</span>
+          </button>
+          
+          <div className="flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <Users size={12} className="text-emerald-400" />
-            <span className="text-white">{liveUsers} personnes en direct</span>
+            <span className="text-emerald-400">{liveUsers} en direct</span>
           </div>
         </div>
       </div>
 
-      <header className="fixed top-0 md:top-8 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-stone-100 shadow-sm">
+      <header className="fixed top-0 lg:top-12 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-stone-100 shadow-sm">
         <div className="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between gap-8">
           <div 
             className="flex flex-col cursor-pointer group shrink-0"
             onClick={() => setActiveTab('home')}
           >
-            <span className="text-2xl font-serif font-bold tracking-tight text-stone-900 group-hover:text-indigo-600 transition-colors">
+            <span className="text-2xl font-serif font-bold tracking-tight text-stone-900 group-hover:text-indigo-600 transition-colors leading-none">
               Jean-François
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-500 flex items-center gap-1">
-              <Globe size={10} /> Magnétiseur à distance
+            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-500 flex items-center gap-1 mt-1">
+              Magnétiseur Guérisseur
             </span>
           </div>
 
@@ -156,7 +185,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
         )}
       </header>
 
-      <main className="flex-1 pt-20 md:pt-32">
+      <main className="flex-1 pt-20 lg:pt-40">
         {children}
       </main>
 
@@ -175,7 +204,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             <h4 className="font-bold text-stone-200 uppercase text-xs tracking-widest">Mentions</h4>
             <p className="text-stone-500 text-sm italic">Le magnétisme ne se substitue pas à un avis médical. L'action à distance complète les soins traditionnels sans les remplacer.</p>
             <div className="pt-4 text-[10px] text-stone-600 uppercase tracking-widest font-bold">
-               Version 2.5 (Nav Optimisée)
+               Version 2.8 (Live Clock & Dynamic AI)
             </div>
           </div>
         </div>

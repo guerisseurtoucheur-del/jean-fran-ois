@@ -1,37 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, HeartHandshake, AlertCircle, Terminal, Settings, ArrowRight } from 'lucide-react';
+import { Send, HeartHandshake, AlertCircle } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'model';
   text: string;
   isError?: boolean;
 }
-
-// Fonction utilitaire robuste pour trouver la clé (Version optimisée)
-const getApiKey = (): string => {
-  // 1. Priorité Vite (standard React moderne)
-  try {
-    // @ts-ignore
-    if (typeof import.meta !== 'undefined' && import.meta.env) {
-      // @ts-ignore
-      if (import.meta.env.VITE_API_KEY) return import.meta.env.VITE_API_KEY;
-      // @ts-ignore
-      if (import.meta.env.API_KEY) return import.meta.env.API_KEY;
-    }
-  } catch (e) {}
-  
-  // 2. Fallback process.env
-  if (typeof process !== 'undefined' && process.env) {
-    if (process.env.VITE_API_KEY) return process.env.VITE_API_KEY;
-    if (process.env.REACT_APP_API_KEY) return process.env.REACT_APP_API_KEY;
-    if (process.env.NEXT_PUBLIC_API_KEY) return process.env.NEXT_PUBLIC_API_KEY;
-    if (process.env.API_KEY) return process.env.API_KEY;
-  }
-  
-  return '';
-};
 
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
   const [messages, setMessages] = useState<Message[]>([
@@ -57,13 +33,14 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const apiKey = getApiKey();
+      // Récupération robuste de la clé API
+      const apiKey = process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY;
       
       if (!apiKey) {
-         throw new Error("NO_API_KEY_FOUND");
+         throw new Error("Clé API introuvable. Veuillez la configurer sur Vercel.");
       }
       
-      const ai = new GoogleGenAI({ apiKey: apiKey });
+      const ai = new GoogleGenAI({ apiKey });
       
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
@@ -81,29 +58,17 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       if (responseText) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
-        throw new Error("EMPTY_RESPONSE");
+        throw new Error("Réponse vide du serveur.");
       }
     } catch (error: any) {
       console.error("Erreur Chat:", error);
-      
-      const technicalError = error instanceof Error ? error.message : String(error);
-      let userMessage = "";
-      
-      if (technicalError === "NO_API_KEY_FOUND") {
-        userMessage = "⚠️ JE NE PEUX PAS RÉPONDRE (Problème de configuration Vercel).\n\nVotre site ne trouve pas la clé API. Veuillez aller dans l'onglet 'Mon Espace' pour voir comment corriger ce problème simple.";
-      } else if (technicalError.includes('403') || technicalError.includes('API key')) {
-        userMessage = "⚠️ La clé API semble incorrecte. Vérifiez qu'elle est bien copiée sans espace.";
-      } else {
-        userMessage = "Le lien énergétique est momentanément perturbé. (Erreur technique)";
-      }
-
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: userMessage,
+        text: "Le lien énergétique est momentanément perturbé. (Vérifiez la clé API sur Vercel si ce message persiste)",
         isError: true
       }]);
     } finally {
-      setLoading(false);
+      loading && setLoading(false);
     }
   };
 
@@ -116,10 +81,10 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
               m.role === 'user' 
                 ? 'bg-stone-900 text-white rounded-tr-none shadow-xl' 
                 : m.isError 
-                  ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none font-bold shadow-sm'
+                  ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none shadow-sm'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.isError && <AlertCircle size={24} className="mb-3 text-red-600" />}
+              {m.isError && <AlertCircle size={20} className="mb-2 text-red-600" />}
               <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>
@@ -139,7 +104,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       </div>
 
       <div className="space-y-4">
-        <div className="flex gap-4 p-2 bg-white rounded-[2.5rem] items-center border border-stone-200 shadow-lg focus-within:border-indigo-400 focus-within:ring-4 focus-within:ring-indigo-50 transition-all">
+        <div className="flex gap-4 p-2 bg-white rounded-[2.5rem] items-center border border-stone-200 shadow-lg focus-within:border-indigo-400 transition-all">
           <input 
             type="text"
             value={input}
@@ -152,7 +117,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
           <button 
             onClick={handleSend}
             disabled={!input.trim() || loading}
-            className="p-4 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 disabled:opacity-30 disabled:grayscale"
+            className="p-4 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all shadow-lg disabled:opacity-30"
           >
             <Send size={20} />
           </button>
@@ -161,9 +126,9 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
         <div className="flex justify-center pt-2">
           <button 
             onClick={onStartHealing}
-            className="group flex items-center gap-3 px-8 py-4 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold hover:bg-indigo-100 transition-all border border-indigo-100/50"
+            className="flex items-center gap-3 px-8 py-4 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold hover:bg-indigo-100 transition-all border border-indigo-100/50"
           >
-            <HeartHandshake size={18} className="group-hover:scale-110 transition-transform" />
+            <HeartHandshake size={18} />
             <span>Passer à la demande de soin (Photo)</span>
           </button>
         </div>

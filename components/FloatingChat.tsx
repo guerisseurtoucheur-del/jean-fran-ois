@@ -40,7 +40,8 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
 
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const conversationHistory = newMessages.map(m => ({
+      // Fix: Ensure history starts with 'user' role by slicing off the first greeting from 'model'
+      const conversationHistory = newMessages.slice(1).map(m => ({
         role: m.role,
         parts: [{ text: m.text }]
       }));

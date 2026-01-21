@@ -6,7 +6,7 @@ import HealingRequest from './components/HealingRequest.tsx';
 import Dashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
 import BreathingTool from './components/BreathingTool.tsx';
-import EnergyGenerator from './components/EnergyGenerator.tsx';
+import EnergyCalculator from './components/EnergyGenerator.tsx'; // Importé depuis le même fichier renommé logiquement
 import FloatingChat from './components/FloatingChat.tsx';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users } from 'lucide-react';
 
@@ -155,8 +155,8 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Energy Generator (AI Driven) */}
-            <EnergyGenerator />
+            {/* Calculateur d'Énergie */}
+            <EnergyCalculator />
 
             {/* FAQ Section */}
             <section className="py-32 bg-stone-50">

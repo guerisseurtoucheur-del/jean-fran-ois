@@ -255,4 +255,66 @@ const EnergyCalculator: React.FC = () => {
             </div>
 
             {/* Décoration arrière plan supplémentaire */}
-            <div className="absolute -z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-radial-gradient from-indigo-50/20 to-transparent blur-[120px
+            <div className="absolute -z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-radial-gradient from-indigo-50/20 to-transparent blur-[120px] rounded-full pointer-events-none"></div>
+          </div>
+
+        </div>
+      </div>
+      
+      <style>{`
+        .custom-range::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 32px;
+          height: 32px;
+          background: white;
+          border: 4px solid #6366f1;
+          border-radius: 50%;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+          transition: all 0.2s ease;
+        }
+        .custom-range::-webkit-slider-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        .custom-range::-webkit-slider-thumb:active {
+          transform: scale(0.95);
+          background: #6366f1;
+          border-color: white;
+        }
+        .custom-range::-moz-range-thumb {
+          width: 32px;
+          height: 32px;
+          background: white;
+          border: 4px solid #6366f1;
+          border-radius: 50%;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+          transition: all 0.2s ease;
+        }
+        @keyframes float-energy {
+          0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+          20% { opacity: 0.8; }
+          80% { opacity: 0.8; }
+          100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+        }
+        .animate-float-energy {
+          animation: float-energy infinite ease-in-out;
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 4s infinite ease-in-out;
+        }
+        .bg-radial-gradient {
+          background: radial-gradient(circle, var(--tw-gradient-from), var(--tw-gradient-to));
+        }
+      `}</style>
+    </section>
+  );
+};
+
+export default EnergyCalculator;

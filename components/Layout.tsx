@@ -54,9 +54,11 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
   });
 
   const scrollToNav = () => {
-    const header = document.querySelector('header');
-    if (header) {
-      header.scrollIntoView({ behavior: 'smooth' });
+    // Le header étant fixe, scrollIntoView sur l'élément lui-même peut ne pas fonctionner.
+    // On défile vers le haut de la page et on active le menu mobile pour plus de clarté sur smartphone.
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.innerWidth < 1280) {
+      setIsMenuOpen(true);
     }
   };
 
@@ -107,15 +109,24 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
       <header className="fixed top-0 lg:top-12 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-stone-100 shadow-sm">
         <div className="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between gap-8">
           <div 
-            className="flex flex-col cursor-pointer group shrink-0"
+            className="flex items-center gap-5 cursor-pointer group shrink-0"
             onClick={() => setActiveTab('home')}
           >
-            <span className="text-2xl font-serif font-bold tracking-tight text-stone-900 group-hover:text-indigo-600 transition-colors leading-none">
-              Jean-François
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-500 flex items-center gap-1 mt-1">
-              Magnétiseur Guérisseur
-            </span>
+            <div className="flex flex-col">
+              <span className="text-2xl font-serif font-bold tracking-tight text-stone-900 group-hover:text-indigo-600 transition-colors leading-none">
+                Jean-François
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-indigo-500 flex items-center gap-1 mt-1">
+                Magnétiseur Guérisseur
+              </span>
+            </div>
+            
+            <div className="h-8 w-px bg-stone-100 hidden sm:block"></div>
+            
+            <a href="tel:0955554462" className="hidden sm:flex flex-col group/tel">
+              <span className="text-[9px] uppercase tracking-widest font-bold text-stone-400 group-hover/tel:text-indigo-500 transition-colors">Appelez-moi</span>
+              <span className="text-base font-bold text-stone-900 group-hover/tel:text-indigo-600 transition-colors">09.55.55.44.62</span>
+            </a>
           </div>
 
           <nav className="hidden xl:flex items-center gap-1 justify-center flex-1">

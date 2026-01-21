@@ -8,7 +8,7 @@ import Payment from './components/Payment.tsx';
 import BreathingTool from './components/BreathingTool.tsx';
 import EnergyCalculator from './components/EnergyGenerator.tsx'; // Importé depuis le même fichier renommé logiquement
 import FloatingChat from './components/FloatingChat.tsx';
-import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users } from 'lucide-react';
+import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users, Clock } from 'lucide-react';
 
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +35,12 @@ const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, ans
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [visitorCount, setVisitorCount] = useState(8530);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -55,6 +61,19 @@ const App: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [activeTab]);
+
+  const formattedDate = currentTime.toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  const formattedTime = currentTime.toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
 
   const renderContent = () => {
     switch (activeTab) {
@@ -105,8 +124,25 @@ const App: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                <div className="relative hidden md:block">
-                  <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-inner relative group border-8 border-stone-50">
+                
+                <div className="relative hidden md:flex flex-col items-center">
+                  {/* Horloge Temps Réel au-dessus de la Terre */}
+                  <div className="mb-8 flex flex-col items-center animate-in fade-in slide-in-from-top-4 duration-1000">
+                    <div className="flex items-center gap-3 bg-stone-50 border border-stone-100 px-6 py-3 rounded-full shadow-sm">
+                      <div className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                      </div>
+                      <Clock size={16} className="text-indigo-600" />
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-stone-900 font-mono font-bold text-lg tabular-nums">{formattedTime}</span>
+                        <span className="text-stone-400 text-[10px] font-bold uppercase tracking-widest">{formattedDate}</span>
+                      </div>
+                    </div>
+                    <div className="w-px h-8 bg-gradient-to-b from-stone-200 to-transparent mt-2"></div>
+                  </div>
+
+                  <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-inner relative group border-8 border-stone-50 w-full">
                     <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" alt="Énergie cosmique tournant autour de la terre" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-stone-900/10 to-transparent"></div>
                     <div className="absolute bottom-12 left-12 right-12 p-8 bg-white/95 backdrop-blur-md rounded-3xl border border-white shadow-2xl">
@@ -185,37 +221,6 @@ const App: React.FC = () => {
                   />
                 </div>
               </div>
-            </section>
-
-            {/* Journal de l'énergie (Blog) */}
-            <section className="py-32 bg-white overflow-hidden">
-               <div className="max-w-7xl mx-auto px-6">
-                 <div className="flex justify-between items-end mb-16">
-                    <div className="space-y-4">
-                       <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 rounded-lg text-indigo-600 text-[10px] font-bold uppercase tracking-widest">
-                         <BookOpen size={12} /> Savoir & Bien-être
-                       </div>
-                       <h2 className="text-5xl font-serif font-bold">Conseils du Journal</h2>
-                    </div>
-                    <p className="text-stone-400 hidden md:block max-w-xs text-right italic">Petits guides pour entretenir votre vibration au quotidien.</p>
-                 </div>
-                 <div className="grid md:grid-cols-2 gap-8">
-                    <div className="group cursor-pointer">
-                      <div className="aspect-video rounded-[3rem] overflow-hidden mb-6 bg-stone-100">
-                        <img src="https://images.unsplash.com/photo-1528319725582-ddc0b6131f48?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Transmission d'énergie" />
-                      </div>
-                      <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-indigo-600 transition-colors">5 minutes pour calmer le feu intérieur</h3>
-                      <p className="text-stone-500 leading-relaxed">Apprenez une technique de respiration simple pour apaiser les inflammations avant un soin...</p>
-                    </div>
-                    <div className="group cursor-pointer">
-                      <div className="aspect-video rounded-[3rem] overflow-hidden mb-6 bg-stone-100">
-                        <img src="https://images.unsplash.com/photo-1600618528240-fb9fe964b853?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Flux énergétique vital" />
-                      </div>
-                      <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-indigo-600 transition-colors">Sommeil et Énergie : le lien invisible</h3>
-                      <p className="text-stone-500 leading-relaxed">Pourquoi la régénération énergétique est-elle plus forte entre 22h et 2h du matin ?</p>
-                    </div>
-                 </div>
-               </div>
             </section>
 
             {/* City Grid SEO */}

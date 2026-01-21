@@ -165,7 +165,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
               <defs>
                 <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
               </defs>
-              <text className="text-[7.5px] font-bold uppercase tracking-[0.25em] fill-indigo-500/60">
+              <text className="text-[7.5px] font-bold uppercase tracking-[0.25em] fill-black">
                 <textPath xlinkHref="#circlePath">
                   Posez vos questions • Magnétisme à distance •
                 </textPath>

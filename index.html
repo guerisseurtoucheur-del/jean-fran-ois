@@ -42,16 +42,12 @@
         .btn-glow:hover { box-shadow: 0 0 25px rgba(79, 70, 229, 0.4); }
     </style>
     <script>
-        // Définition préventive de process pour éviter les erreurs ReferenceError dans le navigateur
-        window.process = {
-          env: {
-            NODE_ENV: 'production',
-            API_KEY: ''
-          },
-          cwd: function() { return '/'; },
-          version: 'v20.0.0',
-          platform: 'browser'
-        };
+        // Polyfill robuste pour process.env dans le navigateur
+        // Cela empêche l'écran blanc si le code accède à process avant que Vite ne l'ait remplacé
+        window.process = window.process || {};
+        window.process.env = window.process.env || {};
+        window.process.env.NODE_ENV = 'production';
+        window.process.cwd = function() { return '/' };
     </script>
 </head>
 <body class="bg-white text-stone-900">

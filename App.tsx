@@ -84,10 +84,10 @@ const App: React.FC = () => {
                     </div>
                   </div>
 
-                  <h1 className="text-7xl md:text-[90px] font-serif font-bold text-stone-900 leading-[0.85] tracking-tight">
-                    Le magnétisme <br/>
-                    <span className="text-indigo-600 italic font-normal">sans frontières</span><br/>
-                    ni limites.
+                  <h1 className="text-6xl md:text-[80px] font-serif font-bold text-stone-900 leading-[0.9] tracking-tight">
+                    La vibration du souffle <br/>
+                    <span className="text-indigo-600 italic font-normal">embrasse le monde</span><br/>
+                    pour vous atteindre.
                   </h1>
                   <p className="text-xl text-stone-600 font-light max-w-lg leading-relaxed">
                     Je m'appelle Jean-François. J'utilise la force du magnétisme pour soulager vos maux, <strong>peu importe où vous vous trouvez sur la planète.</strong>
@@ -105,12 +105,12 @@ const App: React.FC = () => {
                 </div>
                 <div className="relative hidden md:block">
                   <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-inner relative group border-8 border-stone-50">
-                    <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1200" alt="Énergie tournant autour de la terre" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-stone-900/20 to-transparent"></div>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" alt="Énergie cosmique tournant autour de la terre" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-stone-900/10 to-transparent"></div>
                     <div className="absolute bottom-12 left-12 right-12 p-8 bg-white/95 backdrop-blur-md rounded-3xl border border-white shadow-2xl">
                       <div className="flex items-center gap-2 mb-3">
                         <Globe size={16} className="text-indigo-600" />
-                        <p className="text-stone-400 text-[10px] uppercase font-bold tracking-widest">Action Globale</p>
+                        <p className="text-stone-400 text-[10px] uppercase font-bold tracking-widest">Action Universelle</p>
                       </div>
                       <h3 className="text-2xl font-serif font-bold text-stone-800 italic leading-snug">"La puissance du magnétisme transcende l'espace et le temps."</h3>
                     </div>

@@ -6,8 +6,9 @@ import HealingRequest from './components/HealingRequest.tsx';
 import Dashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
 import BreathingTool from './components/BreathingTool.tsx';
-import EnergyCalculator from './components/EnergyGenerator.tsx'; // Importé depuis le même fichier renommé logiquement
+import EnergyCalculator from './components/EnergyGenerator.tsx';
 import FloatingChat from './components/FloatingChat.tsx';
+import AdminDashboard from './components/AdminDashboard.tsx';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users, Clock } from 'lucide-react';
 
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
@@ -50,7 +51,8 @@ const App: React.FC = () => {
       healing: "Demande de soin sur photo | Magnétisme à distance",
       'soin-express': "Soin Express par le Souffle | Jean-François",
       payment: "Règlement & Participation | Jean-François",
-      dashboard: "Mon Espace Énergétique | Jean-François"
+      dashboard: "Mon Espace Énergétique | Jean-François",
+      admin: "Espace Privé Administrateur | Jean-François"
     };
     document.title = titles[activeTab] || "Jean-François Magnétiseur";
     
@@ -82,6 +84,7 @@ const App: React.FC = () => {
       case 'soin-express': return <BreathingTool />;
       case 'payment': return <Payment />;
       case 'dashboard': return <Dashboard />;
+      case 'admin': return <AdminDashboard />;
       default:
         return (
           <div className="page-fade">
@@ -96,7 +99,7 @@ const App: React.FC = () => {
                     <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-stone-900 ml-1">Jean-François Magnétiseur Guérisseur</span>
                     <div className="inline-flex items-center gap-3 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-full w-fit">
                       <span className="flex h-2 w-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                      <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600">Soin à distance • Toute la France</span>
+                      <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-indigo-600">Soin à distance & Sur place à Alençon</span>
                     </div>
                     
                     <div className="flex items-center gap-3 text-stone-400 text-xs font-medium">

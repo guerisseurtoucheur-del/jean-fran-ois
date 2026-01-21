@@ -18,6 +18,26 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     photoFile: null as File | null
   });
 
+  const saveToAdminDatabase = () => {
+    try {
+      const saved = localStorage.getItem('jf_admin_requests');
+      const requests = saved ? JSON.parse(saved) : [];
+      const newRequest = {
+        id: Date.now().toString(),
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        explanation: formData.explanation,
+        date: new Date().toLocaleString('fr-FR'),
+        status: 'pending'
+      };
+      localStorage.setItem('jf_admin_requests', JSON.stringify([newRequest, ...requests]));
+    } catch (e) {
+      console.error("Erreur sauvegarde locale admin:", e);
+    }
+  };
+
   const compressImage = (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -111,6 +131,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       });
 
       if (response.ok) {
+        saveToAdminDatabase(); // Enregistrement pour l'espace admin privé
         setLoading(false);
         setStep(3);
       } else {

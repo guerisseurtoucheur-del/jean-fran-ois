@@ -6,6 +6,7 @@ import HealingRequest from './components/HealingRequest.tsx';
 import Dashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
 import BreathingTool from './components/BreathingTool.tsx';
+import EnergyGenerator from './components/EnergyGenerator.tsx';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users } from 'lucide-react';
 
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
@@ -37,7 +38,7 @@ const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const titles: Record<string, string> = {
-      home: "Jean-François | Magnétiseur Guérisseur à Distance",
+      home: "Jean-François | Magnétiseur Guérisseur à Distance Toute France",
       chat: "Posez vos questions | Jean-François Magnétiseur",
       healing: "Demande de soin sur photo | Magnétisme à distance",
       'soin-express': "Soin Express par le Souffle | Jean-François",
@@ -84,12 +85,12 @@ const App: React.FC = () => {
                   </div>
 
                   <h1 className="text-7xl md:text-[90px] font-serif font-bold text-stone-900 leading-[0.85] tracking-tight">
-                    L'énergie <br/>
+                    Le magnétisme <br/>
                     <span className="text-indigo-600 italic font-normal">sans frontières</span><br/>
                     ni limites.
                   </h1>
                   <p className="text-xl text-stone-600 font-light max-w-lg leading-relaxed">
-                    Je m'appelle Jean-François. J'utilise mon souffle et le magnétisme pour soulager vos maux, <strong>peu importe où vous vous trouvez en France.</strong>
+                    Je m'appelle Jean-François. J'utilise la force du magnétisme pour soulager vos maux, <strong>peu importe où vous vous trouvez sur la planète.</strong>
                   </p>
                   <div className="flex flex-col sm:flex-row gap-5 pt-4">
                     <button onClick={() => setActiveTab('healing')} className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all btn-glow flex items-center justify-center gap-3 group shadow-xl shadow-indigo-100">
@@ -104,14 +105,14 @@ const App: React.FC = () => {
                 </div>
                 <div className="relative hidden md:block">
                   <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-inner relative group border-8 border-stone-50">
-                    <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=1200" alt="Énergie Vibratoire" className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 scale-110 group-hover:scale-100" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
+                    <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1200" alt="Énergie tournant autour de la terre" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white via-stone-900/20 to-transparent"></div>
                     <div className="absolute bottom-12 left-12 right-12 p-8 bg-white/95 backdrop-blur-md rounded-3xl border border-white shadow-2xl">
                       <div className="flex items-center gap-2 mb-3">
                         <Globe size={16} className="text-indigo-600" />
-                        <p className="text-stone-400 text-[10px] uppercase font-bold tracking-widest">Action Nationale</p>
+                        <p className="text-stone-400 text-[10px] uppercase font-bold tracking-widest">Action Globale</p>
                       </div>
-                      <h3 className="text-2xl font-serif font-bold text-stone-800 italic leading-snug">"La distance n'altère pas la force du souffle."</h3>
+                      <h3 className="text-2xl font-serif font-bold text-stone-800 italic leading-snug">"La puissance du magnétisme transcende l'espace et le temps."</h3>
                     </div>
                   </div>
                 </div>
@@ -150,6 +151,9 @@ const App: React.FC = () => {
                 </div>
               </div>
             </section>
+
+            {/* Energy Generator (AI Driven) */}
+            <EnergyGenerator />
 
             {/* FAQ Section */}
             <section className="py-32 bg-stone-50">
@@ -194,14 +198,14 @@ const App: React.FC = () => {
                  <div className="grid md:grid-cols-2 gap-8">
                     <div className="group cursor-pointer">
                       <div className="aspect-video rounded-[3rem] overflow-hidden mb-6 bg-stone-100">
-                        <img src="https://images.unsplash.com/photo-1536640712247-2121b6a4a9cf?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Énergie Lumineuse" />
+                        <img src="https://images.unsplash.com/photo-1528319725582-ddc0b6131f48?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Transmission d'énergie" />
                       </div>
                       <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-indigo-600 transition-colors">5 minutes pour calmer le feu intérieur</h3>
                       <p className="text-stone-500 leading-relaxed">Apprenez une technique de respiration simple pour apaiser les inflammations avant un soin...</p>
                     </div>
                     <div className="group cursor-pointer">
                       <div className="aspect-video rounded-[3rem] overflow-hidden mb-6 bg-stone-100">
-                        <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Sérénité vibratoire" />
+                        <img src="https://images.unsplash.com/photo-1600618528240-fb9fe964b853?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Flux énergétique vital" />
                       </div>
                       <h3 className="text-2xl font-serif font-bold mb-3 group-hover:text-indigo-600 transition-colors">Sommeil et Énergie : le lien invisible</h3>
                       <p className="text-stone-500 leading-relaxed">Pourquoi la régénération énergétique est-elle plus forte entre 22h et 2h du matin ?</p>

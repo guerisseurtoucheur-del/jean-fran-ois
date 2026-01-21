@@ -70,10 +70,10 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[999] flex flex-col items-end pointer-events-none">
       {/* Fenêtre de Chat */}
       {isOpen && (
-        <div className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-[2.5rem] shadow-2xl border border-stone-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300">
+        <div className="mb-4 w-[calc(100vw-32px)] sm:w-[400px] h-[500px] max-h-[70vh] bg-white rounded-[2.5rem] shadow-2xl border border-stone-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300 pointer-events-auto">
           {/* Header */}
           <div className="p-6 bg-stone-900 text-white flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -158,14 +158,14 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
       )}
 
       {/* Bulle Flottante avec Texte Rotatif */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center pointer-events-auto">
         {!isOpen && (
-          <div className="absolute inset-0 -m-8 flex items-center justify-center pointer-events-none">
-            <svg className="w-32 h-32 animate-[spin_12s_linear_infinite]" viewBox="0 0 100 100">
+          <div className="absolute inset-0 -m-6 md:-m-8 flex items-center justify-center pointer-events-none overflow-visible">
+            <svg className="w-28 h-28 md:w-32 md:h-32 animate-[spin_12s_linear_infinite]" viewBox="0 0 100 100">
               <defs>
                 <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
               </defs>
-              <text className="text-[7.5px] font-bold uppercase tracking-[0.25em] fill-black">
+              <text className="text-[7px] md:text-[7.5px] font-bold uppercase tracking-[0.25em] fill-indigo-600">
                 <textPath xlinkHref="#circlePath">
                   Posez vos questions • Magnétisme à distance •
                 </textPath>
@@ -176,16 +176,16 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
 
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 z-10 ${
+          className={`relative w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 z-10 ${
             isOpen ? 'bg-stone-900 text-white rotate-90' : 'bg-indigo-600 text-white btn-glow'
           }`}
         >
-          {isOpen ? <Minus size={28} /> : <MessageCircle size={28} />}
+          {isOpen ? <Minus size={24} /> : <MessageCircle size={24} />}
           
           {!isOpen && (
-            <span className="absolute -top-1 -right-1 flex h-4 w-4">
+            <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-indigo-500"></span>
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-indigo-500"></span>
             </span>
           )}
         </button>

@@ -85,10 +85,10 @@ const App: React.FC = () => {
                     </div>
                   </div>
 
-                  <h1 className="text-6xl md:text-[80px] font-serif font-bold text-stone-900 leading-[0.9] tracking-tight">
-                    La vibration du souffle <br/>
-                    <span className="text-indigo-600 italic font-normal">embrasse le monde</span><br/>
-                    pour vous atteindre.
+                  <h1 className="text-6xl md:text-[72px] font-serif font-bold text-stone-900 leading-[0.95] tracking-tight">
+                    L'énergie est le lien invisible <br/>
+                    <span className="text-indigo-600 italic font-normal">qui nous unit tous</span> :<br/>
+                    mon souffle vous rejoint.
                   </h1>
                   <p className="text-xl text-stone-600 font-light max-w-lg leading-relaxed">
                     Je m'appelle Jean-François. J'utilise la force du magnétisme pour soulager vos maux, <strong>peu importe où vous vous trouvez sur la planète.</strong>

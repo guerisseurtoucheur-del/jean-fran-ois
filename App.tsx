@@ -128,8 +128,10 @@ const App: React.FC = () => {
                   <h2 className="text-3xl font-serif font-bold italic text-stone-400">Paroles de patients</h2>
                   <div className="h-px flex-1 bg-stone-100"></div>
                 </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                   {[
+                    { name: "Catherine D.", city: "Alençon", text: "Habitant Alençon, j'ai fait appel à Jean-François pour des migraines chroniques. Le soulagement a été quasi immédiat. Une chance de l'avoir à nos côtés.", subject: "Migraines" },
+                    { name: "Bernard T.", city: "Alençon", text: "Un magnétiseur exceptionnel ici même à Alençon. Il m'a soigné une sciatique qui me paralysait depuis des semaines. Merci pour votre don.", subject: "Sciatique" },
                     { name: "Sophie M.", city: "Lyon", text: "Jean-François m'a aidé pour un zona très douloureux. En deux séances à distance, le feu s'est éteint. Incroyable.", subject: "Zona" },
                     { name: "Marc D.", city: "Paris", text: "Mes douleurs de dos chroniques ont disparu après l'envoi de ma photo. Un vrai soulagement.", subject: "Douleurs de dos" },
                     { name: "Élise L.", city: "Bordeaux", text: "Une bienveillance rare. On ressent l'énergie même à des centaines de kilomètres.", subject: "Stress & Anxiété" },
@@ -142,7 +144,7 @@ const App: React.FC = () => {
                       <div className="flex gap-1 text-amber-400">
                         {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
                       </div>
-                      <p className="text-stone-600 italic leading-relaxed">"{t.text}"</p>
+                      <p className="text-stone-600 italic leading-relaxed text-sm">"{t.text}"</p>
                       <div>
                         <p className="font-bold text-stone-900">{t.name}</p>
                         <p className="text-xs text-indigo-500 uppercase tracking-widest">{t.city} • {t.subject}</p>

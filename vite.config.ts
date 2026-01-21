@@ -3,27 +3,28 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
-  // Charge les variables d'environnement (Vercel injecte API_KEY dans process.env)
-  // Utilisation de (process as any).cwd() pour éviter les erreurs de typage TS
-  const env = loadEnv(mode, (process as any).cwd(), '');
+  // @ts-ignore
+  const cwd = process.cwd();
+  const env = loadEnv(mode, cwd, '');
   
   return {
     plugins: [react()],
     define: {
-      // REMPLACEMENT LITTÉRAL SÉCURISÉ :
-      // On ne remplace QUE process.env.API_KEY et process.env.NODE_ENV.
-      // On ne définit PAS 'process.env' entier car cela brise le build (erreur "Invalid assignment").
+      // Remplacement sécurisé des variables d'environnement
       'process.env.API_KEY': JSON.stringify(env.API_KEY || env.VITE_API_KEY || ""),
       'process.env.NODE_ENV': JSON.stringify(mode),
     },
     build: {
-      chunkSizeWarningLimit: 2000,
-      rollupOptions: {
-        output: {
-          // Laisse Vite gérer le découpage automatique pour une compatibilité maximale
-          manualChunks: undefined
-        },
+      // Configuration pour éviter les erreurs de parsing sur certaines librairies
+      commonjsOptions: {
+        transformMixedEsModules: true,
       },
-    },
+      rollupOptions: {
+        // Pas de manualChunks complexes qui pourraient casser le graphe de dépendance
+        output: {
+          manualChunks: undefined,
+        }
+      }
+    }
   };
 });

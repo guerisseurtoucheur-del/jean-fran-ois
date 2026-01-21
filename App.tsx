@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
 import BreathingTool from './components/BreathingTool.tsx';
 import EnergyGenerator from './components/EnergyGenerator.tsx';
+import FloatingChat from './components/FloatingChat.tsx';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users } from 'lucide-react';
 
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
@@ -38,7 +39,7 @@ const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const titles: Record<string, string> = {
-      home: "Jean-François | Magnétiseur Guérisseur à Distance Toute France",
+      home: "Jean-François | Magnétiseur à Distance Toute France",
       chat: "Posez vos questions | Jean-François Magnétiseur",
       healing: "Demande de soin sur photo | Magnétisme à distance",
       'soin-express': "Soin Express par le Souffle | Jean-François",
@@ -247,7 +248,12 @@ const App: React.FC = () => {
     }
   };
 
-  return <Layout activeTab={activeTab} setActiveTab={setActiveTab}>{renderContent()}</Layout>;
+  return (
+    <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
+      {renderContent()}
+      <FloatingChat onNavigate={(tab) => setActiveTab(tab)} />
+    </Layout>
+  );
 };
 
 export default App;

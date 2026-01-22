@@ -127,21 +127,25 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       submissionData.append("_captcha", "false");
       submissionData.append("_template", "table");
 
+      console.log("Tentative d'envoi du formulaire à FormSubmit...");
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
         body: submissionData,
       });
 
       if (response.ok) {
+        console.log("Formulaire envoyé avec succès à FormSubmit !");
         saveToAdminDatabase(); // Enregistrement pour l'espace admin privé
         setLoading(false);
         setStep(3);
       } else {
-        throw new Error("Erreur serveur");
+        console.error("Échec de l'envoi du formulaire à FormSubmit:", response.status, response.statusText);
+        throw new Error(`Échec de l'envoi du formulaire. Statut: ${response.status} - ${response.statusText}`);
       }
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false);
-      setError("Le souffle a été interrompu. Vérifiez votre connexion et réessayez.");
+      setError(err.message || "Le souffle a été interrompu. Vérifiez votre connexion et réessayez.");
+      console.error("Erreur inattendue lors de l'envoi du formulaire:", err);
     } finally {
       // Clear photo state after submission regardless of success
       setFormData(prev => ({ ...prev, photoFile: null, photoPreview: null }));

@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard, Wind, Clock, Users, Mail, ArrowDown, MapPin } from 'lucide-react';
 
@@ -56,7 +57,6 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
     { id: 'home', label: 'Accueil', icon: Home },
     { id: 'chat', label: 'Poser vos questions à Jean-François', icon: MessageCircle },
     { id: 'healing', label: 'Soin Photo', icon: Heart },
-    { id: 'soin-express', label: 'Soin Express', icon: Wind },
     { id: 'payment', label: 'Règlement', icon: CreditCard },
     { id: 'dashboard', label: 'Mon Espace', icon: LayoutDashboard },
   ];

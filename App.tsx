@@ -5,7 +5,6 @@ import ChatRoom from './components/ChatRoom.tsx';
 import HealingRequest from './components/HealingRequest.tsx';
 import Dashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
-import BreathingTool from './components/BreathingTool.tsx';
 import FloatingChat from './components/FloatingChat.tsx';
 import AdminDashboard from './components/AdminDashboard.tsx';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users, Clock } from 'lucide-react';
@@ -48,7 +47,6 @@ const App: React.FC = () => {
       home: "Jean-François | Magnétiseur à Distance Toute France",
       chat: "Posez vos questions | Jean-François Magnétiseur",
       healing: "Demande de soin sur photo | Magnétisme à distance",
-      'soin-express': "Soin Express par le Souffle | Jean-François",
       payment: "Règlement & Participation | Jean-François",
       dashboard: "Mon Espace Énergétique | Jean-François",
       admin: "Espace Privé Administrateur | Jean-François"
@@ -80,7 +78,6 @@ const App: React.FC = () => {
     switch (activeTab) {
       case 'chat': return <ChatRoom onStartHealing={() => setActiveTab('healing')} />;
       case 'healing': return <HealingRequest onSuccess={() => setActiveTab('payment')} />;
-      case 'soin-express': return <BreathingTool />;
       case 'payment': return <Payment />;
       case 'dashboard': return <Dashboard />;
       case 'admin': return <AdminDashboard />;
@@ -120,10 +117,7 @@ const App: React.FC = () => {
                       <span>Soin sur photo</span>
                       <ShieldCheck size={20} />
                     </button>
-                    <button onClick={() => setActiveTab('soin-express')} className="px-10 py-5 bg-stone-100 text-stone-900 border border-stone-200 rounded-2xl font-bold text-lg hover:bg-white transition-all flex items-center justify-center gap-3">
-                      <Wind size={20} className="text-indigo-600" />
-                      <span>Soin Express</span>
-                    </button>
+                    {/* Le bouton "Soin Express" a été retiré */}
                   </div>
                 </div>
                 

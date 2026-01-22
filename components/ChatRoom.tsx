@@ -26,6 +26,19 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
+    // Vérification de la clé API
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      setMessages(prev => [...prev, { role: 'user', text: input }]);
+      setMessages(prev => [...prev, { 
+        role: 'model', 
+        text: "⚠️ Erreur de configuration : La clé API est introuvable. Veuillez ajouter la variable d'environnement 'API_KEY' dans les paramètres de votre projet Vercel.",
+        isError: true 
+      }]);
+      setInput('');
+      return;
+    }
+
     const userMsg = input;
     setInput('');
     const currentMessages: Message[] = [...messages, { role: 'user', text: userMsg }];
@@ -33,7 +46,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: apiKey });
       
       const conversationHistory = currentMessages
         .filter(m => !m.isError)
@@ -63,7 +76,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Le lien énergétique est momentanément perturbé. Si vous êtes sur Vercel, assurez-vous que la variable 'API_KEY' est bien renseignée dans vos paramètres.",
+        text: "Le lien énergétique est momentanément perturbé. Vérifiez votre connexion ou la validité de votre clé API.",
         isError: true
       }]);
     } finally {

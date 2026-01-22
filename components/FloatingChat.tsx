@@ -37,9 +37,17 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
     const newMessages: Message[] = [...messages, { role: 'user', text: userMsg }];
     setMessages(newMessages);
     setLoading(true);
+    
+    // Vérification Clé API
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      setMessages(prev => [...prev, { role: 'model', text: "Erreur : Clé API manquante dans la configuration Vercel." }]);
+      setLoading(false);
+      return;
+    }
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: apiKey });
       // Fix: Ensure history starts with 'user' role by slicing off the first greeting from 'model'
       const conversationHistory = newMessages.slice(1).map(m => ({
         role: m.role,

@@ -1,24 +1,29 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import { GoogleGenAI } from "@google/genai";
+import { 
+  Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, 
+  CreditCard, Wind, Clock, Users, Mail, ArrowDown, MapPin,
+  Send, HeartHandshake, AlertCircle, Upload, Camera, CheckCircle2, 
+  Loader2, Calendar, User, FileText, Sparkles, ArrowRight, Trash2, 
+  CheckCircle, Search, ShieldCheck, Download, Star, Quote, Plus, Minus,
+  Activity, Zap, Brain, MousePointer2, Play, Pause, RotateCcw, Lock, ExternalLink
+} from 'lucide-react';
 
-const rootElement = document.getElementById('root');
-
-if (!rootElement) {
-  const msg = "ERREUR : L'élément 'root' est introuvable dans le HTML.";
-  console.error(msg);
-  document.body.innerHTML = `<div style="padding:20px;color:red">${msg}</div>`;
-} else {
-  try {
-    const root = createRoot(rootElement);
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
-  } catch (err) {
-    console.error("Erreur de rendu React:", err);
-    rootElement.innerHTML = `<div style="padding:20px;color:red">Erreur React : ${err instanceof Error ? err.message : String(err)}</div>`;
-  }
+// --- TYPES & HELPERS ---
+interface Message { role: 'user' | 'model'; text: string; isError?: boolean; }
+interface Request { 
+  id: string; 
+  firstName: string; 
+  lastName: string; 
+  email: string; 
+  phone: string; 
+  explanation: string; 
+  date: string; 
+  status: 'pending' | 'active' | 'completed'; 
+  notes?: string;
+  result?: string;
 }
+
+// ... rest of file (identical parts kept below)

@@ -1,9 +1,10 @@
 
+
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout.tsx';
 import ChatRoom from './components/ChatRoom.tsx';
 import HealingRequest from './components/HealingRequest.tsx';
-import Dashboard from './components/Dashboard.tsx';
+import UserDashboard from './components/Dashboard.tsx'; // Renommé en UserDashboard
 import Payment from './components/Payment.tsx';
 import FloatingChat from './components/FloatingChat.tsx';
 import AdminDashboard from './components/AdminDashboard.tsx';
@@ -48,7 +49,7 @@ const App: React.FC = () => {
       chat: "Posez vos questions | Jean-François Magnétiseur",
       healing: "Demande de soin sur photo | Magnétisme à distance",
       payment: "Règlement & Participation | Jean-François",
-      dashboard: "Mon Espace Énergétique | Jean-François",
+      dashboard: "Mon Espace | Jean-François", // Titre mis à jour
       admin: "Espace Privé Administrateur | Jean-François"
     };
     document.title = titles[activeTab] || "Jean-François Magnétiseur";
@@ -79,7 +80,7 @@ const App: React.FC = () => {
       case 'chat': return <ChatRoom onStartHealing={() => setActiveTab('healing')} />;
       case 'healing': return <HealingRequest onSuccess={() => setActiveTab('payment')} />;
       case 'payment': return <Payment />;
-      case 'dashboard': return <Dashboard />;
+      case 'dashboard': return <UserDashboard onStartHealing={() => setActiveTab('healing')} />; // Utilisation de UserDashboard
       case 'admin': return <AdminDashboard />;
       default:
         return (

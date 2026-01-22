@@ -1,112 +1,67 @@
 
-import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle, Wind, User, Sparkles, Loader2, ShieldCheck, AlertTriangle } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import React from 'react';
+import { Heart, ArrowRight, BookOpen, Users } from 'lucide-react';
 
-const Dashboard: React.FC = () => {
-  const [dailyWisdom, setDailyWisdom] = useState<string>('');
-  const [loadingWisdom, setLoadingWisdom] = useState(true);
+interface UserDashboardProps {
+  onStartHealing: () => void;
+}
 
-  const treatments = [
-    { id: 1, type: 'Soin Zona', status: 'En cours', date: 'Aujourd\'hui', progress: 65 },
-    { id: 2, type: 'Inflammation Dos', status: 'Terminé', date: 'Il y a 2 jours', progress: 100 },
-  ];
-
-  useEffect(() => {
-    const fetchWisdom = async () => {
-      try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        const response = await ai.models.generateContent({
-          model: 'gemini-3-flash-preview',
-          contents: "Génère un court message intuitif et bienveillant (max 2 lignes) pour un patient qui vient voir son magnétiseur. Parle d'énergie, de souffle ou de lumière.",
-          config: {
-            systemInstruction: "Tu es Jean-François, un magnétiseur bienveillant. Ton message doit être poétique et apaisant."
-          }
-        });
-        setDailyWisdom(response.text || "La lumière du souffle vous accompagne aujourd'hui.");
-      } catch (err) {
-        setDailyWisdom("Votre énergie est votre plus belle alliée.");
-      } finally {
-        setLoadingWisdom(false);
-      }
-    };
-    fetchWisdom();
-  }, []);
-
+const UserDashboard: React.FC<UserDashboardProps> = ({ onStartHealing }) => {
   return (
-    <div className="max-w-6xl mx-auto p-6 md:p-12 space-y-12 page-fade">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-        <div className="space-y-2">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold">Bonjour.</h1>
-          <p className="text-stone-500">Espace de contrôle énergétique.</p>
+    <div className="max-w-4xl mx-auto p-6 md:p-12 space-y-12 page-fade min-h-[70vh]">
+      <div className="text-center space-y-4 mb-16">
+        <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-indigo-600 shadow-lg">
+          <BookOpen size={40} />
         </div>
-        <div className="flex items-center gap-3 px-6 py-3 rounded-full border bg-indigo-50 border-indigo-100 text-indigo-600">
-          <Wind size={20} className="animate-pulse" />
-          <span className="text-sm font-bold uppercase tracking-widest">Énergie Active</span>
-        </div>
-      </div>
-
-      {/* Daily Wisdom Card */}
-      <div className="relative p-10 bg-indigo-600 rounded-[3.5rem] text-white overflow-hidden shadow-2xl shadow-indigo-200">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-        <div className="relative z-10 space-y-6">
-          <div className="flex items-center gap-3">
-             <Sparkles size={20} className="text-indigo-200" />
-             <span className="text-xs font-bold uppercase tracking-widest opacity-80">Vibration du moment</span>
-          </div>
-          {loadingWisdom ? (
-            <div className="flex items-center gap-3 text-indigo-100 italic">
-              <Loader2 size={20} className="animate-spin" />
-              <span>Réception du souffle...</span>
-            </div>
-          ) : (
-            <p className="text-3xl font-serif italic leading-relaxed">
-              "{dailyWisdom}"
-            </p>
-          )}
-        </div>
+        <h1 className="text-4xl md:text-5xl font-serif font-bold text-stone-900 leading-tight">
+          Mon Espace
+        </h1>
+        <p className="text-xl text-stone-500 max-w-2xl mx-auto font-light leading-relaxed">
+          Bienvenue dans votre espace personnel. Retrouvez ici les informations générales.
+        </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {treatments.map((t) => (
-          <div key={t.id} className="p-8 bg-stone-50 rounded-[3rem] border border-stone-100 hover:shadow-xl transition-all group bg-white">
-            <div className="flex justify-between items-start mb-8">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">{t.date}</span>
-                <h3 className="text-2xl font-serif font-bold text-stone-900">{t.type}</h3>
-              </div>
-              <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${
-                t.status === 'En cours' ? 'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'
-              }`}>
-                {t.status}
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex justify-between text-xs font-bold text-stone-500 uppercase tracking-tighter">
-                <span>Régénération</span>
-                <span>{t.progress}%</span>
-              </div>
-              <div className="h-3 w-full bg-stone-200 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full transition-all duration-1000 ${t.status === 'En cours' ? 'bg-indigo-500' : 'bg-emerald-500'}`} 
-                  style={{ width: `${t.progress}%` }}
-                />
-              </div>
-            </div>
-
-            <div className="mt-8 pt-8 border-t border-stone-200 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity">
-               <button className="text-sm font-bold text-indigo-600 hover:underline">Détails du ressenti</button>
-               <div className="flex -space-x-2">
-                 <div className="w-8 h-8 rounded-full bg-stone-900 border-2 border-white flex items-center justify-center text-[10px] text-white">JF</div>
-                 <div className="w-8 h-8 rounded-full bg-stone-300 border-2 border-white flex items-center justify-center text-[10px] text-stone-600"><User size={12}/></div>
-               </div>
-            </div>
+        {/* Section Demandes de Soin */}
+        <div className="p-8 bg-white rounded-[3rem] border border-stone-100 shadow-xl space-y-6">
+          <div className="flex items-center gap-3 text-indigo-600">
+            <Heart size={24} fill="currentColor" />
+            <span className="text-xs font-bold uppercase tracking-widest">Vos Demandes de Soin</span>
           </div>
-        ))}
+          <p className="text-stone-600 leading-relaxed">
+            Pour le moment, le suivi détaillé de vos demandes nécessite une connexion sécurisée.
+            Vous pouvez envoyer une nouvelle demande ou consulter l'historique par échange direct avec Jean-François.
+          </p>
+          <button
+            onClick={onStartHealing}
+            className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all shadow-md group"
+          >
+            Nouvelle Demande de Soin
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+
+        {/* Section Ressources Utiles */}
+        <div className="p-8 bg-stone-50 rounded-[3rem] border border-stone-100 shadow-inner space-y-6">
+          <div className="flex items-center gap-3 text-stone-700">
+            <Users size={24} />
+            <span className="text-xs font-bold uppercase tracking-widest">Ressources Utiles</span>
+          </div>
+          <p className="text-stone-600 leading-relaxed">
+            Explorez notre FAQ pour en savoir plus sur le magnétisme, ou utilisez le chat pour poser vos questions à l'assistant.
+          </p>
+          <div className="flex flex-col gap-3">
+            <button className="w-full py-4 bg-white text-stone-800 rounded-xl font-bold border border-stone-200 hover:bg-stone-100 transition-all shadow-sm">
+              Consulter la FAQ
+            </button>
+            <button className="w-full py-4 bg-white text-stone-800 rounded-xl font-bold border border-stone-200 hover:bg-stone-100 transition-all shadow-sm">
+              Parler à l'Assistant
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   User, Mail, Phone, FileText, Trash2, CheckCircle, Clock, Search, 
   ShieldCheck, Download, Edit3, Save, ChevronRight, Activity, 
-  Stethoscope, MessageSquare, History, PlusCircle, Users
+  Stethoscope, MessageSquare, History, PlusCircle, Users, Calendar, DollarSign
 } from 'lucide-react';
 
 interface Request {
@@ -11,11 +12,13 @@ interface Request {
   lastName: string;
   email: string;
   phone: string;
+  birthDate: string; // Ajout de la date de naissance
   explanation: string;
   date: string;
   status: 'pending' | 'active' | 'completed';
   notes?: string;
   result?: string;
+  amountGiven?: string; // Ajout du montant donné
 }
 
 const AdminDashboard: React.FC = () => {
@@ -24,6 +27,7 @@ const AdminDashboard: React.FC = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editNotes, setEditNotes] = useState('');
   const [editResult, setEditResult] = useState('');
+  const [editAmountGiven, setEditAmountGiven] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem('jf_admin_requests');
@@ -47,7 +51,7 @@ const AdminDashboard: React.FC = () => {
 
   const updatePatientData = (id: string) => {
     const next = requests.map(r => 
-      r.id === id ? { ...r, notes: editNotes, result: editResult } : r
+      r.id === id ? { ...r, notes: editNotes, result: editResult, amountGiven: editAmountGiven } : r
     );
     saveToLocal(next);
     alert("Dossier mis à jour avec succès.");
@@ -63,7 +67,8 @@ const AdminDashboard: React.FC = () => {
   const filtered = requests.filter(r => 
     `${r.firstName} ${r.lastName}`.toLowerCase().includes(filter.toLowerCase()) ||
     r.email.toLowerCase().includes(filter.toLowerCase()) ||
-    r.explanation.toLowerCase().includes(filter.toLowerCase())
+    r.explanation.toLowerCase().includes(filter.toLowerCase()) ||
+    r.birthDate.toLowerCase().includes(filter.toLowerCase()) // Ajout de la recherche par date de naissance
   );
 
   const selectedPatient = requests.find(r => r.id === selectedId);
@@ -72,6 +77,7 @@ const AdminDashboard: React.FC = () => {
     if (selectedPatient) {
       setEditNotes(selectedPatient.notes || '');
       setEditResult(selectedPatient.result || '');
+      setEditAmountGiven(selectedPatient.amountGiven || '');
     }
   }, [selectedId]);
 
@@ -94,7 +100,6 @@ const AdminDashboard: React.FC = () => {
               <span className="text-[10px] uppercase font-bold text-stone-400">Total Patients</span>
               <span className="text-lg font-serif font-bold text-indigo-600">{requests.length}</span>
             </div>
-            {/* Fix: Added missing Users icon from lucide-react */}
             <Users size={20} className="text-stone-300" />
           </div>
           <button onClick={() => {
@@ -169,6 +174,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="flex flex-wrap gap-4 text-stone-400 text-xs font-bold uppercase tracking-widest">
                     <span className="flex items-center gap-2"><Mail size={14} className="text-indigo-400" /> {selectedPatient.email}</span>
                     <span className="flex items-center gap-2"><Phone size={14} className="text-indigo-400" /> {selectedPatient.phone}</span>
+                    <span className="flex items-center gap-2"><Calendar size={14} className="text-indigo-400" /> Né(e) le {selectedPatient.birthDate}</span>
                     <span className="flex items-center gap-2"><Clock size={14} className="text-indigo-400" /> Arrivée le {selectedPatient.date}</span>
                   </div>
                 </div>
@@ -222,6 +228,20 @@ const AdminDashboard: React.FC = () => {
                       placeholder="Décrivez le résultat final (douleur disparue, apaisement, peau nette...)"
                       className="w-full h-40 p-6 bg-emerald-50/30 rounded-[2rem] border border-emerald-100 outline-none focus:border-emerald-300 focus:bg-white transition-all text-sm leading-relaxed italic resize-none"
                     />
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-2">
+                      <DollarSign size={14} /> Participation reçue (montant libre)
+                    </label>
+                    <input 
+                      type="text"
+                      value={editAmountGiven}
+                      onChange={(e) => setEditAmountGiven(e.target.value)}
+                      placeholder="Ex: 20€ ou 'Don libre'"
+                      className="w-full p-6 bg-amber-50/30 rounded-[2rem] border border-amber-100 outline-none focus:border-amber-300 focus:bg-white transition-all text-sm leading-relaxed"
+                    />
+                     <p className="text-[9px] text-stone-400 italic">Note : Les photos sont envoyées par email lors de la demande de soin, à l'adresse 'guerisseurtoucheur@gmail.com'.</p>
                   </div>
 
                   <div className="pt-4">

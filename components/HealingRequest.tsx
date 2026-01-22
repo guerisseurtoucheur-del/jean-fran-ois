@@ -28,9 +28,11 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
+        birthDate: formData.birthDate, // Ajout de la date de naissance
         explanation: formData.explanation,
         date: new Date().toLocaleString('fr-FR'),
-        status: 'pending'
+        status: 'pending',
+        amountGiven: '' // Initialisation du champ pour le montant
       };
       localStorage.setItem('jf_admin_requests', JSON.stringify([newRequest, ...requests]));
     } catch (e) {
@@ -140,6 +142,9 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     } catch (err) {
       setLoading(false);
       setError("Le souffle a été interrompu. Vérifiez votre connexion et réessayez.");
+    } finally {
+      // Clear photo state after submission regardless of success
+      setFormData(prev => ({ ...prev, photoFile: null, photoPreview: null }));
     }
   };
 

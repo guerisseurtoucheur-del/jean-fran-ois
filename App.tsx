@@ -6,7 +6,6 @@ import HealingRequest from './components/HealingRequest.tsx';
 import Dashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
 import BreathingTool from './components/BreathingTool.tsx';
-import EnergyCalculator from './components/EnergyGenerator.tsx';
 import FloatingChat from './components/FloatingChat.tsx';
 import AdminDashboard from './components/AdminDashboard.tsx';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users, Clock } from 'lucide-react';
@@ -195,9 +194,6 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Calculateur d'Énergie */}
-            <EnergyCalculator />
-
             {/* FAQ Section */}
             <section className="py-32 bg-stone-50">
               <div className="max-w-3xl mx-auto px-6">
@@ -216,7 +212,7 @@ const App: React.FC = () => {
                   />
                   <FAQItem 
                     question="Combien de temps dure l'effet d'un soin ?" 
-                    answer="Cela dépend de la pathologie. Pour un zona ou une brûlure, l'effet est souvent immédiat. Pour des douleurs chroniques, le travail peut infuser pendant plusieurs jours."
+                    answer="Cela dépend de la pathologie. Pour un zona ou une brûlure, l'effet est often immédiat. Pour des douleurs chroniques, le travail peut infuser pendant plusieurs jours."
                   />
                   <FAQItem 
                     question="Est-ce un don ou une technique ?" 

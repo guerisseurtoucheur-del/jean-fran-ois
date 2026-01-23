@@ -14,25 +14,25 @@ const HealingRequest = () => {
 
   const [status, setStatus] = useState('');
 
-  // Fonction pour transformer et compresser la photo
+  // Fonction pour transformer et compresser la photo (VERSION CORRIGÉE)
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         const img = new Image();
-        img.src = event.target?.result as string;
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 400; // On réduit la taille pour EmailJS
+          const MAX_WIDTH = 200; // Taille réduite pour EmailJS
           const scaleSize = MAX_WIDTH / img.width;
           canvas.width = MAX_WIDTH;
           canvas.height = img.height * scaleSize;
           const ctx = canvas.getContext('2d');
           ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.7); // Compression à 70%
-          setFormData({ ...formData, user_photo: dataUrl });
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.3); // Compression forte à 30%
+          setFormData(prev => ({ ...prev, user_photo: dataUrl }));
         };
+        img.src = event.target?.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -42,7 +42,6 @@ const HealingRequest = () => {
     e.preventDefault();
     setStatus('Envoi en cours...');
 
-    // TES CODES CONFIGURÉS
     const serviceID = 'service_6hxzf8g';
     const templateID = 'template_rj7whq1';
     const publicKey = 'xx_aBqYl2Cx85nz1d';
@@ -70,7 +69,7 @@ const HealingRequest = () => {
         <input type="email" placeholder="Votre Email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} style={inputStyle} />
         <textarea placeholder="Décrivez votre mal (douleurs, fatigue, etc.)..." required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} style={inputStyle} rows={4} />
         
-        <label style={{ display: 'block', marginTop: '10px', fontWeight: 'bold' }}>Photo (Facultatif pour le test) :</label>
+        <label style={{ display: 'block', marginTop: '10px', fontWeight: 'bold' }}>Photo du patient :</label>
         <input type="file" accept="image/*" onChange={handlePhotoChange} style={{ marginBottom: '10px' }} />
 
         <button type="submit" style={buttonStyle}>Envoyer ma demande</button>

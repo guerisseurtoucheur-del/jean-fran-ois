@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail, Sparkles, CreditCard, ArrowRight } from 'lucide-react';
 
@@ -28,11 +27,11 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
-        birthDate: formData.birthDate, // Ajout de la date de naissance
+        birthDate: formData.birthDate,
         explanation: formData.explanation,
         date: new Date().toLocaleString('fr-FR'),
         status: 'pending',
-        amountGiven: '' // Initialisation du champ pour le montant
+        amountGiven: ''
       };
       localStorage.setItem('jf_admin_requests', JSON.stringify([newRequest, ...requests]));
     } catch (e) {
@@ -40,54 +39,11 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     }
   };
 
-  const compressImage = (file: File): Promise<Blob> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target?.result as string;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_SIZE = 1000; 
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height) {
-            if (width > MAX_SIZE) {
-              height *= MAX_SIZE / width;
-              width = MAX_SIZE;
-            }
-          } else {
-            if (height > MAX_SIZE) {
-              width *= MAX_SIZE / height;
-              height = MAX_SIZE;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0, width, height);
-          
-          canvas.toBlob(
-            (blob) => {
-              if (blob) resolve(blob);
-              else reject(new Error("Erreur de compression"));
-            },
-            'image/jpeg',
-            0.6 
-          );
-        };
-      };
-      reader.onerror = (err) => reject(err);
-    });
-  };
-
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setError(null);
+      // On stocke le fichier brut
       setFormData({ ...formData, photoFile: file });
       const reader = new FileReader();
       reader.onloadend = () => setFormData(prev => ({ ...prev, photoPreview: reader.result as string }));
@@ -100,55 +56,44 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     setError(null);
 
     try {
-      setLoadingStatus('Préparation de la photo...');
-      let fileToSend: Blob | File | null = formData.photoFile;
+      setLoadingStatus('Envoi de votre demande...');
       
+      const submissionData = new FormData();
+
+      // 1. AJOUT DE LA PHOTO (Nom de clé "attachment" obligatoire pour FormSubmit)
       if (formData.photoFile) {
-        try {
-          fileToSend = await compressImage(formData.photoFile);
-        } catch (e) {
-          console.error("Échec compression", e);
-        }
+        submissionData.append("attachment", formData.photoFile);
       }
 
-      setLoadingStatus('Envoi de votre demande...');
-      const submissionData = new FormData();
+      // 2. AJOUT DES AUTRES INFOS
       submissionData.append("_subject", `✨ SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
       submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
-      submissionData.append("Naissance", formData.birthDate);
-      submissionData.append("Contact", `${formData.phone} / ${formData.email}`);
-      submissionData.append("Message", formData.explanation);
+      submissionData.append("Date de Naissance", formData.birthDate);
+      submissionData.append("Téléphone", formData.phone);
+      submissionData.append("Email", formData.email);
+      submissionData.append("Description du mal", formData.explanation);
       
-      if (fileToSend) {
-        submissionData.append("attachment", fileToSend, "photo_soin.jpg");
-      }
-      
-      submissionData.append("_honey", ""); 
+      // Options techniques FormSubmit
       submissionData.append("_captcha", "false");
       submissionData.append("_template", "table");
 
-      console.log("Tentative d'envoi du formulaire à FormSubmit...");
+      // 3. ENVOI
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
         body: submissionData,
       });
 
       if (response.ok) {
-        console.log("Formulaire envoyé avec succès à FormSubmit !");
-        saveToAdminDatabase(); // Enregistrement pour l'espace admin privé
+        saveToAdminDatabase();
         setLoading(false);
         setStep(3);
       } else {
-        console.error("Échec de l'envoi du formulaire à FormSubmit:", response.status, response.statusText);
-        throw new Error(`Échec de l'envoi du formulaire. Statut: ${response.status} - ${response.statusText}`);
+        throw new Error("Le serveur n'a pas pu traiter l'envoi.");
       }
     } catch (err: any) {
       setLoading(false);
-      setError(err.message || "Le souffle a été interrompu. Vérifiez votre connexion et réessayez.");
-      console.error("Erreur inattendue lors de l'envoi du formulaire:", err);
-    } finally {
-      // Clear photo state after submission regardless of success
-      setFormData(prev => ({ ...prev, photoFile: null, photoPreview: null }));
+      setError("Erreur : Impossible d'envoyer la photo. Vérifiez votre connexion.");
+      console.error(err);
     }
   };
 

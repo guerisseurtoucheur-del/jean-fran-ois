@@ -14,7 +14,7 @@ const HealingRequest = () => {
 
   const [status, setStatus] = useState('');
 
-  // Fonction pour transformer et compresser la photo (VERSION CORRIGÉE)
+  // Fonction de compression ULTRA-LÉGÈRE pour EmailJS
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -23,13 +23,15 @@ const HealingRequest = () => {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 200; // Taille réduite pour EmailJS
+          const MAX_WIDTH = 100; // Taille miniature pour garantir l'envoi
           const scaleSize = MAX_WIDTH / img.width;
           canvas.width = MAX_WIDTH;
           canvas.height = img.height * scaleSize;
           const ctx = canvas.getContext('2d');
           ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.3); // Compression forte à 30%
+          
+          // Compression maximale (0.1) pour un poids plume
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.1);
           setFormData(prev => ({ ...prev, user_photo: dataUrl }));
         };
         img.src = event.target?.result as string;
@@ -53,7 +55,7 @@ const HealingRequest = () => {
       })
       .catch((err) => {
         console.error('Erreur:', err);
-        setStatus('❌ Erreur. Vérifiez votre connexion ou réessayez sans photo.');
+        setStatus('❌ Erreur technique. Réessayez sans photo ou contactez-moi directement.');
       });
   };
 

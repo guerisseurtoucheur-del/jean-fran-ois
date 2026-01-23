@@ -1,291 +1,73 @@
 import React, { useState } from 'react';
-import { Upload, Camera, CheckCircle2, Loader2, Heart, Calendar, User, FileText, AlertCircle, Phone, Mail, Sparkles, CreditCard, ArrowRight } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
-const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
-  const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [loadingStatus, setLoadingStatus] = useState('');
-  const [error, setError] = useState<string | null>(null);
+const HealingRequest = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     birthDate: '',
     phone: '',
     email: '',
-    explanation: '',
-    photoPreview: null as string | null,
-    photoFile: null as File | null
+    message: '',
+    user_photo: '' // Contiendra l'image en texte pour EmailJS
   });
 
-  const saveToAdminDatabase = () => {
-    try {
-      const saved = localStorage.getItem('jf_admin_requests');
-      const requests = saved ? JSON.parse(saved) : [];
-      const newRequest = {
-        id: Date.now().toString(),
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        birthDate: formData.birthDate,
-        explanation: formData.explanation,
-        date: new Date().toLocaleString('fr-FR'),
-        status: 'pending',
-        amountGiven: ''
-      };
-      localStorage.setItem('jf_admin_requests', JSON.stringify([newRequest, ...requests]));
-    } catch (e) {
-      console.error("Erreur sauvegarde locale admin:", e);
-    }
-  };
+  const [status, setStatus] = useState('');
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Fonction pour transformer la photo en texte (Base64)
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setError(null);
-      setFormData({ ...formData, photoFile: file });
       const reader = new FileReader();
-      reader.onloadend = () => setFormData(prev => ({ ...prev, photoPreview: reader.result as string }));
+      reader.onloadend = () => {
+        setFormData({ ...formData, user_photo: reader.result as string });
+      };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError(null);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('Envoi en cours...');
 
-    try {
-      setLoadingStatus('Envoi de votre demande...');
-      
-      const submissionData = new FormData();
+    // CONFIGURATION EMAILJS
+    const serviceID = 'service_6hxzf8g';
+    const templateID = 'template_rj7whq1';
+    const publicKey = 'xx_aBqYl2Cx85nz1d';
 
-      // 1. GESTION DE LA PHOTO (FORÇAGE DU NOM ET FORMAT)
-      if (formData.photoFile) {
-        // On crée un nouveau fichier "propre" pour FormSubmit
-        const blob = formData.photoFile.slice(0, formData.photoFile.size, formData.photoFile.type);
-        const cleanFile = new File([blob], "photo_soin.jpg", { type: "image/jpeg" });
-        submissionData.append("attachment", cleanFile);
-      }
-
-      // 2. DONNÉES DU FORMULAIRE
-      submissionData.append("_subject", `✨ SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
-      submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
-      submissionData.append("Date de Naissance", formData.birthDate);
-      submissionData.append("Contact", `${formData.phone} / ${formData.email}`);
-      submissionData.append("Message", formData.explanation);
-      
-      // Configuration FormSubmit
-      submissionData.append("_captcha", "false");
-      submissionData.append("_template", "table");
-      submissionData.append("_honey", ""); // Protection anti-spam
-
-      // 3. ENVOI VIA AJAX
-      const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
-        method: "POST",
-        body: submissionData,
+    emailjs.send(serviceID, templateID, formData, publicKey)
+      .then(() => {
+        setStatus('✅ Demande envoyée avec succès !');
+        setFormData({ firstName: '', lastName: '', birthDate: '', phone: '', email: '', message: '', user_photo: '' });
+      })
+      .catch((err) => {
+        console.error('Erreur:', err);
+        setStatus('❌ Erreur lors de l\'envoi. Réessayez.');
       });
-
-      if (response.ok) {
-        saveToAdminDatabase();
-        setLoading(false);
-        setStep(3);
-      } else {
-        const result = await response.json();
-        throw new Error(result.message || "Erreur serveur");
-      }
-    } catch (err: any) {
-      setLoading(false);
-      setError("Le souffle a été interrompu. Essayez avec une photo plus légère (moins de 5Mo).");
-      console.error("Détail erreur:", err);
-    }
   };
 
-  const isStep1Valid = 
-    formData.firstName.trim() !== '' && 
-    formData.lastName.trim() !== '' && 
-    formData.birthDate !== '' && 
-    formData.phone.trim() !== '' && 
-    formData.email.trim() !== '' && 
-    formData.explanation.trim() !== '';
-
   return (
-    <div className="max-w-2xl mx-auto p-8 md:p-12 bg-white rounded-[4rem] border border-stone-100 shadow-2xl my-10 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+    <div style={{ maxWidth: '500px', margin: 'auto', padding: '20px' }}>
+      <h2>Demande de soin à distance</h2>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Prénom" required value={formData.firstName} onChange={(e) => setFormData({...formData, firstName: e.target.value})} style={inputStyle} />
+        <input type="text" placeholder="Nom" required value={formData.lastName} onChange={(e) => setFormData({...formData, lastName: e.target.value})} style={inputStyle} />
+        <input type="date" required value={formData.birthDate} onChange={(e) => setFormData({...formData, birthDate: e.target.value})} style={inputStyle} />
+        <input type="tel" placeholder="Téléphone" required value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} style={inputStyle} />
+        <input type="email" placeholder="Votre Email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} style={inputStyle} />
+        <textarea placeholder="Décrivez votre mal..." required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} style={inputStyle} rows={4} />
+        
+        <label style={{ display: 'block', marginBottom: '10px' }}>Ajouter votre photo (obligatoire) :</label>
+        <input type="file" accept="image/*" onChange={handlePhotoChange} required style={{ marginBottom: '20px' }} />
 
-      {step === 1 && (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10">
-          <div className="text-center space-y-4">
-            <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto text-indigo-600">
-              <Heart size={40} className="animate-pulse" />
-            </div>
-            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Vibration Personnelle</h2>
-            <p className="text-stone-500">Ces éléments sont nécessaires pour que je puisse me connecter à votre énergie.</p>
-          </div>
-
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                  <User size={12} /> Prénom
-                </label>
-                <input 
-                  type="text" 
-                  value={formData.firstName}
-                  onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                  className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                  <User size={12} /> Nom
-                </label>
-                <input 
-                  type="text" 
-                  value={formData.lastName}
-                  onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                  className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                  <Calendar size={12} /> Date de naissance
-                </label>
-                <input 
-                  type="date" 
-                  value={formData.birthDate}
-                  onChange={(e) => setFormData({...formData, birthDate: e.target.value})}
-                  className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                  <Phone size={12} /> Téléphone
-                </label>
-                <input 
-                  type="tel" 
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                  placeholder="06..."
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <Mail size={12} /> Email
-              </label>
-              <input 
-                type="email" 
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm"
-                placeholder="votre@email.com"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4 flex items-center gap-2">
-                <FileText size={12} /> Votre mal
-              </label>
-              <textarea 
-                rows={3}
-                value={formData.explanation}
-                onChange={(e) => setFormData({...formData, explanation: e.target.value})}
-                className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm resize-none"
-                placeholder="Zona, douleur, brûlure..."
-              />
-            </div>
-          </div>
-
-          <button 
-            disabled={!isStep1Valid}
-            onClick={() => setStep(2)}
-            className="w-full py-5 bg-stone-900 text-white rounded-[2rem] font-bold text-lg hover:bg-black transition-all disabled:opacity-30"
-          >
-            Choisir la photo
-          </button>
-        </div>
-      )}
-
-      {step === 2 && (
-        <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500 relative z-10">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Votre Photo</h2>
-            <p className="text-stone-500 italic">Une photo nette sert de support pour le travail à distance.</p>
-          </div>
-
-          <div 
-            onClick={() => document.getElementById('photo-input')?.click()}
-            className="w-full aspect-square bg-stone-50 border-2 border-dashed border-stone-200 rounded-[3rem] flex flex-col items-center justify-center cursor-pointer hover:bg-stone-100 transition-all overflow-hidden relative"
-          >
-            {formData.photoPreview ? (
-              <img src={formData.photoPreview} alt="Aperçu" className="w-full h-full object-cover" />
-            ) : (
-              <div className="text-center space-y-3">
-                <div className="p-6 bg-white rounded-full shadow-sm inline-block"><Camera size={40} className="text-indigo-600" /></div>
-                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-widest">Cliquez pour ajouter</p>
-              </div>
-            )}
-            <input id="photo-input" type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
-          </div>
-
-          {error && (
-            <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-sm flex items-center gap-3">
-              <AlertCircle size={18} />
-              {error}
-            </div>
-          )}
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button onClick={() => setStep(1)} className="flex-1 py-5 border border-stone-200 text-stone-400 rounded-[2rem] font-bold">Retour</button>
-            <button 
-              onClick={handleSubmit}
-              disabled={loading || !formData.photoFile}
-              className="flex-[2] py-5 bg-indigo-600 text-white rounded-[2rem] font-bold hover:bg-indigo-700 transition-all disabled:opacity-30 flex items-center justify-center gap-3 shadow-xl shadow-indigo-100"
-            >
-              {loading ? <Loader2 className="animate-spin" /> : <Sparkles size={20} />}
-              {loading ? loadingStatus : 'Envoyer ma demande'}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="py-12 text-center space-y-10 animate-in zoom-in duration-500">
-          <div className="w-24 h-24 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle2 size={56} />
-          </div>
-          <div className="space-y-4">
-            <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Demande Transmise</h2>
-            <p className="text-stone-500 max-w-sm mx-auto italic">
-              Merci {formData.firstName}. Jean-François a bien reçu votre demande et va s'y connecter.
-            </p>
-          </div>
-
-          <div className="p-8 bg-indigo-50 rounded-[2.5rem] border border-indigo-100 space-y-6">
-             <div className="flex items-center gap-3 justify-center text-indigo-700">
-                <CreditCard size={24} />
-                <span className="font-bold uppercase tracking-widest text-xs">Finaliser votre démarche</span>
-             </div>
-             <p className="text-sm text-stone-600 leading-relaxed">
-               Pour compléter votre soin, vous pouvez maintenant accéder à l'espace règlement pour effectuer votre participation libre.
-             </p>
-             <button 
-               onClick={onSuccess}
-               className="w-full py-5 bg-indigo-600 text-white rounded-[1.5rem] font-bold flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all"
-             >
-               Accéder au règlement PayPal
-               <ArrowRight size={18} />
-             </button>
-          </div>
-        </div>
-      )}
+        <button type="submit" style={buttonStyle}>Envoyer la demande</button>
+      </form>
+      <p>{status}</p>
     </div>
   );
 };
+
+const inputStyle = { width: '100%', marginBottom: '10px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' };
+const buttonStyle = { width: '100%', padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' };
 
 export default HealingRequest;

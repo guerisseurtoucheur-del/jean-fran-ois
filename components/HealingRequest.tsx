@@ -43,7 +43,6 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     const file = e.target.files?.[0];
     if (file) {
       setError(null);
-      // On stocke le fichier brut
       setFormData({ ...formData, photoFile: file });
       const reader = new FileReader();
       reader.onloadend = () => setFormData(prev => ({ ...prev, photoPreview: reader.result as string }));
@@ -60,24 +59,27 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       
       const submissionData = new FormData();
 
-      // 1. AJOUT DE LA PHOTO (Nom de clé "attachment" obligatoire pour FormSubmit)
+      // 1. GESTION DE LA PHOTO (FORÇAGE DU NOM ET FORMAT)
       if (formData.photoFile) {
-        submissionData.append("attachment", formData.photoFile);
+        // On crée un nouveau fichier "propre" pour FormSubmit
+        const blob = formData.photoFile.slice(0, formData.photoFile.size, formData.photoFile.type);
+        const cleanFile = new File([blob], "photo_soin.jpg", { type: "image/jpeg" });
+        submissionData.append("attachment", cleanFile);
       }
 
-      // 2. AJOUT DES AUTRES INFOS
+      // 2. DONNÉES DU FORMULAIRE
       submissionData.append("_subject", `✨ SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
       submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
       submissionData.append("Date de Naissance", formData.birthDate);
-      submissionData.append("Téléphone", formData.phone);
-      submissionData.append("Email", formData.email);
-      submissionData.append("Description du mal", formData.explanation);
+      submissionData.append("Contact", `${formData.phone} / ${formData.email}`);
+      submissionData.append("Message", formData.explanation);
       
-      // Options techniques FormSubmit
+      // Configuration FormSubmit
       submissionData.append("_captcha", "false");
       submissionData.append("_template", "table");
+      submissionData.append("_honey", ""); // Protection anti-spam
 
-      // 3. ENVOI
+      // 3. ENVOI VIA AJAX
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
         body: submissionData,
@@ -88,12 +90,13 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         setLoading(false);
         setStep(3);
       } else {
-        throw new Error("Le serveur n'a pas pu traiter l'envoi.");
+        const result = await response.json();
+        throw new Error(result.message || "Erreur serveur");
       }
     } catch (err: any) {
       setLoading(false);
-      setError("Erreur : Impossible d'envoyer la photo. Vérifiez votre connexion.");
-      console.error(err);
+      setError("Le souffle a été interrompu. Essayez avec une photo plus légère (moins de 5Mo).");
+      console.error("Détail erreur:", err);
     }
   };
 

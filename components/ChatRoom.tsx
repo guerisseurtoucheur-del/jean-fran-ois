@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai"; // Correction de l'import
 import { Send, HeartHandshake, AlertCircle } from 'lucide-react';
 
 interface Message {
@@ -26,13 +25,15 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
-    // Vérification de la clé API
-    const apiKey = process.env.API_KEY;
+    // --- CORRECTION CLÉ API ---
+    // Vite utilise import.meta.env pour exposer les variables au navigateur
+    const apiKey = import.meta.env.VITE_API_KEY;
+    
     if (!apiKey) {
       setMessages(prev => [...prev, { role: 'user', text: input }]);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "⚠️ Erreur de configuration : La clé API est introuvable. Veuillez ajouter la variable d'environnement 'API_KEY' dans les paramètres de votre projet Vercel.",
+        text: "⚠️ Configuration incomplète : La variable VITE_API_KEY est absente sur Vercel. Pensez à l'ajouter dans les Settings et à Redéployer.",
         isError: true 
       }]);
       setInput('');
@@ -46,26 +47,28 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: apiKey });
+      // Initialisation correcte avec la clé
+      const genAI = new GoogleGenerativeAI(apiKey);
       
-      const conversationHistory = currentMessages
-        .filter(m => !m.isError)
-        .slice(1) 
-        .map(m => ({
-          role: m.role,
-          parts: [{ text: m.text }]
-        }));
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: conversationHistory,
-        config: {
-          temperature: 1.1, // Augmentation de la créativité pour des réponses variées
-          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. IMPORTANT : Ne réponds JAMAIS deux fois de la même manière. Varie tes tournures de phrases, ton vocabulaire et tes conseils. Si la personne semble souffrir d'un problème grave, suggère toujours d'en parler aussi à un médecin. Réponds de manière concise et apaisante.",
-        },
+      // On utilise gemini-1.5-flash qui est très rapide et stable sur Vercel
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel mais terre-à-terre. Tu aides les gens pour le zona, l'eczéma, les brûlures et les douleurs de dos. IMPORTANT : Ne réponds JAMAIS deux fois de la même manière. Varie tes tournures de phrases. Si le cas est grave, suggère de consulter un médecin. Réponds de manière concise.",
       });
 
-      const responseText = response.text;
+      const chat = model.startChat({
+        history: currentMessages
+          .filter(m => !m.isError)
+          .slice(1, -1) // On prend l'historique sauf le message actuel
+          .map(m => ({
+            role: m.role === 'user' ? 'user' : 'model',
+            parts: [{ text: m.text }],
+          })),
+      });
+
+      const result = await chat.sendMessage(userMsg);
+      const response = await result.response;
+      const responseText = response.text();
 
       if (responseText) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
@@ -76,7 +79,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Le lien énergétique est momentanément perturbé. Vérifiez votre connexion ou la validité de votre clé API.",
+        text: "Le lien énergétique est momentanément perturbé. Vérifiez votre clé API dans Vercel ou réessayez dans quelques instants.",
         isError: true
       }]);
     } finally {

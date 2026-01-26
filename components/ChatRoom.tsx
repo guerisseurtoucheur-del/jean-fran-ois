@@ -16,6 +16,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Défilement automatique vers le bas
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -25,45 +26,23 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
-    // --- LA SOLUTION DE SECOURS ---
-    // On cherche dans import.meta.env (Vite) ET dans process.env (Vercel Node)
-    const apiKey ="AIzaSyD7FIqH7uX2XrICwy9jdb5muY_KvoAKXNU" import.meta.env.VITE_API_KEY || (process.env.VITE_API_KEY as string);
-    
-    if (!apiKey) {
-      setMessages(prev => [...prev, { role: 'user', text: input }]);
-      setMessages(prev => [...prev, { 
-        role: 'model', 
-        text: "⚠️ Erreur : Clé API introuvable. Si elle est pourtant bien sur Vercel, essayez de supprimer la variable VITE_API_KEY et de la recréer proprement sans espaces.",
-        isError: true 
-      }]);
-      setInput('');
-      return;
-    }
+    // --- ICI TU COLLERAS TA CLÉ ---
+    const apiKey ="AIzaSyD7FIqH7uX2XrICwy9jdb5muY_KvoAKXNU";
+    // ------------------------------
 
     const userMsg = input;
     setInput('');
-    const currentMessages: Message[] = [...messages, { role: 'user', text: userMsg }];
-    setMessages(currentMessages);
+    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setLoading(true);
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ 
         model: "gemini-1.5-flash",
-        systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel. Tu aides pour le zona, l'eczéma, les brûlures et les douleurs de dos. Varie tes phrases. Si c'est grave, suggère un médecin. Réponds de manière concise.",
+        systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant à Alençon. Ton ton est calme et spirituel. Tu aides pour le zona, l'eczéma, les brûlures et le dos. Réponds de manière concise.",
       });
 
-      const chat = model.startChat({
-        history: currentMessages
-          .filter(m => !m.isError)
-          .slice(1, -1)
-          .map(m => ({
-            role: m.role === 'user' ? 'user' : 'model',
-            parts: [{ text: m.text }],
-          })),
-      });
-
-      const result = await chat.sendMessage(userMsg);
+      const result = await model.generateContent(userMsg);
       const response = await result.response;
       const responseText = response.text();
 
@@ -74,7 +53,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Le lien énergétique est perturbé. Vérifiez votre clé API dans les paramètres Vercel.",
+        text: "Une petite coupure énergétique... Réessayez dans un instant. (Erreur: " + (error.message || "Lien rompu") + ")",
         isError: true
       }]);
     } finally {
@@ -87,28 +66,53 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       <div className="flex-1 overflow-y-auto space-y-6 pr-4" ref={scrollRef}>
         {messages.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] p-6 rounded-[2rem] ${
-              m.role === 'user' ? 'bg-stone-900 text-white' : 'bg-white text-stone-800 border'
+            <div className={`max-w-[85%] md:max-w-[70%] p-6 rounded-[2rem] ${
+              m.role === 'user' 
+                ? 'bg-stone-900 text-white rounded-tr-none' 
+                : m.isError 
+                  ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none'
+                  : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
             }`}>
-              {m.isError && <AlertCircle size={20} className="mb-2 text-red-600" />}
-              <p className="whitespace-pre-line">{m.text}</p>
+              {m.isError && <AlertCircle size={20} className="mb-2 inline mr-2" />}
+              <p className="text-base leading-relaxed whitespace-pre-line">{m.text}</p>
             </div>
           </div>
         ))}
+        {loading && (
+          <div className="flex justify-start italic text-stone-400 text-sm">
+            Jean-François se connecte à votre message...
+          </div>
+        )}
       </div>
 
-      <div className="flex gap-4 p-2 bg-white rounded-[2.5rem] border shadow-lg">
-        <input 
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder="Posez votre question..."
-          className="flex-1 outline-none px-6 py-4"
-        />
-        <button onClick={handleSend} className="p-4 bg-indigo-600 text-white rounded-full">
-          <Send size={20} />
-        </button>
+      <div className="space-y-4">
+        <div className="flex gap-4 p-2 bg-white rounded-[2.5rem] items-center border border-stone-200 shadow-lg">
+          <input 
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            placeholder="Posez votre question..."
+            className="flex-1 bg-transparent border-none outline-none px-6 py-4"
+          />
+          <button 
+            onClick={handleSend}
+            disabled={!input.trim() || loading}
+            className="p-4 bg-indigo-600 text-white rounded-full disabled:opacity-30"
+          >
+            <Send size={20} />
+          </button>
+        </div>
+
+        <div className="flex justify-center">
+          <button 
+            onClick={onStartHealing}
+            className="flex items-center gap-2 px-6 py-3 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold"
+          >
+            <HeartHandshake size={18} />
+            <span>Passer à la demande de soin (Photo)</span>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -10,13 +10,12 @@ interface Message {
 
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: 'Bonjour, je suis Jean-François. Posez-moi vos questions sur vos douleurs ou votre besoin de soin. Comment puis-je vous aider aujourd\'hui ?' }
+    { role: 'model', text: 'Bonjour, je suis Jean-François. Comment puis-je vous aider aujourd\'hui ?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Défilement automatique vers le bas
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -26,9 +25,9 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
 
-    // --- ICI TU COLLERAS TA CLÉ ---
-    const apiKey ="AIzaSyD7FIqH7uX2XrICwy9jdb5muY_KvoAKXNU";
-    // ------------------------------
+    // --- COLLE TA CLÉ API CI-DESSOUS ---
+    const apiKey = "AIzaSyD7FIqH7uX2XrICwy9jdb5muY_KvoAKXNU";
+    // ----------------------------------
 
     const userMsg = input;
     setInput('');
@@ -53,7 +52,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: "Une petite coupure énergétique... Réessayez dans un instant. (Erreur: " + (error.message || "Lien rompu") + ")",
+        text: "La connexion est difficile en ce moment. Erreur : " + (error.message || "Lien rompu"),
         isError: true
       }]);
     } finally {
@@ -68,7 +67,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[85%] md:max-w-[70%] p-6 rounded-[2rem] ${
               m.role === 'user' 
-                ? 'bg-stone-900 text-white rounded-tr-none' 
+                ? 'bg-stone-900 text-white rounded-tr-none shadow-md' 
                 : m.isError 
                   ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none'
                   : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
@@ -79,14 +78,14 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
           </div>
         ))}
         {loading && (
-          <div className="flex justify-start italic text-stone-400 text-sm">
-            Jean-François se connecte à votre message...
+          <div className="flex justify-start italic text-stone-400 text-sm animate-pulse">
+            Jean-François se connecte...
           </div>
         )}
       </div>
 
       <div className="space-y-4">
-        <div className="flex gap-4 p-2 bg-white rounded-[2.5rem] items-center border border-stone-200 shadow-lg">
+        <div className="flex gap-4 p-2 bg-white rounded-[2.5rem] items-center border border-stone-200 shadow-xl">
           <input 
             type="text"
             value={input}
@@ -98,7 +97,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
           <button 
             onClick={handleSend}
             disabled={!input.trim() || loading}
-            className="p-4 bg-indigo-600 text-white rounded-full disabled:opacity-30"
+            className="p-4 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 disabled:opacity-30 transition-all"
           >
             <Send size={20} />
           </button>
@@ -107,10 +106,10 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
         <div className="flex justify-center">
           <button 
             onClick={onStartHealing}
-            className="flex items-center gap-2 px-6 py-3 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold"
+            className="flex items-center gap-2 px-6 py-3 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold hover:bg-indigo-100 transition-colors"
           >
             <HeartHandshake size={18} />
-            <span>Passer à la demande de soin (Photo)</span>
+            <span>Demander un soin sur photo</span>
           </button>
         </div>
       </div>

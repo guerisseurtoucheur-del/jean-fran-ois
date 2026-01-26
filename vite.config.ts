@@ -1,14 +1,11 @@
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
   define: {
-    // On laisse Vercel fournir la valeur dynamiquement si possible, 
-    // ou on l'injecte via une variable d'environnement de build
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || "")
+    // Cette ligne permet à Vite de reconnaître les variables process.env sur Vercel
+    'process.env': process.env 
   },
   build: {
     target: 'esnext',

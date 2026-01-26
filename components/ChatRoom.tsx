@@ -27,7 +27,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
 
     // --- LA SOLUTION DE SECOURS ---
     // On cherche dans import.meta.env (Vite) ET dans process.env (Vercel Node)
-    const apiKey = import.meta.env.VITE_API_KEY || (process.env.VITE_API_KEY as string);
+    const apiKey ="AIzaSyD7FIqH7uX2XrICwy9jdb5muY_KvoAKXNU" import.meta.env.VITE_API_KEY || (process.env.VITE_API_KEY as string);
     
     if (!apiKey) {
       setMessages(prev => [...prev, { role: 'user', text: input }]);

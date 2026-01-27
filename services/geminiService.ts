@@ -1,25 +1,22 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// On force la lecture de la variable VITE_API_KEY
-const apiKey = import.meta.env.VITE_API_KEY;
-
-const genAI = new GoogleGenerativeAI(apiKey || "");
-
 export const analyzeProject = async (files: any[]) => {
-  // TEST DE SÉCURITÉ
+  // On récupère la clé DIRECTEMENT à l'intérieur de la fonction
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   if (!apiKey) {
-    console.error("ERREUR : La variable VITE_API_KEY est vide !");
-    return "Erreur : La clé n'est pas détectée par le site.";
+    console.error("Clé introuvable dans import.meta.env");
+    return "Erreur : La clé VITE_API_KEY est introuvable. Vérifiez le Redeploy sur Vercel.";
   }
 
+  const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   try {
-    const result = await model.generateContent("Bonjour, es-tu prêt ?");
+    const result = await model.generateContent("Réponds par un seul mot : Connecté !");
     const response = await result.response;
     return response.text();
   } catch (error: any) {
-    console.error("Erreur Gemini détaillée:", error);
-    return "L'IA est connectée mais ne peut pas répondre : " + error.message;
+    return "Erreur Gemini : " + error.message;
   }
 };

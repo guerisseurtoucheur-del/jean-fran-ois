@@ -1,29 +1,25 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialisation avec la clé Vercel
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 
 export const analyzeProject = async (files: any[]) => {
-  // On utilise gemini-1.5-flash (le plus rapide et le moins sujet aux erreurs 429)
+  // On reste sur le 1.5-flash car c'est le seul qui accepte beaucoup de requêtes gratuites
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  // On limite l'analyse pour ne pas dépasser les quotas de caractères
-  const limitedFiles = files.slice(0, 3); // On ne prend que les 3 premiers fichiers
-  const filesContext = limitedFiles
-    .map((f) => `File: ${f.path}\nContent:\n${f.content.substring(0, 1000)}`) // On coupe le contenu trop long
-    .join("\n\n---\n\n");
-
-  const prompt = `Analyse courte de ces fichiers React : ${filesContext}`;
+  // ON RÉDUIT AU MAXIMUM : On ne prend que le 1er fichier et seulement les 500 premiers caractères
+  const firstFile = files[0];
+  const shortContent = firstFile ? firstFile.content.substring(0, 500) : "Pas de contenu";
+  
+  const prompt = `Fais un résumé de 2 lignes sur ce fichier : ${shortContent}`;
 
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     return response.text();
   } catch (error: any) {
-    console.error("Détail de l'erreur:", error);
-    if (error.status === 429) {
-      return "Désolé, Google limite les requêtes gratuites. Attends 1 minute et réessaie.";
-    }
-    return "Une erreur est survenue avec l'IA.";
+    console.error("Erreur Gemini:", error);
+    // Si tu vois encore 429, il faut vraiment attendre 5 minutes
+    if (error.status === 429) return "Google sature. Attends 5 min.";
+    return "Erreur de connexion.";
   }
 };

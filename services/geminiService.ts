@@ -1,30 +1,36 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// 1. Initialisation avec la clé configurée sur Vercel
-// On utilise import.meta.env pour que Vite puisse lire la clé en ligne
+/**
+ * CONFIGURATION :
+ * On utilise import.meta.env.VITE_API_KEY car c'est la seule syntaxe 
+ * que Vite accepte pour lire ta clé sur Vercel.
+ */
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 
 export const analyzeProject = async (files: any[]) => {
-  // 2. Utilisation du modèle 1.5-flash (le plus rapide et compatible)
-  // Même si tu vois "2.5" sur AI Studio, écris "1.5-flash" ici pour la stabilité
+  /**
+   * CHOIX DU MODÈLE :
+   * J'ai mis "gemini-1.5-flash". Même si tu vois 2.5 sur ton écran AI Studio, 
+   * dans le code, "1.5-flash" est le nom universel qui fonctionne partout 
+   * sans erreur de quota ou de timeout sur Vercel.
+   */
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  // Préparation du contexte avec les fichiers
+  // On prépare les fichiers pour que l'IA puisse les lire
   const filesContext = files
     .map((f) => `File: ${f.path}\nContent:\n${f.content}`)
     .join("\n\n---\n\n");
 
-  const prompt = `Analyse les fichiers suivants de mon projet React et fais un résumé :
+  const prompt = `Agis comme un expert React. Analyse ces fichiers et fais un résumé structuré :
     ${filesContext}`;
 
   try {
-    // 3. Appel à l'IA
     const result = await model.generateContent(prompt);
     const response = await result.response;
     return response.text();
   } catch (error) {
-    // Affiche l'erreur précise dans la console du navigateur pour le debug
-    console.error("Erreur détaillée Gemini:", error);
-    return "Désolé, une erreur est survenue lors de la connexion à l'IA.";
+    // Si ça plante, on affiche l'erreur dans la console pour comprendre pourquoi
+    console.error("Erreur Gemini détaillée:", error);
+    return "L'IA ne répond pas. Vérifie si ta clé VITE_API_KEY est bien configurée sur Vercel.";
   }
 };

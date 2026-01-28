@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout.tsx';
 import ChatRoom from './components/ChatRoom.tsx';

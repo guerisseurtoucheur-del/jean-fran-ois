@@ -24,7 +24,11 @@
         .animate-pulse-slow { animation: pulse-slow 4s infinite ease-in-out; }
     </style>
     <script>
-        window.process = { env: { NODE_ENV: 'production' } };
+        // Polyfill pour process.env pour une exécution directe ou compatible.
+        // Vite injectera ses propres variables d'environnement à la construction.
+        window.process = window.process || { env: {} };
+        // Si vous testez en local sans `vite dev`, vous pouvez définir manuellement l'API_KEY ici:
+        // window.process.env.API_KEY = "VOTRE_CLE_API_GEMINI_ICI";
     </script>
     <script type="importmap">
 {
@@ -34,11 +38,10 @@
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "@google/genai": "https://esm.sh/@google/genai",
     "lucide-react": "https://esm.sh/lucide-react@0.462.0?external=react",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
     "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "@google/generative-ai": "https://esm.sh/@google/generative-ai@^0.24.1"
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>

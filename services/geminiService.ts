@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectFile } from "../types";
 
@@ -17,7 +16,7 @@ export const analyzeProject = async (files: ProjectFile[]) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-3-flash-preview', // Modèle mis à jour
       contents: prompt,
       config: {
         responseMimeType: "application/json",

@@ -89,28 +89,37 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     setLoading(true);
     setError(null);
     try {
-      let fileToSend: Blob | File | null = formData.photoFile;
+      let fileToSend: File | null = null;
       if (formData.photoFile) {
         try {
-          fileToSend = await compressImage(formData.photoFile);
+          const blob = await compressImage(formData.photoFile);
+          // Conversion du Blob en objet File réel pour une compatibilité maximale avec FormSubmit
+          fileToSend = new File([blob], "photo.jpg", { type: "image/jpeg" });
         } catch (e) {
           console.error("Erreur compression", e);
+          fileToSend = formData.photoFile; // Repli sur le fichier original si la compression échoue
         }
       }
 
       const submissionData = new FormData();
+      
+      // On place les métadonnées techniques en premier
       submissionData.append("_subject", `✨ NOUVEAU SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
+      submissionData.append("_captcha", "false");
+      submissionData.append("_template", "table");
+      submissionData.append("_honey", "");
+
+      // Les données textes
       submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
       submissionData.append("Date de Naissance", formData.birthDate);
       submissionData.append("Email", formData.email);
       submissionData.append("Téléphone", formData.phone);
       submissionData.append("Message", formData.explanation);
+      
+      // La pièce jointe doit être l'un des DERNIERS éléments pour être bien traitée par FormSubmit via AJAX
       if (fileToSend) {
-        submissionData.append("attachment", fileToSend, "photo.jpg");
+        submissionData.append("attachment", fileToSend);
       }
-      submissionData.append("_captcha", "false");
-      submissionData.append("_template", "table");
-      submissionData.append("_honey", "");
 
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
@@ -126,7 +135,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       }
     } catch (err: any) {
       setLoading(false);
-      setError("Une erreur est survenue. Veuillez réessayer.");
+      setError("Une erreur est survenue lors de l'envoi de la photo. Vérifiez votre connexion.");
     }
   };
 
@@ -290,7 +299,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           </div>
           <div className="space-y-4">
             <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Demande Transmise</h2>
-            <p className="text-stone-500 max-w-sm mx-auto italic">
+            <p className="text-stone-500 max-sm mx-auto italic">
               Merci {formData.firstName}. Jean-François a bien reçu votre demande et va s'y connecter.
             </p>
           </div>

@@ -46,7 +46,8 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         img.src = event.target?.result as string;
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          const MAX_SIZE = 800; 
+          // Réduction de la taille pour un envoi plus fiable en 4G/5G
+          const MAX_SIZE = 600; 
           let width = img.width;
           let height = img.height;
           if (width > height) {
@@ -67,7 +68,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           canvas.toBlob((blob) => {
             if (blob) resolve(blob);
             else reject(new Error("Erreur compression"));
-          }, 'image/jpeg', 0.6);
+          }, 'image/jpeg', 0.5); // Qualité réduite pour alléger le fichier
         };
       };
       reader.onerror = (err) => reject(err);
@@ -89,37 +90,31 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     setLoading(true);
     setError(null);
     try {
-      let fileToSend: File | null = null;
+      const submissionData = new FormData();
+      
+      // CRITIQUE : Pour certains serveurs AJAX, le fichier doit être ajouté EN PREMIER 
+      // ou avec une signature très spécifique pour être bien détecté.
       if (formData.photoFile) {
         try {
           const blob = await compressImage(formData.photoFile);
-          // Conversion du Blob en objet File réel pour une compatibilité maximale avec FormSubmit
-          fileToSend = new File([blob], "photo.jpg", { type: "image/jpeg" });
+          // On utilise le blob directement avec un nom de fichier explicite
+          submissionData.append("attachment", blob, "photo_patient.jpg");
         } catch (e) {
-          console.error("Erreur compression", e);
-          fileToSend = formData.photoFile; // Repli sur le fichier original si la compression échoue
+          console.error("Erreur compression, envoi du fichier original", e);
+          submissionData.append("attachment", formData.photoFile);
         }
       }
 
-      const submissionData = new FormData();
-      
-      // On place les métadonnées techniques en premier
+      // Ajout des autres champs après le fichier
       submissionData.append("_subject", `✨ NOUVEAU SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
       submissionData.append("_captcha", "false");
       submissionData.append("_template", "table");
-      submissionData.append("_honey", "");
-
-      // Les données textes
+      
       submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
       submissionData.append("Date de Naissance", formData.birthDate);
       submissionData.append("Email", formData.email);
       submissionData.append("Téléphone", formData.phone);
       submissionData.append("Message", formData.explanation);
-      
-      // La pièce jointe doit être l'un des DERNIERS éléments pour être bien traitée par FormSubmit via AJAX
-      if (fileToSend) {
-        submissionData.append("attachment", fileToSend);
-      }
 
       const response = await fetch("https://formsubmit.co/ajax/guerisseurtoucheur@gmail.com", {
         method: "POST",
@@ -131,11 +126,13 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         setLoading(false);
         setStep(3);
       } else {
-        throw new Error("Erreur lors de l'envoi.");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erreur lors de l'envoi.");
       }
     } catch (err: any) {
       setLoading(false);
-      setError("Une erreur est survenue lors de l'envoi de la photo. Vérifiez votre connexion.");
+      console.error("Détails erreur envoi:", err);
+      setError("Le message est parti mais la photo a pu être bloquée par votre connexion. Réessayez avec une photo plus petite si possible.");
     }
   };
 

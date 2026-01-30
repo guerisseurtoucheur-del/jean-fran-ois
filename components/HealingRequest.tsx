@@ -46,7 +46,8 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         img.src = event.target?.result as string;
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          const MAX_SIZE = 800; // Taille standard
+          // On passe à 400px pour un fichier ultra-léger (< 50ko)
+          const MAX_SIZE = 400; 
           let width = img.width;
           let height = img.height;
           if (width > height) {
@@ -66,13 +67,13 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           ctx?.drawImage(img, 0, 0, width, height);
           canvas.toBlob((blob) => {
             if (blob) {
-              // On transforme le Blob en un vrai objet File pour FormSubmit
-              const finalFile = new File([blob], "photo_soin.jpg", { type: "image/jpeg" });
+              // Nom de fichier très simple pour éviter les erreurs de serveur
+              const finalFile = new File([blob], "photo.jpg", { type: "image/jpeg" });
               resolve(finalFile);
             } else {
               reject(new Error("Erreur compression"));
             }
-          }, 'image/jpeg', 0.7);
+          }, 'image/jpeg', 0.5);
         };
       };
       reader.onerror = (err) => reject(err);
@@ -96,26 +97,24 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     try {
       const submissionData = new FormData();
       
-      // Configuration technique de FormSubmit
-      submissionData.append("_subject", `✨ NOUVEAU SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
+      // Configuration pour FormSubmit
+      submissionData.append("_subject", `✨ SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
       submissionData.append("_captcha", "false");
       submissionData.append("_template", "table");
 
-      // Données du patient
+      // Données Patient
       submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
-      submissionData.append("Date de Naissance", formData.birthDate);
+      submissionData.append("Naissance", formData.birthDate);
       submissionData.append("Email", formData.email);
-      submissionData.append("Téléphone", formData.phone);
+      submissionData.append("Tel", formData.phone);
       submissionData.append("Message", formData.explanation);
 
-      // Traitement et ajout de la photo
+      // Le champ "attachment" est celui reconnu par FormSubmit
       if (formData.photoFile) {
         try {
           const processedFile = await compressImage(formData.photoFile);
-          // Le champ DOIT s'appeler "attachment" pour FormSubmit
           submissionData.append("attachment", processedFile);
         } catch (e) {
-          console.error("Erreur compression, envoi original", e);
           submissionData.append("attachment", formData.photoFile);
         }
       }
@@ -130,12 +129,11 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         setLoading(false);
         setStep(3);
       } else {
-        throw new Error("Erreur lors de l'envoi.");
+        throw new Error("Erreur serveur");
       }
     } catch (err: any) {
       setLoading(false);
-      console.error("Erreur:", err);
-      setError("Le message a été envoyé mais la photo n'a pas pu être jointe. Vérifiez vos paramètres FormSubmit (File Uploads).");
+      setError("Le texte est bien parti, mais pour recevoir la photo, vous devez activer l'option 'File Uploads' sur votre compte FormSubmit.");
     }
   };
 
@@ -253,7 +251,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500 relative z-10">
           <div className="text-center space-y-4">
             <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Votre Photo</h2>
-            <p className="text-stone-500 italic">Une photo nette sert de support pour le travail à distance.</p>
+            <p className="text-stone-500 italic text-sm">Une photo nette sert de support pour le travail à distance.</p>
           </div>
 
           <div 
@@ -272,9 +270,13 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           </div>
 
           {error && (
-            <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-sm flex items-center gap-3">
-              <AlertCircle size={18} />
-              {error}
+            <div className="p-4 bg-amber-50 text-amber-700 border border-amber-100 rounded-2xl text-[11px] leading-relaxed flex items-start gap-3">
+              <AlertCircle size={18} className="shrink-0 mt-0.5" />
+              <span>
+                <strong>Note importante :</strong> {error}
+                <br /><br />
+                <a href="https://formsubmit.co/login" target="_blank" rel="noreferrer" className="underline font-bold">Cliquez ici pour aller sur FormSubmit</a> et connectez-vous avec votre email pour vérifier vos réglages.
+              </span>
             </div>
           )}
 

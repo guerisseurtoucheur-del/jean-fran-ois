@@ -46,8 +46,8 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         img.src = event.target?.result as string;
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          // On passe à 400px pour un fichier ultra-léger (< 50ko)
-          const MAX_SIZE = 400; 
+          // Passage à 1200px pour une netteté optimale du soin
+          const MAX_SIZE = 1200; 
           let width = img.width;
           let height = img.height;
           if (width > height) {
@@ -67,13 +67,12 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           ctx?.drawImage(img, 0, 0, width, height);
           canvas.toBlob((blob) => {
             if (blob) {
-              // Nom de fichier très simple pour éviter les erreurs de serveur
-              const finalFile = new File([blob], "photo.jpg", { type: "image/jpeg" });
+              const finalFile = new File([blob], "photo_soin.jpg", { type: "image/jpeg" });
               resolve(finalFile);
             } else {
               reject(new Error("Erreur compression"));
             }
-          }, 'image/jpeg', 0.5);
+          }, 'image/jpeg', 0.7); // Augmentation de la qualité à 70%
         };
       };
       reader.onerror = (err) => reject(err);
@@ -98,18 +97,17 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
       const submissionData = new FormData();
       
       // Configuration pour FormSubmit
-      submissionData.append("_subject", `✨ SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
+      submissionData.append("_subject", `✨ NOUVEAU SOIN PHOTO : ${formData.firstName} ${formData.lastName}`);
       submissionData.append("_captcha", "false");
-      submissionData.append("_template", "table");
 
-      // Données Patient
+      // Données transmises au mail
       submissionData.append("Patient", `${formData.firstName} ${formData.lastName}`);
-      submissionData.append("Naissance", formData.birthDate);
+      submissionData.append("Date de naissance", formData.birthDate);
       submissionData.append("Email", formData.email);
-      submissionData.append("Tel", formData.phone);
-      submissionData.append("Message", formData.explanation);
+      submissionData.append("Téléphone", formData.phone);
+      submissionData.append("Message / Symptômes", formData.explanation);
 
-      // Le champ "attachment" est celui reconnu par FormSubmit
+      // Envoi de la photo
       if (formData.photoFile) {
         try {
           const processedFile = await compressImage(formData.photoFile);
@@ -129,11 +127,11 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
         setLoading(false);
         setStep(3);
       } else {
-        throw new Error("Erreur serveur");
+        throw new Error("Erreur serveur lors de l'envoi");
       }
     } catch (err: any) {
       setLoading(false);
-      setError("Le texte est bien parti, mais pour recevoir la photo, vous devez activer l'option 'File Uploads' sur votre compte FormSubmit.");
+      setError("Le message a bien été envoyé, mais les photos sont bloquées. Veuillez vérifier que l'option 'File Uploads' est bien activée sur votre compte FormSubmit.");
     }
   };
 
@@ -232,7 +230,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
                 value={formData.explanation}
                 onChange={(e) => setFormData({...formData, explanation: e.target.value})}
                 className="w-full bg-stone-50 border border-stone-100 rounded-3xl px-6 py-4 outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-sm resize-none"
-                placeholder="Ex: Zona, brûlure, douleurs..."
+                placeholder="Décrivez votre mal (Ex: Zona, brûlure, douleurs...)"
               />
             </div>
           </div>
@@ -275,7 +273,7 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
               <span>
                 <strong>Note importante :</strong> {error}
                 <br /><br />
-                <a href="https://formsubmit.co/login" target="_blank" rel="noreferrer" className="underline font-bold">Cliquez ici pour aller sur FormSubmit</a> et connectez-vous avec votre email pour vérifier vos réglages.
+                <a href="https://formsubmit.co/login" target="_blank" rel="noreferrer" className="underline font-bold">Connectez-vous ici</a> pour vérifier vos réglages "File Uploads".
               </span>
             </div>
           )}
@@ -302,17 +300,17 @@ const HealingRequest: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           <div className="space-y-4">
             <h2 className="text-4xl font-serif font-bold text-stone-900 leading-tight">Demande Transmise</h2>
             <p className="text-stone-500 max-sm mx-auto italic">
-              Merci {formData.firstName}. Jean-François a bien reçu votre demande et va s'y connecter.
+              Merci {formData.firstName}. J'ai bien reçu vos informations et je vais m'y connecter.
             </p>
           </div>
 
           <div className="p-8 bg-indigo-50 rounded-[2.5rem] border border-indigo-100 space-y-6">
              <div className="flex items-center gap-3 justify-center text-indigo-700">
                 <CreditCard size={24} />
-                <span className="font-bold uppercase tracking-widest text-xs">Finaliser votre démarche</span>
+                <span className="font-bold uppercase tracking-widest text-xs">Participation Libre</span>
              </div>
              <p className="text-sm text-stone-600 leading-relaxed">
-               Pour compléter votre soin, vous pouvez maintenant accéder à l'espace règlement pour effectuer votre participation libre.
+               Pour finaliser votre démarche, vous pouvez maintenant accéder à l'espace règlement.
              </p>
              <button 
                onClick={onSuccess}

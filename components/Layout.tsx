@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard, Wind, Clock, Users, Mail, ArrowDown, MapPin } from 'lucide-react';
+import MobileBottomNav from './MobileBottomNav.tsx';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -218,7 +219,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
         )}
       </header>
 
-      <main className="flex-1 pt-20 lg:pt-40">
+      <main className="flex-1 pt-20 lg:pt-40 pb-20 md:pb-0">
         {children}
       </main>
 
@@ -245,6 +246,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           </div>
         </div>
       </footer>
+      <MobileBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
   );
 };

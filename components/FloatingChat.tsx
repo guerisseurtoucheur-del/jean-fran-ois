@@ -79,7 +79,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[999] flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-[999] flex flex-col items-end pointer-events-none">
       {/* Fenêtre de Chat */}
       {isOpen && (
         <div className="mb-4 w-[calc(100vw-32px)] sm:w-[400px] h-[500px] max-h-[70vh] bg-white rounded-[2.5rem] shadow-2xl border border-stone-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300 pointer-events-auto">

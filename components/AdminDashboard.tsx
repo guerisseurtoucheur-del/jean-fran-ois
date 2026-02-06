@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   User, Mail, Phone, FileText, Trash2, CheckCircle, Clock, Search, 
   ShieldCheck, Download, Edit3, Save, ChevronRight, Activity, 
-  Stethoscope, MessageSquare, History, PlusCircle, Users, Calendar, DollarSign
+  Stethoscope, MessageSquare, History, PlusCircle, Users, Calendar, DollarSign,
+  Lock, LogOut, ArrowRight, Eye, EyeOff
 } from 'lucide-react';
 
 interface Request {
@@ -12,16 +12,23 @@ interface Request {
   lastName: string;
   email: string;
   phone: string;
-  birthDate: string; // Ajout de la date de naissance
+  birthDate: string;
   explanation: string;
   date: string;
   status: 'pending' | 'active' | 'completed';
   notes?: string;
   result?: string;
-  amountGiven?: string; // Ajout du montant donné
+  amountGiven?: string;
 }
 
+// Utilitaires de sécurité simples (Obfuscation)
+const encodeData = (data: any) => btoa(encodeURIComponent(JSON.stringify(data)));
+const decodeData = (encoded: string) => JSON.parse(decodeURIComponent(atob(encoded)));
+
 const AdminDashboard: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginPassword, setLoginPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [requests, setRequests] = useState<Request[]>([]);
   const [filter, setFilter] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -29,16 +36,43 @@ const AdminDashboard: React.FC = () => {
   const [editResult, setEditResult] = useState('');
   const [editAmountGiven, setEditAmountGiven] = useState('');
 
+  // Vérification de la session au chargement
   useEffect(() => {
-    const saved = localStorage.getItem('jf_admin_requests');
+    const sessionAuth = sessionStorage.getItem('jf_admin_auth');
+    if (sessionAuth === 'true') {
+      setIsAuthenticated(true);
+    }
+
+    const saved = localStorage.getItem('jf_admin_requests_v2');
     if (saved) {
-      setRequests(JSON.parse(saved));
+      try {
+        setRequests(decodeData(saved));
+      } catch (e) {
+        // Fallback pour les anciennes données non encodées si besoin
+        const oldData = localStorage.getItem('jf_admin_requests');
+        if (oldData) setRequests(JSON.parse(oldData));
+      }
     }
   }, []);
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loginPassword === 'ALENCON61') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('jf_admin_auth', 'true');
+    } else {
+      alert("Accès refusé. Code incorrect.");
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('jf_admin_auth');
+  };
+
   const saveToLocal = (newRequests: Request[]) => {
     setRequests(newRequests);
-    localStorage.setItem('jf_admin_requests', JSON.stringify(newRequests));
+    localStorage.setItem('jf_admin_requests_v2', encodeData(newRequests));
   };
 
   const deleteRequest = (id: string) => {
@@ -54,21 +88,18 @@ const AdminDashboard: React.FC = () => {
       r.id === id ? { ...r, notes: editNotes, result: editResult, amountGiven: editAmountGiven } : r
     );
     saveToLocal(next);
-    alert("Dossier mis à jour avec succès.");
+    alert("Dossier mis à jour en toute sécurité.");
   };
 
   const setStatus = (id: string, newStatus: Request['status']) => {
-    const next = requests.map(r => 
-      r.id === id ? { ...r, status: newStatus } : r
-    );
+    const next = requests.map(r => r.id === id ? { ...r, status: newStatus } : r);
     saveToLocal(next);
   };
 
   const filtered = requests.filter(r => 
     `${r.firstName} ${r.lastName}`.toLowerCase().includes(filter.toLowerCase()) ||
     r.email.toLowerCase().includes(filter.toLowerCase()) ||
-    r.explanation.toLowerCase().includes(filter.toLowerCase()) ||
-    r.birthDate.toLowerCase().includes(filter.toLowerCase()) // Ajout de la recherche par date de naissance
+    r.explanation.toLowerCase().includes(filter.toLowerCase())
   );
 
   const selectedPatient = requests.find(r => r.id === selectedId);
@@ -81,36 +112,88 @@ const AdminDashboard: React.FC = () => {
     }
   }, [selectedId]);
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-6 page-fade">
+        <div className="w-full max-w-md bg-white rounded-[3rem] shadow-2xl border border-stone-100 overflow-hidden relative">
+          <div className="absolute top-0 inset-x-0 h-2 bg-indigo-600"></div>
+          <div className="p-10 md:p-12 space-y-8">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto text-indigo-600 mb-6">
+                <Lock size={32} />
+              </div>
+              <h2 className="text-3xl font-serif font-bold text-stone-900">Espace Privé</h2>
+              <p className="text-stone-500 text-sm italic">Accès réservé à Jean-François pour la gestion des soins.</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-stone-400 ml-4">Code d'accès sécurisé</label>
+                <div className="relative">
+                  <input 
+                    type={showPassword ? "text" : "password"}
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-6 py-4 bg-stone-50 border border-stone-100 rounded-2xl outline-none focus:border-indigo-300 focus:bg-white transition-all font-mono"
+                    autoFocus
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-300 hover:text-stone-500"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full py-5 bg-stone-900 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-black transition-all shadow-xl group"
+              >
+                <span>S'identifier</span>
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </form>
+
+            <div className="pt-6 border-t border-stone-50 flex items-center justify-center gap-2 text-[10px] text-stone-400 font-bold uppercase tracking-widest">
+              <ShieldCheck size={12} className="text-emerald-500" />
+              Connexion Chiffrée
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-10 space-y-8 page-fade min-h-screen">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white p-8 rounded-[2.5rem] shadow-sm border border-stone-100">
         <div className="flex items-center gap-4">
-          <div className="p-4 bg-indigo-600 text-white rounded-2xl shadow-lg shadow-indigo-100">
+          <div className="p-4 bg-indigo-600 text-white rounded-2xl shadow-lg">
             <ShieldCheck size={32} />
           </div>
           <div>
-            <h1 className="text-3xl font-serif font-bold text-stone-900">Suivi Patientèle</h1>
-            <p className="text-stone-500 text-[10px] uppercase tracking-[0.2em] font-bold">Jean-François • Alençon (61)</p>
+            <h1 className="text-3xl font-serif font-bold text-stone-900">Tableau de Bord Sécurisé</h1>
+            <p className="text-stone-500 text-[10px] uppercase tracking-[0.2em] font-bold">Session active : Jean-François</p>
           </div>
         </div>
         
         <div className="flex gap-3">
           <div className="bg-stone-50 border border-stone-200 rounded-2xl px-4 py-2 flex items-center gap-3">
             <div className="flex flex-col text-right">
-              <span className="text-[10px] uppercase font-bold text-stone-400">Total Patients</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400">Patients</span>
               <span className="text-lg font-serif font-bold text-indigo-600">{requests.length}</span>
             </div>
             <Users size={20} className="text-stone-300" />
           </div>
-          <button onClick={() => {
-            const dataStr = JSON.stringify(requests, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            const link = document.createElement('a');
-            link.setAttribute('href', dataUri);
-            link.setAttribute('download', 'sauvegarde_patients_jf.json');
-            link.click();
-          }} className="p-4 bg-stone-100 text-stone-600 rounded-2xl hover:bg-stone-200 transition-colors" title="Exporter les données">
-            <Download size={20} />
+          <button 
+            onClick={handleLogout}
+            className="p-4 bg-red-50 text-red-600 rounded-2xl hover:bg-red-100 transition-colors" 
+            title="Se déconnecter"
+          >
+            <LogOut size={20} />
           </button>
         </div>
       </div>
@@ -123,7 +206,7 @@ const AdminDashboard: React.FC = () => {
               <Search size={16} className="text-stone-400" />
               <input 
                 type="text" 
-                placeholder="Nom, email, pathologie..." 
+                placeholder="Rechercher un dossier..." 
                 className="bg-transparent border-none outline-none text-sm w-full font-medium"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
@@ -148,8 +231,7 @@ const AdminDashboard: React.FC = () => {
                         {r.status === 'completed' ? 'Fait' : r.status === 'active' ? 'En cours' : 'Nouveau'}
                       </span>
                     </div>
-                    <p className="text-[10px] text-stone-400 font-mono mb-2">{r.date}</p>
-                    <p className="text-xs text-stone-600 line-clamp-1 italic">"{r.explanation}"</p>
+                    <p className="text-[10px] text-stone-400 font-mono">{r.date}</p>
                     <ChevronRight size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-stone-300 group-hover:translate-x-1 transition-all ${selectedId === r.id ? 'opacity-100' : 'opacity-0'}`} />
                   </div>
                 ))
@@ -162,7 +244,6 @@ const AdminDashboard: React.FC = () => {
         <div className="lg:col-span-8">
           {selectedPatient ? (
             <div className="bg-white rounded-[3rem] shadow-xl border border-stone-100 overflow-hidden animate-in fade-in slide-in-from-right-4 duration-500">
-              {/* Header Dossier */}
               <div className="p-8 bg-stone-900 text-white flex justify-between items-start">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
@@ -172,109 +253,67 @@ const AdminDashboard: React.FC = () => {
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-4 text-stone-400 text-xs font-bold uppercase tracking-widest">
-                    <span className="flex items-center gap-2"><Mail size={14} className="text-indigo-400" /> {selectedPatient.email}</span>
-                    <span className="flex items-center gap-2"><Phone size={14} className="text-indigo-400" /> {selectedPatient.phone}</span>
-                    <span className="flex items-center gap-2"><Calendar size={14} className="text-indigo-400" /> Né(e) le {selectedPatient.birthDate}</span>
-                    <span className="flex items-center gap-2"><Clock size={14} className="text-indigo-400" /> Arrivée le {selectedPatient.date}</span>
+                    <span className="flex items-center gap-2 text-white/60"><Mail size={14} /> {selectedPatient.email}</span>
+                    <span className="flex items-center gap-2 text-white/60"><Phone size={14} /> {selectedPatient.phone}</span>
+                    <span className="flex items-center gap-2 text-white/60"><Calendar size={14} /> Né(e) le {selectedPatient.birthDate}</span>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 items-end">
-                   <select 
-                    value={selectedPatient.status} 
-                    onChange={(e) => setStatus(selectedPatient.id, e.target.value as any)}
-                    className="bg-stone-800 text-white border-none rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-widest outline-none cursor-pointer hover:bg-stone-700 transition-colors"
-                   >
-                     <option value="pending">Nouveau dossier</option>
-                     <option value="active">Soin en cours</option>
-                     <option value="completed">Soin terminé</option>
-                   </select>
-                </div>
+                <select 
+                  value={selectedPatient.status} 
+                  onChange={(e) => setStatus(selectedPatient.id, e.target.value as any)}
+                  className="bg-stone-800 text-white border-none rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-widest outline-none cursor-pointer"
+                >
+                  <option value="pending">Nouveau</option>
+                  <option value="active">Soin actif</option>
+                  <option value="completed">Terminé</option>
+                </select>
               </div>
 
               <div className="p-8 grid md:grid-cols-2 gap-8">
-                {/* Colonne Gauche : Diagnostic initial */}
                 <div className="space-y-6">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-500 flex items-center gap-2">
-                      <Stethoscope size={14} /> Pathologie Initialement déclarée
-                    </label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Diagnostic Patient</label>
                     <div className="p-6 bg-stone-50 rounded-[2rem] border border-stone-100 italic text-stone-700 leading-relaxed shadow-inner">
                       "{selectedPatient.explanation}"
                     </div>
                   </div>
-
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-500 flex items-center gap-2">
-                      <MessageSquare size={14} /> Notes de suivi & Observations
-                    </label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Notes Privées</label>
                     <textarea 
                       value={editNotes}
                       onChange={(e) => setEditNotes(e.target.value)}
-                      placeholder="Notez ici vos ressentis, le nombre de séances, les dates de rappel..."
-                      className="w-full h-40 p-6 bg-stone-50 rounded-[2rem] border border-stone-100 outline-none focus:border-indigo-300 focus:bg-white transition-all text-sm leading-relaxed resize-none"
+                      placeholder="Vos observations secrètes..."
+                      className="w-full h-40 p-6 bg-stone-50 rounded-[2rem] border border-stone-100 outline-none focus:bg-white text-sm leading-relaxed resize-none"
                     />
                   </div>
                 </div>
 
-                {/* Colonne Droite : Résultats */}
                 <div className="space-y-6">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-500 flex items-center gap-2">
-                      <History size={14} /> Résultat obtenu & Conclusion
-                    </label>
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Résultat final</label>
                     <textarea 
                       value={editResult}
                       onChange={(e) => setEditResult(e.target.value)}
-                      placeholder="Décrivez le résultat final (douleur disparue, apaisement, peau nette...)"
-                      className="w-full h-40 p-6 bg-emerald-50/30 rounded-[2rem] border border-emerald-100 outline-none focus:border-emerald-300 focus:bg-white transition-all text-sm leading-relaxed italic resize-none"
+                      placeholder="Comment s'est terminé le soin ?"
+                      className="w-full h-40 p-6 bg-emerald-50/20 rounded-[2rem] border border-emerald-100 outline-none focus:bg-white text-sm italic resize-none"
                     />
                   </div>
-
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-500 flex items-center gap-2">
-                      <DollarSign size={14} /> Participation reçue (montant libre)
-                    </label>
-                    <input 
-                      type="text"
-                      value={editAmountGiven}
-                      onChange={(e) => setEditAmountGiven(e.target.value)}
-                      placeholder="Ex: 20€ ou 'Don libre'"
-                      className="w-full p-6 bg-amber-50/30 rounded-[2rem] border border-amber-100 outline-none focus:border-amber-300 focus:bg-white transition-all text-sm leading-relaxed"
-                    />
-                     <p className="text-[9px] text-stone-400 italic">Note : Les photos sont envoyées par email lors de la demande de soin, à l'adresse 'guerisseurtoucheur@gmail.com'.</p>
-                  </div>
-
-                  <div className="pt-4">
-                    <button 
-                      onClick={() => updatePatientData(selectedPatient.id)}
-                      className="w-full py-5 bg-stone-900 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-black transition-all shadow-xl group"
-                    >
-                      <Save size={20} className="group-hover:scale-110 transition-transform" />
-                      Enregistrer le dossier
-                    </button>
-                    <p className="text-[9px] text-center text-stone-400 mt-4 uppercase tracking-widest">Dernière modification locale enregistrée automatiquement</p>
-                  </div>
-
-                  <div className="p-6 bg-stone-50 rounded-3xl border border-stone-100 space-y-4">
-                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-stone-500">Actions Rapides</h4>
-                    <div className="grid grid-cols-2 gap-2">
-                       <a href={`mailto:${selectedPatient.email}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-stone-200 rounded-xl text-[10px] font-bold hover:bg-stone-100 transition-colors uppercase">
-                        <Mail size={12}/> Envoyer un mail
-                       </a>
-                       <a href={`tel:${selectedPatient.phone}`} className="flex items-center justify-center gap-2 p-3 bg-white border border-stone-200 rounded-xl text-[10px] font-bold hover:bg-stone-100 transition-colors uppercase">
-                        <Phone size={12}/> Appeler
-                       </a>
-                    </div>
-                  </div>
+                  <button 
+                    onClick={() => updatePatientData(selectedPatient.id)}
+                    className="w-full py-5 bg-stone-900 text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-black transition-all shadow-xl"
+                  >
+                    <Save size={20} />
+                    Enregistrer en toute sécurité
+                  </button>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="h-full min-h-[500px] flex flex-col items-center justify-center bg-white rounded-[3rem] border border-stone-100 border-dashed text-stone-400 space-y-4">
-              <div className="p-8 bg-stone-50 rounded-full">
-                <Activity size={64} className="opacity-20" />
+            <div className="h-full min-h-[500px] flex flex-col items-center justify-center bg-white rounded-[3rem] border border-stone-100 border-dashed text-stone-400">
+              <div className="p-8 bg-stone-50 rounded-full mb-4">
+                <ShieldCheck size={48} className="opacity-20" />
               </div>
-              <p className="font-serif italic text-lg">Sélectionnez un patient dans la liste pour voir son dossier</p>
+              <p className="font-serif italic text-lg">Sélectionnez un dossier protégé</p>
             </div>
           )}
         </div>

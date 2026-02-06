@@ -60,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Top Banner Discrète - Uniquement Info Flash */}
+      {/* Top Banner Discrète */}
       <div className={`bg-stone-950 text-white/50 py-1.5 px-6 text-[9px] font-bold uppercase tracking-[0.3em] flex justify-center items-center gap-8 z-[70] transition-all duration-500 ${scrolled ? '-translate-y-full opacity-0 h-0' : 'h-8'}`}>
         <div className="flex items-center gap-2">
           <span className="w-1 h-1 bg-indigo-500 rounded-full animate-pulse"></span>
@@ -74,21 +74,21 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
 
       {/* Header Unifié "Crystal" */}
       <header className={`fixed left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'top-0 py-2' : 'top-8 py-4 md:py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className={`flex items-center justify-between gap-8 px-6 h-16 md:h-20 rounded-[2rem] border transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-xl border-stone-100 shadow-xl' : 'bg-white/60 backdrop-blur-md border-white/20'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={`flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 h-16 md:h-20 rounded-[2rem] border transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-xl border-stone-100 shadow-xl' : 'bg-white/60 backdrop-blur-md border-white/20'}`}>
             
             {/* Logo Signature */}
             <div className="flex items-center gap-4 cursor-pointer group shrink-0" onClick={() => setActiveTab('home')}>
               <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-François</span>
+                <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-François</span>
                 <div className="flex items-center gap-1.5 mt-1">
                   <span className="w-3 h-px bg-indigo-400"></span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] font-extrabold text-indigo-500">Magnétiseur</span>
+                  <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] font-extrabold text-indigo-500">Magnétiseur</span>
                 </div>
               </div>
             </div>
 
-            {/* Navigation Bureau - Design Minimaliste */}
+            {/* Navigation Bureau */}
             <nav className="hidden xl:flex items-center gap-2">
               {navItems.map((item) => (
                 <button
@@ -106,7 +106,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
             </nav>
 
             {/* Actions & Status */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-emerald-500/5 rounded-full border border-emerald-500/10 text-[10px] font-bold text-emerald-600">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -115,13 +115,22 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
                 {liveUsers} en ligne
               </div>
 
-              <a href="tel:0955554462" className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-full text-[11px] font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 btn-glow">
+              <a href="tel:0955554462" className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-indigo-600 text-white rounded-full text-[10px] sm:text-[11px] font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 btn-glow">
                 <Phone size={14} />
                 <span className="hidden sm:inline">09.55.55.44.62</span>
               </a>
 
-              <button className="xl:hidden p-2 text-stone-900 hover:bg-stone-100 rounded-full transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {/* Nouveau bouton MENU stylisé pour Mobile */}
+              <button 
+                className={`xl:hidden flex items-center gap-2 px-4 py-2 rounded-full transition-all border ${isMenuOpen ? 'bg-stone-900 text-white border-stone-900 shadow-lg' : 'bg-white/80 text-stone-900 border-stone-200 shadow-sm'}`} 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{isMenuOpen ? 'Fermer' : 'Menu'}</span>
+                {isMenuOpen ? (
+                  <X size={16} className="animate-in spin-in-90 duration-300" />
+                ) : (
+                  <Wind size={16} className="text-indigo-500 animate-pulse" />
+                )}
               </button>
             </div>
           </div>
@@ -129,7 +138,10 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
 
         {/* Menu Mobile Amélioré */}
         {isMenuOpen && (
-          <div className="xl:hidden absolute top-24 left-6 right-6 bg-white/95 backdrop-blur-2xl rounded-[2.5rem] border border-stone-100 p-6 space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-300 z-[60]">
+          <div className="xl:hidden absolute top-24 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-[2.5rem] border border-stone-100 p-6 space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-300 z-[60]">
+            <div className="pb-4 border-b border-stone-50 mb-2">
+               <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-stone-400 text-center">Navigation Énergétique</p>
+            </div>
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -140,11 +152,14 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
                 {item.label}
               </button>
             ))}
+            <a href="tel:0955554462" className="flex items-center justify-center gap-3 w-full p-5 bg-stone-900 text-white rounded-2xl text-sm font-bold mt-4 shadow-xl">
+               <Phone size={18} />
+               Appeler le cabinet
+            </a>
           </div>
         )}
       </header>
 
-      {/* Ajustement du padding main pour compenser l'en-tête dynamique */}
       <main className="flex-1 transition-all duration-500">
         {children}
       </main>

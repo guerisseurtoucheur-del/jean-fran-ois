@@ -2,6 +2,7 @@
   "name": "Jean-François - Magnétiseur Guérisseur",
   "description": "Site professionnel pour Jean-François, magnétiseur guérisseur à Alençon. Demandes de soins par le souffle et magnétisme sur photo.",
   "requestFramePermissions": [
-    "camera"
+    "camera",
+    "geolocation"
   ]
 }

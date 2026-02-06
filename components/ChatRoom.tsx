@@ -1,11 +1,18 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI, Chat } from "@google/genai"; // Mis à jour: GoogleGenerativeAI -> GoogleGenAI
-import { Send, HeartHandshake, AlertCircle } from 'lucide-react';
+import { GoogleGenAI } from "@google/genai";
+import { Send, HeartHandshake, AlertCircle, MapPin, ExternalLink } from 'lucide-react';
+
+interface GroundingLink {
+  title: string;
+  uri: string;
+}
 
 interface Message {
   role: 'user' | 'model';
   text: string;
   isError?: boolean;
+  links?: GroundingLink[];
 }
 
 const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) => {
@@ -15,39 +22,46 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const chatRef = useRef<Chat | null>(null); // Référence pour l'objet de chat
+  const chatInstance = useRef<any>(null);
 
-  // Initialisation du chat Gemini une seule fois au montage du composant
-  useEffect(() => {
-    const apiKey = process.env.API_KEY;
-
-    if (!apiKey) {
-      console.error("API Key non configurée pour le chat.");
-      setMessages(prev => [...prev, {
-        role: 'model',
-        text: "⚠️ Erreur : Clé API introuvable. Veuillez contacter l'administrateur.",
-        isError: true
-      }]);
-      return;
-    }
-
-    const ai = new GoogleGenAI({ apiKey: apiKey });
-    
-    // Convertir l'historique initial pour le SDK
-    const initialHistoryForSdk = messages.map(m => ({
-      role: m.role,
-      parts: [{ text: m.text }],
-    }));
-
-    chatRef.current = ai.chats.create({
-      model: "gemini-3-flash-preview", // Modèle recommandé
-      history: initialHistoryForSdk, // Passer l'historique initial ici
-      config: {
-        systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant et humble basé à Alençon. Ton ton est calme, protecteur et spirituel. Tu aides pour le zona, l'eczéma, les brûlures et les douleurs de dos. Varie tes phrases. Si c'est grave, suggère un médecin. Réponds de manière concise.",
-      },
+  const getUserLocation = (): Promise<{latitude: number, longitude: number} | null> => {
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) return resolve(null);
+      navigator.geolocation.getCurrentPosition(
+        (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+        () => resolve(null),
+        { timeout: 5000 }
+      );
     });
+  };
 
-  }, []); // Exécuter une seule fois au montage
+  useEffect(() => {
+    const initChat = async () => {
+      const apiKey = process.env.API_KEY;
+      if (!apiKey) return;
+
+      const ai = new GoogleGenAI({ apiKey: apiKey });
+      const location = await getUserLocation();
+
+      chatInstance.current = ai.chats.create({
+        model: "gemini-2.5-flash",
+        history: [],
+        config: {
+          systemInstruction: "Tu es Jean-François, un magnétiseur guérisseur bienveillant basé à Alençon. Ton ton est calme. Tu aides pour le zona, l'eczéma et les douleurs de dos. Si on demande où tu te trouves, précise que tu es au Centre-ville d'Alençon (61000) et utilise l'outil Google Maps pour sourcer ta réponse.",
+          tools: [{ googleMaps: {} }, { googleSearch: {} }],
+          toolConfig: location ? {
+            retrievalConfig: {
+              latLng: {
+                latitude: location.latitude,
+                longitude: location.longitude
+              }
+            }
+          } : undefined
+        },
+      });
+    };
+    initChat();
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -56,7 +70,7 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
   }, [messages, loading]);
 
   const handleSend = async () => {
-    if (!input.trim() || loading || !chatRef.current) return;
+    if (!input.trim() || loading || !chatInstance.current) return;
 
     const userMsg = input;
     setInput('');
@@ -64,17 +78,31 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
     setLoading(true);
 
     try {
-      const result = await chatRef.current.sendMessage({ message: userMsg }); // Utiliser l'objet chat pour envoyer le message
-      const responseText = result.text; // Accès direct à la propriété .text
+      const result = await chatInstance.current.sendMessage({ message: userMsg });
+      
+      const groundingLinks: GroundingLink[] = [];
+      const chunks = result.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+      
+      chunks.forEach((chunk: any) => {
+        if (chunk.maps) {
+          groundingLinks.push({ title: chunk.maps.title || "Voir sur Google Maps", uri: chunk.maps.uri });
+        } else if (chunk.web) {
+          groundingLinks.push({ title: chunk.web.title || "Source Web", uri: chunk.web.uri });
+        }
+      });
 
-      if (responseText) {
-        setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+      if (result.text) {
+        setMessages(prev => [...prev, { 
+          role: 'model', 
+          text: result.text,
+          links: groundingLinks.length > 0 ? groundingLinks : undefined
+        }]);
       }
     } catch (error: any) {
       console.error("Erreur Chat:", error);
       setMessages(prev => [...prev, {
         role: 'model',
-        text: "Le lien énergétique est perturbé. Vérifiez votre clé API dans les paramètres Vercel.",
+        text: "Le lien énergétique est perturbé. Vérifiez votre connexion.",
         isError: true
       }]);
     } finally {
@@ -87,15 +115,35 @@ const ChatRoom: React.FC<{ onStartHealing: () => void }> = ({ onStartHealing }) 
       <div className="flex-1 overflow-y-auto space-y-6 pr-4" ref={scrollRef}>
         {messages.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] p-6 rounded-[2rem] ${
-              m.role === 'user' 
-                ? 'bg-stone-900 text-white rounded-tr-none shadow-md' 
-                : m.isError 
-                  ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none'
-                  : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
-            }`}>
-              {m.isError && <AlertCircle size={20} className="mb-2 inline mr-2" />}
-              <p className="whitespace-pre-line">{m.text}</p>
+            <div className="max-w-[85%] space-y-3">
+              <div className={`p-6 rounded-[2rem] ${
+                m.role === 'user' 
+                  ? 'bg-stone-900 text-white rounded-tr-none shadow-md' 
+                  : m.isError 
+                    ? 'bg-red-50 text-red-900 border border-red-200 rounded-tl-none'
+                    : 'bg-white text-stone-800 rounded-tl-none border border-stone-100 shadow-sm'
+              }`}>
+                {m.isError && <AlertCircle size={20} className="mb-2 inline mr-2" />}
+                <p className="whitespace-pre-line">{m.text}</p>
+              </div>
+              
+              {m.links && m.links.length > 0 && (
+                <div className="flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-2">
+                  {m.links.map((link, idx) => (
+                    <a 
+                      key={idx}
+                      href={link.uri}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-white border border-stone-100 rounded-xl text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors shadow-sm"
+                    >
+                      <MapPin size={14} />
+                      {link.title}
+                      <ExternalLink size={12} />
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         ))}

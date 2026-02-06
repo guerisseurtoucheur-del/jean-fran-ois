@@ -82,30 +82,41 @@ const App: React.FC = () => {
         return (
           <div className="page-fade">
             {/* Hero Section Optimisée SEO National */}
-            <section className="relative min-h-[90vh] flex items-center px-6 overflow-hidden bg-white">
+            <section className="relative min-h-[95vh] flex items-center px-6 overflow-hidden bg-white">
               <div className="energy-field w-96 h-96 bg-indigo-100 -top-20 -left-20"></div>
               <div className="energy-field w-[500px] h-[500px] bg-amber-50 -bottom-40 -right-20" style={{ animationDelay: '2s' }}></div>
 
               <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center relative z-10">
                 <div className="space-y-10">
-                  <div className="flex flex-col gap-4">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-indigo-600 text-white rounded-full w-fit shadow-lg shadow-indigo-100">
-                      <Globe size={14} className="animate-spin-slow" />
-                      <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Action Énergétique France Entière</span>
+                  <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-3">
+                      <div className="inline-flex items-center gap-3 px-4 py-2 bg-indigo-600 text-white rounded-full w-fit shadow-lg shadow-indigo-100">
+                        <Globe size={14} className="animate-spin-slow" />
+                        <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Action Énergétique France Entière</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-stone-400 text-xs font-medium">
+                        <MapPin size={14} className="text-indigo-500" />
+                        <span>Cabinet à Alençon (61) & <strong>Soins sur photo à distance</strong></span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-stone-400 text-xs font-medium">
-                      <MapPin size={14} className="text-indigo-500" />
-                      <span>Cabinet à Alençon (61) & <strong>Soins sur photo à distance</strong></span>
-                    </div>
+
+                    {/* La phrase emblématique de Jean-François */}
+                    <p className="text-2xl font-serif italic text-indigo-600 leading-relaxed border-l-4 border-indigo-100 pl-6 py-2 animate-in fade-in slide-in-from-left duration-1000">
+                      "L'énergie est le lien invisible <br/>
+                      qui nous unit tous : <br/>
+                      mon souffle vous rejoint."
+                    </p>
                   </div>
 
-                  <h1 className="text-6xl md:text-[80px] font-serif font-bold text-stone-900 leading-[0.9] tracking-tight">
+                  <h1 className="text-5xl md:text-[70px] font-serif font-bold text-stone-900 leading-[1] tracking-tight">
                     Le Souffle <br/>
-                    <span className="text-indigo-600 italic font-normal">sans frontières.</span>
+                    <span className="text-stone-400 italic font-normal">sans frontières.</span>
                   </h1>
+                  
                   <p className="text-xl text-stone-600 font-light max-w-lg leading-relaxed">
                     Jean-François, magnétiseur expert. Je soulage vos maux par le souffle et l'énergie, <strong>que vous soyez à Paris, Lyon, Marseille ou partout en France.</strong>
                   </p>
+                  
                   <div className="flex flex-col sm:flex-row gap-5 pt-4">
                     <button onClick={() => setActiveTab('healing')} className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all btn-glow flex items-center justify-center gap-3 group shadow-xl">
                       <span>Démarrer un soin sur photo</span>
@@ -241,4 +252,38 @@ const App: React.FC = () => {
             <section className="py-20 bg-stone-950 text-white/40">
               <div className="max-w-7xl mx-auto px-6">
                 <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-indigo-500">Rayonnement énergétique national</p>
-                
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                  {["Paris", "Lyon", "Marseille", "Toulouse", "Nice", "Nantes", "Montpellier", "Strasbourg", "Bordeaux", "Lille", "Rennes", "Reims", "Toulon", "Saint-Étienne", "Le Havre", "Grenoble", "Dijon", "Angers", "Villeurbanne", "Alençon", "Brest", "Le Mans", "Amiens", "Limoges"].map(city => (
+                    <div key={city} className="text-[10px] uppercase font-bold tracking-widest hover:text-white transition-colors cursor-default text-center border border-white/5 py-3 rounded-xl">
+                      Magnétiseur {city}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* CTA Final */}
+            <section className="py-24 bg-indigo-600 text-white overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+              <div className="max-w-4xl mx-auto px-6 text-center space-y-10 relative z-10">
+                <h2 className="text-4xl md:text-5xl font-serif font-bold italic">Prêt à retrouver votre équilibre ?</h2>
+                <div className="flex flex-col sm:flex-row justify-center gap-6">
+                   <button onClick={() => setActiveTab('healing')} className="px-12 py-6 bg-white text-indigo-600 rounded-3xl font-bold text-xl hover:shadow-2xl transition-all">Soin à distance immédiat</button>
+                </div>
+                <p className="text-indigo-200 text-sm font-medium">Jean-François traite chaque demande personnellement sous 24h.</p>
+              </div>
+            </section>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
+      {renderContent()}
+      <FloatingChat onNavigate={(tab) => setActiveTab(tab)} />
+    </Layout>
+  );
+};
+
+export default App;

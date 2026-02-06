@@ -124,8 +124,35 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      <button onClick={() => setIsOpen(!isOpen)} className={`relative w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 pointer-events-auto ${isOpen ? 'bg-stone-900 text-white' : 'bg-indigo-600 text-white'}`}>
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+      {/* Bouton avec effets énergétiques renforcés */}
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(79,70,229,0.5)] transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto group z-10
+          ${isOpen 
+            ? 'bg-stone-900 text-white' 
+            : 'bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 text-white ring-4 ring-white shadow-indigo-500/50'}`}
+      >
+        {/* Cercles d'énergie animés à l'extérieur */}
+        {!isOpen && (
+          <>
+            <span className="absolute -inset-2 rounded-full bg-indigo-400 animate-ping opacity-30"></span>
+            <span className="absolute -inset-4 rounded-full bg-indigo-600/10 animate-pulse"></span>
+          </>
+        )}
+        
+        <div className="relative z-20">
+          {isOpen ? (
+            <X size={32} className="animate-in zoom-in duration-300" />
+          ) : (
+            <div className="relative">
+              <MessageCircle size={32} className="group-hover:rotate-12 transition-transform duration-300" />
+              {/* Badge de notification animé */}
+              <span className="absolute -top-1 -right-1 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center animate-bounce shadow-lg">
+                 <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+              </span>
+            </div>
+          )}
+        </div>
       </button>
     </div>
   );

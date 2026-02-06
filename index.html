@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jean-François Magnétiseur Guérisseur à Distance | Soins Énergétiques sur Photo France Entière & Alençon</title>
-    <meta name="description" content="Jean-François, magnétiseur guérisseur, propose des soins énergétiques et du magnétisme sur photo à distance partout en France. Spécialisé en zona, eczéma, brûlures et douleurs de dos. Consultation sur place à Alençon.">
+    <title>Jean-François | Magnétiseur Guérisseur à Distance sur Photo - France Entière</title>
+    <meta name="description" content="Soin énergétique à distance par Jean-François, magnétiseur expert. Action immédiate sur photo partout en France pour zona, eczéma, brûlures et douleurs. Cabinet à Alençon.">
+    <meta name="keywords" content="magnétiseur à distance, guérisseur sur photo, soin énergétique france, coupeur de feu à distance, magnétisme zona photo, jean-françois magnétiseur">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <!-- Données Structurées JSON-LD pour SEO Local -->
+    <!-- Données Structurées JSON-LD Enrichies -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "name": "Jean-François - Magnétiseur Guérisseur Alençon",
+      "name": "Jean-François - Magnétiseur Guérisseur",
       "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
-      "@id": "",
       "url": "https://votre-site-vercel.app",
       "telephone": "+33955554462",
+      "description": "Expert en magnétisme et soins énergétiques sur photo à distance dans toute la France. Spécialiste zona, eczéma et douleurs chroniques.",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Centre ville",
@@ -28,28 +29,30 @@
         "addressRegion": "Normandie",
         "addressCountry": "FR"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 48.4326,
-        "longitude": 0.0913
+      "areaServed": {
+        "@type": "Country",
+        "name": "France"
       },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
-        ],
-        "opens": "09:00",
-        "closes": "19:00"
-      },
-      "sameAs": [
-        "https://www.facebook.com/magnetiseuralencon"
-      ],
-      "description": "Jean-François, magnétiseur guérisseur expert à Alençon. Soins énergétiques à distance sur photo partout en France pour zona, eczéma, brûlures et douleurs chroniques."
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Soins Énergétiques",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Soin sur photo à distance"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Coupeur de feu"
+            }
+          }
+        ]
+      }
     }
     </script>
 
@@ -63,14 +66,8 @@
         .btn-glow:hover { box-shadow: 0 0 25px rgba(79, 70, 229, 0.4); }
         .custom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 32px; height: 32px; background: white; border: 4px solid #6366f1; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: all 0.2s ease; }
         .custom-range::-webkit-slider-thumb:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
-        @keyframes float-energy { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { transform: translateY(-100px) translateX(20px); opacity: 0; } }
-        .animate-float-energy { animation: float-energy infinite ease-in-out; }
-        @keyframes pulse-slow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } }
-        .animate-pulse-slow { animation: pulse-slow 4s infinite ease-in-out; }
     </style>
-    <script>
-        window.process = window.process || { env: {} };
-    </script>
+    <script>window.process = { env: {} };</script>
     <script type="importmap">
 {
   "imports": {
@@ -79,10 +76,10 @@
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "@google/genai": "https://esm.sh/@google/genai",
     "lucide-react": "https://esm.sh/lucide-react@0.462.0?external=react",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
     "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
   }
 }
 </script>

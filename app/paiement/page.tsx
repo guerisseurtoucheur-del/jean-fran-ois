@@ -9,29 +9,14 @@ const donationAmounts = [10, 20, 30, 50, 100]
 export default function PaiementPage() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(30)
   const [customAmount, setCustomAmount] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
+  const handlePayPal = () => {
+    const amount = customAmount ? parseInt(customAmount) : selectedAmount
+    if (amount) {
+      window.open(`https://paypal.me/magnetiseur61/${amount}EUR`, '_blank')
+    }
   }
 
   const finalAmount = customAmount ? parseInt(customAmount) : selectedAmount
-
-  if (submitted) {
-    return (
-      <LayoutWrapper>
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle size={40} className="text-emerald-600" />
-          </div>
-          <h1 className="text-3xl font-serif font-bold text-stone-900 mb-4">Merci pour votre don !</h1>
-          <p className="text-stone-500 mb-4">Votre generosite permet a Jean-Francois de continuer a aider ceux qui en ont besoin.</p>
-          <p className="text-2xl font-bold text-indigo-600">{finalAmount} EUR</p>
-        </div>
-      </LayoutWrapper>
-    )
-  }
 
   return (
     <LayoutWrapper>
@@ -45,7 +30,7 @@ export default function PaiementPage() {
           <p className="text-stone-500 max-w-xl mx-auto">Les soins de Jean-Francois fonctionnent sur le principe du don libre. Donnez selon vos moyens et votre satisfaction.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl border border-stone-100 p-6 sm:p-10 space-y-8">
+        <div className="bg-white rounded-3xl shadow-xl border border-stone-100 p-6 sm:p-10 space-y-8">
           {/* Amount Selection */}
           <div>
             <label className="block text-sm font-bold text-stone-700 mb-4">Choisissez un montant</label>
@@ -120,18 +105,22 @@ export default function PaiementPage() {
           </div>
 
           <button
-            type="submit"
+            type="button"
+            onClick={handlePayPal}
             disabled={!finalAmount}
-            className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-4 bg-[#0070ba] text-white rounded-2xl font-bold text-lg hover:bg-[#005ea6] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <CreditCard size={20} />
-            Faire un don de {finalAmount || '...'} EUR
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.641.641 0 0 1 .633-.54h6.012c2.656 0 4.507 1.725 4.287 4.174-.2 2.22-1.984 3.895-4.65 3.895H8.89l-.95 5.46a.641.641 0 0 1-.633.54l-.232 4.088z"/>
+              <path d="M19.885 8.088c-.2 2.22-1.983 3.895-4.65 3.895h-2.336l-.95 5.46a.641.641 0 0 1-.633.54H8.07l-.232.268a.641.641 0 0 0 .633.74h3.258a.641.641 0 0 0 .633-.54l.026-.15.5-2.874.032-.174a.641.641 0 0 1 .633-.54h.399c2.587 0 4.611-1.05 5.203-4.087.247-1.268.119-2.327-.534-3.072a2.607 2.607 0 0 0-.736-.566z"/>
+            </svg>
+            Payer {finalAmount || '...'} EUR avec PayPal
           </button>
 
           <p className="text-center text-stone-400 text-sm">
-            Paiement securise par Stripe. Vos donnees bancaires ne sont jamais stockees.
+            Paiement securise par PayPal. Vous serez redirige vers PayPal pour finaliser votre don.
           </p>
-        </form>
+        </div>
 
         {/* Testimonial */}
         <div className="mt-10 bg-stone-50 rounded-2xl p-6 text-center">

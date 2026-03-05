@@ -84,12 +84,20 @@ export default function HomePage() {
             </div>
             
             <div className="relative hidden md:flex flex-col items-center">
-              {isClient && currentTime && (
+              {isClient ? (
                 <div className="mb-8 flex flex-col items-center">
                   <div className="flex items-center gap-3 bg-white border border-stone-100 px-6 py-3 rounded-full shadow-xl">
                     <Clock size={16} className="text-indigo-600" />
-                    <span className="text-stone-900 font-mono font-bold text-lg">{formattedTime}</span>
-                    <span className="text-stone-400 text-[10px] font-bold uppercase tracking-widest">{formattedDate}</span>
+                    <span className="text-stone-900 font-mono font-bold text-lg" suppressHydrationWarning>{formattedTime}</span>
+                    <span className="text-stone-400 text-[10px] font-bold uppercase tracking-widest" suppressHydrationWarning>{formattedDate}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="mb-8 flex flex-col items-center">
+                  <div className="flex items-center gap-3 bg-white border border-stone-100 px-6 py-3 rounded-full shadow-xl">
+                    <Clock size={16} className="text-indigo-600" />
+                    <span className="text-stone-900 font-mono font-bold text-lg">--:--:--</span>
+                    <span className="text-stone-400 text-[10px] font-bold uppercase tracking-widest">chargement...</span>
                   </div>
                 </div>
               )}

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import ChatWrapper from '@/components/ChatWrapper'
 
 export const metadata: Metadata = {
   title: 'Jean-Francois | Magnetiseur Guerisseur a Distance sur Photo - France Entiere',
@@ -56,6 +57,7 @@ export default function RootLayout({
       </head>
       <body className="bg-white text-stone-900">
         {children}
+        <ChatWrapper />
       </body>
     </html>
   )

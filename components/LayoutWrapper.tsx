@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, CreditCard, Clock, Users, Mail, MapPin, Sparkles } from 'lucide-react'
+import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, CreditCard, Clock, Mail, MapPin } from 'lucide-react'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
@@ -49,8 +49,10 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-4 cursor-pointer group shrink-0">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform">
-              <Sparkles className="text-white" size={20} />
+            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl overflow-hidden shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform">
+              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                <source src="/logo-video.mp4" type="video/mp4" />
+              </video>
             </div>
             <div className="flex flex-col">
               <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-Francois</span>
@@ -141,8 +143,10 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           <div className="grid md:grid-cols-4 gap-12">
             <div className="md:col-span-2 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center">
-                  <Sparkles className="text-white" size={24} />
+                <div className="w-14 h-14 rounded-2xl overflow-hidden">
+                  <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                    <source src="/logo-video.mp4" type="video/mp4" />
+                  </video>
                 </div>
                 <div>
                   <span className="text-2xl font-serif font-bold">Jean-Francois</span>

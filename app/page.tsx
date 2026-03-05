@@ -90,7 +90,15 @@ export default function HomePage() {
               </div>
 
               <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-2xl relative group border-8 border-stone-50 w-full max-w-md">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" alt="Energie a distance France" className="w-full h-full object-cover group-hover:scale-110 transition-all duration-[2000ms]" />
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl">
                   <h3 className="text-xl font-serif font-bold text-stone-800 mb-2">&quot;La distance est une illusion&quot;</h3>

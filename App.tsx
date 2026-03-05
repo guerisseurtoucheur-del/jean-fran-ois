@@ -7,6 +7,8 @@ import UserDashboard from './components/Dashboard.tsx';
 import Payment from './components/Payment.tsx';
 import FloatingChat from './components/FloatingChat.tsx';
 import AdminDashboard from './components/AdminDashboard.tsx';
+import CityPage from './components/CityPage.tsx';
+import { citiesData, getCityBySlug, citySlugList } from './data/cities.ts';
 import { Globe, MapPin, Zap, ShieldCheck, Phone, CheckCircle, Quote, Plus, Minus, BookOpen, Star, Wind, Users, Clock, Sparkles, Heart } from 'lucide-react';
 
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
@@ -52,6 +54,17 @@ const App: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Titres dynamiques pour les pages villes
+    if (activeTab.startsWith('city-')) {
+      const citySlug = activeTab.replace('city-', '');
+      const cityData = getCityBySlug(citySlug);
+      if (cityData) {
+        document.title = `Magnétiseur ${cityData.name} (${cityData.departmentCode}) | Guérisseur & Coupeur de Feu - Jean-François`;
+        return;
+      }
+    }
+    
     const titles: Record<string, string> = {
       home: "Jean-François | Magnétiseur à Distance Toute France & Alençon",
       chat: "Assistant Énergétique | Jean-François Magnétiseur",
@@ -72,6 +85,15 @@ const App: React.FC = () => {
   });
 
   const renderContent = () => {
+    // Vérifier si c'est une page ville
+    if (activeTab.startsWith('city-')) {
+      const citySlug = activeTab.replace('city-', '');
+      const cityData = getCityBySlug(citySlug);
+      if (cityData) {
+        return <CityPage city={cityData} onStartHealing={() => setActiveTab('healing')} />;
+      }
+    }
+
     switch (activeTab) {
       case 'chat': return <ChatRoom onStartHealing={() => setActiveTab('healing')} />;
       case 'healing': return <HealingRequest onSuccess={() => setActiveTab('payment')} />;
@@ -248,15 +270,19 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* City Grid SEO Renforcé */}
+            {/* City Grid SEO Renforcé - Liens vers pages dédiées */}
             <section className="py-20 bg-stone-950 text-white/40">
               <div className="max-w-7xl mx-auto px-6">
-                <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-indigo-500">Rayonnement énergétique national</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-indigo-500">Rayonnement énergétique national - Cliquez pour découvrir</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                  {["Paris", "Lyon", "Marseille", "Toulouse", "Nice", "Nantes", "Montpellier", "Strasbourg", "Bordeaux", "Lille", "Rennes", "Reims", "Toulon", "Saint-Étienne", "Le Havre", "Grenoble", "Dijon", "Angers", "Villeurbanne", "Alençon", "Brest", "Le Mans", "Amiens", "Limoges"].map(city => (
-                    <div key={city} className="text-[10px] uppercase font-bold tracking-widest hover:text-white transition-colors cursor-default text-center border border-white/5 py-3 rounded-xl">
-                      Magnétiseur {city}
-                    </div>
+                  {Object.values(citiesData).map(city => (
+                    <button 
+                      key={city.slug} 
+                      onClick={() => setActiveTab(`city-${city.slug}`)}
+                      className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-indigo-500 py-3 rounded-xl"
+                    >
+                      Magnétiseur {city.name}
+                    </button>
                   ))}
                 </div>
               </div>

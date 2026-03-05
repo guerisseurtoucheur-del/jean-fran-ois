@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Page d'accueil -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Pages principales -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/demande-soin</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/questions</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Ile-de-France -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-paris</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Pages villes - Auvergne-Rhone-Alpes -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-lyon</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-grenoble</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - PACA -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-marseille</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-nice</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-toulon</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Occitanie -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-toulouse</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-montpellier</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Nouvelle-Aquitaine -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-bordeaux</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Pages villes - Pays de la Loire -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-nantes</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-angers</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Bretagne -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-rennes</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-brest</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Hauts-de-France -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-lille</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-reims</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Grand Est -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-strasbourg</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Pages villes - Bourgogne-Franche-Comte -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-dijon</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pages villes - Normandie -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-le-havre</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-alencon</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+</urlset>

@@ -1,0 +1,11 @@
+# robots.txt - Jean-François Magnétiseur Guérisseur
+# https://www.jean-francois-magnetiseur-guerisseur.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.jean-francois-magnetiseur-guerisseur.com/sitemap.xml
+
+# Favoriser l'indexation rapide
+Crawl-delay: 1

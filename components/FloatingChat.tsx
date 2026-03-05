@@ -45,7 +45,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
     setLoading(true);
     
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '' });
       
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',

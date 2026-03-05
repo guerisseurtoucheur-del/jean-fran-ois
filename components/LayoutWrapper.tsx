@@ -49,11 +49,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-4 cursor-pointer group shrink-0">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl overflow-hidden shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform">
-              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                <source src="/logo-video.mp4" type="video/mp4" />
-              </video>
-            </div>
+            <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform object-cover" />
             <div className="flex flex-col">
               <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-Francois</span>
               <div className="flex items-center gap-1.5 mt-1">
@@ -143,11 +139,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           <div className="grid md:grid-cols-4 gap-12">
             <div className="md:col-span-2 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl overflow-hidden">
-                  <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                    <source src="/logo-video.mp4" type="video/mp4" />
-                  </video>
-                </div>
+                <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-14 h-14 rounded-2xl object-cover" />
                 <div>
                   <span className="text-2xl font-serif font-bold">Jean-Francois</span>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-indigo-400 font-bold">Magnetiseur Guerisseur</p>

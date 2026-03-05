@@ -239,10 +239,27 @@ const App: React.FC = () => {
             {/* Témoignages Section */}
             <section className="py-32 bg-white">
               <div className="max-w-7xl mx-auto px-6">
-                <div className="flex items-center gap-4 mb-16">
-                  <div className="h-px flex-1 bg-stone-100"></div>
-                  <h2 className="text-3xl font-serif font-bold italic text-stone-400">Paroles de patients (France Entière)</h2>
-                  <div className="h-px flex-1 bg-stone-100"></div>
+                <div className="flex flex-col items-center gap-6 mb-16">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="h-px flex-1 bg-stone-100"></div>
+                    <h2 className="text-3xl font-serif font-bold italic text-stone-400">Paroles de patients (France Entiere)</h2>
+                    <div className="h-px flex-1 bg-stone-100"></div>
+                  </div>
+                  <a 
+                    href="https://maps.app.goo.gl/7T8BscaocjerZRNWA" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-white border-2 border-stone-200 rounded-full hover:border-indigo-500 hover:shadow-lg transition-all group"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#4285F4"/>
+                      <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+                    </svg>
+                    <span className="font-bold text-stone-700 group-hover:text-indigo-600 transition-colors">Voir tous les avis Google</span>
+                    <div className="flex gap-0.5 text-amber-400">
+                      {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                    </div>
+                  </a>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                   {[

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { citiesData } from '@/data/cities'
 import CityPageContent from '@/components/CityPageContent'
 
-const city = citiesData['le-havre']
+const city = citiesData['lehavre']
 
 export const metadata: Metadata = {
   title: `Magnetiseur ${city.name} (${city.departmentCode}) | Guerisseur & Coupeur de Feu - Jean-Francois`,

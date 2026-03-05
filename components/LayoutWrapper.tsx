@@ -20,12 +20,12 @@ const navItems = [
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentTime, setCurrentTime] = useState(new Date())
   const [liveUsers, setLiveUsers] = useState(14)
   const [scrolled, setScrolled] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
+    setIsClient(true)
     const userTimer = setInterval(() => {
       setLiveUsers(prev => Math.max(8, Math.min(25, prev + Math.floor(Math.random() * 3) - 1)))
     }, 5000)
@@ -34,7 +34,6 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     window.addEventListener('scroll', handleScroll)
     
     return () => {
-      clearInterval(timer)
       clearInterval(userTimer)
       window.removeEventListener('scroll', handleScroll)
     }
@@ -81,10 +80,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
 
           {/* Actions */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
-            </div>
+            {isClient && (
+              <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
+              </div>
+            )}
             
             <a href="tel:0955554462" className="hidden sm:flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-all">
               <Phone size={14} />

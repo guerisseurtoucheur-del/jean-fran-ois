@@ -1,4 +1,15 @@
-import { CityData } from '../components/CityPage';
+export interface CityData {
+  name: string;
+  slug: string;
+  department: string;
+  departmentCode: string;
+  region: string;
+  population: string;
+  coordinates: { lat: number; lng: number };
+  nearbyAreas: string[];
+  localTestimonials: Array<{ name: string; text: string; condition: string }>;
+  specificConditions: string[];
+}
 
 export const citiesData: Record<string, CityData> = {
   // ILE-DE-FRANCE

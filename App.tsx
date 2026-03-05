@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom';
 import Layout from './components/Layout.tsx';
 import ChatRoom from './components/ChatRoom.tsx';
 import HealingRequest from './components/HealingRequest.tsx';
@@ -33,8 +34,29 @@ const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, ans
   );
 };
 
+// Composant wrapper pour la page ville
+const CityPageWrapper: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const slug = location.pathname.replace('/magnetiseur-', '');
+  const cityData = getCityBySlug(slug);
+  
+  useEffect(() => {
+    if (cityData) {
+      document.title = `Magnetiseur ${cityData.name} (${cityData.departmentCode}) | Guerisseur & Coupeur de Feu - Jean-Francois`;
+    }
+  }, [cityData]);
+  
+  if (!cityData) {
+    return <div className="p-10 text-center">Page non trouvee</div>;
+  }
+  
+  return <CityPage city={cityData} onStartHealing={() => navigate('/demande-soin')} />;
+};
+
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('home');
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Calcul du compteur dynamique : 6450 de base + 6 par semaine depuis le 01/01/2024
@@ -55,26 +77,16 @@ const App: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // Titres dynamiques pour les pages villes
-    if (activeTab.startsWith('city-')) {
-      const citySlug = activeTab.replace('city-', '');
-      const cityData = getCityBySlug(citySlug);
-      if (cityData) {
-        document.title = `Magnétiseur ${cityData.name} (${cityData.departmentCode}) | Guérisseur & Coupeur de Feu - Jean-François`;
-        return;
-      }
-    }
-    
-    const titles: Record<string, string> = {
-      home: "Jean-François | Magnétiseur à Distance Toute France & Alençon",
-      chat: "Assistant Énergétique | Jean-François Magnétiseur",
-      healing: "Soin sur Photo à Distance | France Entière",
-      payment: "Règlement Sécurisé | Jean-François",
-      dashboard: "Espace Patient | Jean-François",
-      admin: "Gestion des Soins | Accès Privé"
+    const pathTitles: Record<string, string> = {
+      '/': "Jean-Francois | Magnetiseur a Distance Toute France & Alencon",
+      '/questions': "Assistant Energetique | Jean-Francois Magnetiseur",
+      '/demande-soin': "Soin sur Photo a Distance | France Entiere",
+      '/paiement': "Reglement Securise | Jean-Francois",
+      '/espace-patient': "Espace Patient | Jean-Francois",
+      '/admin': "Gestion des Soins | Acces Prive"
     };
-    document.title = titles[activeTab] || "Jean-François Magnétiseur";
-  }, [activeTab]);
+    document.title = pathTitles[location.pathname] || "Jean-Francois Magnetiseur";
+  }, [location.pathname]);
 
   const formattedDate = currentTime.toLocaleDateString('fr-FR', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
@@ -84,24 +96,8 @@ const App: React.FC = () => {
     hour: '2-digit', minute: '2-digit', second: '2-digit'
   });
 
-  const renderContent = () => {
-    // Vérifier si c'est une page ville
-    if (activeTab.startsWith('city-')) {
-      const citySlug = activeTab.replace('city-', '');
-      const cityData = getCityBySlug(citySlug);
-      if (cityData) {
-        return <CityPage city={cityData} onStartHealing={() => setActiveTab('healing')} />;
-      }
-    }
-
-    switch (activeTab) {
-      case 'chat': return <ChatRoom onStartHealing={() => setActiveTab('healing')} />;
-      case 'healing': return <HealingRequest onSuccess={() => setActiveTab('payment')} />;
-      case 'payment': return <Payment />;
-      case 'dashboard': return <UserDashboard onStartHealing={() => setActiveTab('healing')} />;
-      case 'admin': return <AdminDashboard />;
-      default:
-        return (
+  const HomePage = () => {
+    return (
           <div className="page-fade">
             {/* Hero Section Optimisée SEO National */}
             <section className="relative min-h-[95vh] flex items-center px-6 overflow-hidden bg-white">
@@ -140,7 +136,7 @@ const App: React.FC = () => {
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-5 pt-4">
-                    <button onClick={() => setActiveTab('healing')} className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all btn-glow flex items-center justify-center gap-3 group shadow-xl">
+                    <button onClick={() => navigate('/demande-soin')} className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all btn-glow flex items-center justify-center gap-3 group shadow-xl">
                       <span>Démarrer un soin sur photo</span>
                       <Sparkles size={20} />
                     </button>
@@ -295,13 +291,13 @@ const App: React.FC = () => {
                 <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-indigo-500">Rayonnement énergétique national - Cliquez pour découvrir</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                   {Object.values(citiesData).map(city => (
-                    <button 
+                    <Link 
                       key={city.slug} 
-                      onClick={() => setActiveTab(`city-${city.slug}`)}
+                      to={`/magnetiseur-${city.slug}`}
                       className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-indigo-500 py-3 rounded-xl"
                     >
-                      Magnétiseur {city.name}
-                    </button>
+                      Magnetiseur {city.name}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -313,20 +309,34 @@ const App: React.FC = () => {
               <div className="max-w-4xl mx-auto px-6 text-center space-y-10 relative z-10">
                 <h2 className="text-4xl md:text-5xl font-serif font-bold italic">Prêt à retrouver votre équilibre ?</h2>
                 <div className="flex flex-col sm:flex-row justify-center gap-6">
-                   <button onClick={() => setActiveTab('healing')} className="px-12 py-6 bg-white text-indigo-600 rounded-3xl font-bold text-xl hover:shadow-2xl transition-all">Soin à distance immédiat</button>
+                   <button onClick={() => navigate('/demande-soin')} className="px-12 py-6 bg-white text-indigo-600 rounded-3xl font-bold text-xl hover:shadow-2xl transition-all">Soin a distance immediat</button>
                 </div>
                 <p className="text-indigo-200 text-sm font-medium">Jean-François traite chaque demande personnellement sous 24h.</p>
               </div>
             </section>
           </div>
         );
-    }
   };
 
   return (
-    <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
-      {renderContent()}
-      <FloatingChat onNavigate={(tab) => setActiveTab(tab)} />
+    <Layout activeTab={location.pathname} setActiveTab={(path) => navigate(path === 'home' ? '/' : `/${path}`)}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/questions" element={<ChatRoom onStartHealing={() => navigate('/demande-soin')} />} />
+        <Route path="/demande-soin" element={<HealingRequest onSuccess={() => navigate('/paiement')} />} />
+        <Route path="/paiement" element={<Payment />} />
+        <Route path="/espace-patient" element={<UserDashboard onStartHealing={() => navigate('/demande-soin')} />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        {/* Routes dynamiques pour toutes les villes */}
+        {Object.values(citiesData).map(city => (
+          <Route 
+            key={city.slug} 
+            path={`/magnetiseur-${city.slug}`} 
+            element={<CityPageWrapper />} 
+          />
+        ))}
+      </Routes>
+      <FloatingChat onNavigate={(path) => navigate(path === 'home' ? '/' : `/${path}`)} />
     </Layout>
   );
 };

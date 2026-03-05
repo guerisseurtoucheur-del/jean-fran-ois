@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, Globe, CreditCard, Wind, Clock, Users, Mail, ArrowDown, MapPin, Sparkles } from 'lucide-react';
 import MobileBottomNav from './MobileBottomNav.tsx';
 
@@ -10,6 +11,8 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [liveUsers, setLiveUsers] = useState(14);
@@ -44,19 +47,21 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
     setClickCount(newCount);
     if (newCount >= 5) {
       setClickCount(0);
-      setActiveTab('admin');
+      navigate('/admin');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setTimeout(() => setClickCount(0), 2000);
   };
 
   const navItems = [
-    { id: 'home', label: 'Accueil', icon: Home },
-    { id: 'chat', label: 'Questions', icon: MessageCircle },
-    { id: 'healing', label: 'Soin Photo', icon: Heart },
-    { id: 'payment', label: 'Règlement', icon: CreditCard },
-    { id: 'dashboard', label: 'Mon Espace', icon: LayoutDashboard },
+    { id: '/', label: 'Accueil', icon: Home },
+    { id: '/questions', label: 'Questions', icon: MessageCircle },
+    { id: '/demande-soin', label: 'Soin Photo', icon: Heart },
+    { id: '/paiement', label: 'Reglement', icon: CreditCard },
+    { id: '/espace-patient', label: 'Mon Espace', icon: LayoutDashboard },
   ];
+  
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -78,30 +83,30 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
           <div className={`flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 h-16 md:h-20 rounded-[2rem] border transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-xl border-stone-100 shadow-xl' : 'bg-white/60 backdrop-blur-md border-white/20'}`}>
             
             {/* Logo Signature */}
-            <div className="flex items-center gap-4 cursor-pointer group shrink-0" onClick={() => setActiveTab('home')}>
+            <Link to="/" className="flex items-center gap-4 cursor-pointer group shrink-0">
               <div className="flex flex-col">
-                <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-François</span>
+                <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-Francois</span>
                 <div className="flex items-center gap-1.5 mt-1">
                   <span className="w-3 h-px bg-indigo-400"></span>
-                  <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] font-extrabold text-indigo-500">Magnétiseur</span>
+                  <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] font-extrabold text-indigo-500">Magnetiseur</span>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Navigation Bureau */}
             <nav className="hidden xl:flex items-center gap-2">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all relative group ${activeTab === item.id ? 'text-indigo-600 bg-indigo-50/50' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'}`}
+                  to={item.id}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all relative group ${isActive(item.id) ? 'text-indigo-600 bg-indigo-50/50' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'}`}
                 >
-                  <item.icon size={14} className={activeTab === item.id ? 'text-indigo-600' : 'text-stone-300 group-hover:text-stone-500'} />
+                  <item.icon size={14} className={isActive(item.id) ? 'text-indigo-600' : 'text-stone-300 group-hover:text-stone-500'} />
                   <span className="text-[10px] font-bold uppercase tracking-widest">{item.label}</span>
-                  {activeTab === item.id && (
+                  {isActive(item.id) && (
                     <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-indigo-600 rounded-full"></span>
                   )}
-                </button>
+                </Link>
               ))}
             </nav>
 
@@ -143,14 +148,15 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
                <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-stone-400 text-center">Navigation Énergétique</p>
             </div>
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => { setActiveTab(item.id); setIsMenuOpen(false); }}
-                className={`flex items-center gap-4 w-full p-4 rounded-2xl text-base font-bold transition-all ${activeTab === item.id ? 'bg-indigo-600 text-white shadow-xl' : 'text-stone-600 bg-stone-50/50 hover:bg-stone-50'}`}
+                to={item.id}
+                onClick={() => setIsMenuOpen(false)}
+                className={`flex items-center gap-4 w-full p-4 rounded-2xl text-base font-bold transition-all ${isActive(item.id) ? 'bg-indigo-600 text-white shadow-xl' : 'text-stone-600 bg-stone-50/50 hover:bg-stone-50'}`}
               >
-                <item.icon size={20} className={activeTab === item.id ? 'text-white' : 'text-indigo-400'} />
+                <item.icon size={20} className={isActive(item.id) ? 'text-white' : 'text-indigo-400'} />
                 {item.label}
-              </button>
+              </Link>
             ))}
             <a href="tel:0955554462" className="flex items-center justify-center gap-3 w-full p-5 bg-stone-900 text-white rounded-2xl text-sm font-bold mt-4 shadow-xl">
                <Phone size={18} />

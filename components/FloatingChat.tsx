@@ -64,13 +64,12 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
         if (chunk.maps) groundingLinks.push({ title: "Localisation", uri: chunk.maps.uri });
       });
 
-      if (response.text) {
-        setMessages(prev => [...prev, { 
-          role: 'model', 
-          text: response.text,
-          links: groundingLinks.length > 0 ? groundingLinks : undefined
-        }]);
-      }
+      const responseText = response.text || "Je n'ai pas pu générer une réponse. Veuillez réessayer.";
+      setMessages(prev => [...prev, { 
+        role: 'model', 
+        text: responseText,
+        links: groundingLinks.length > 0 ? groundingLinks : undefined
+      }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'model', text: "Une petite coupure d'énergie... réessayez." }]);
     } finally {

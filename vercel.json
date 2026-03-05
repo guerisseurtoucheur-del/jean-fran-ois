@@ -1,5 +1,11 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/magnetiseur-:city", "destination": "/index.html" },
+    { "source": "/demande-soin", "destination": "/index.html" },
+    { "source": "/questions", "destination": "/index.html" },
+    { "source": "/paiement", "destination": "/index.html" },
+    { "source": "/espace-patient", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }

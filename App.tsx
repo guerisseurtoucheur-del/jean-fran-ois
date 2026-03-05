@@ -255,10 +255,12 @@ const App: React.FC = () => {
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#4285F4"/>
                       <circle cx="12" cy="9" r="2.5" fill="#fff"/>
                     </svg>
-                    <span className="font-bold text-stone-700 group-hover:text-indigo-600 transition-colors">Voir tous les avis Google</span>
+                    <span className="font-bold text-stone-700 group-hover:text-indigo-600 transition-colors">Voir les avis Google</span>
+                    <span className="text-amber-500 font-bold">5/5</span>
                     <div className="flex gap-0.5 text-amber-400">
                       {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
                     </div>
+                    <span className="text-stone-400 text-sm">(3 avis)</span>
                   </a>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">

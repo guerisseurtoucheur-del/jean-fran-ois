@@ -7,19 +7,50 @@ import Link from 'next/link'
 
 export default function DemandeSoinPage() {
   const [formData, setFormData] = useState({
+    prenom: '',
     nom: '',
+    dateNaissance: '',
     email: '',
     telephone: '',
     probleme: '',
     details: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [photo, setPhoto] = useState<File | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Simulate submission
-    setSubmitted(true)
+    setIsSubmitting(true)
+    
+    try {
+      const formDataToSend = new FormData()
+      formDataToSend.append('prenom', formData.prenom)
+      formDataToSend.append('nom', formData.nom)
+      formDataToSend.append('dateNaissance', formData.dateNaissance)
+      formDataToSend.append('email', formData.email)
+      formDataToSend.append('telephone', formData.telephone)
+      formDataToSend.append('probleme', formData.probleme)
+      formDataToSend.append('details', formData.details)
+      if (photo) {
+        formDataToSend.append('photo', photo)
+      }
+      
+      const response = await fetch('/api/demande-soin', {
+        method: 'POST',
+        body: formDataToSend
+      })
+      
+      if (response.ok) {
+        setSubmitted(true)
+      } else {
+        alert('Erreur lors de l\'envoi. Veuillez reessayer.')
+      }
+    } catch (error) {
+      alert('Erreur lors de l\'envoi. Veuillez reessayer.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +124,21 @@ export default function DemandeSoinPage() {
           {/* Form Fields */}
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-stone-700 mb-2">Nom complet</label>
+              <label className="block text-sm font-bold text-stone-700 mb-2">Prenom</label>
+              <div className="relative">
+                <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                <input
+                  type="text"
+                  required
+                  value={formData.prenom}
+                  onChange={(e) => setFormData({...formData, prenom: e.target.value})}
+                  className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Jean"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-stone-700 mb-2">Nom</label>
               <div className="relative">
                 <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
                 <input
@@ -102,36 +147,49 @@ export default function DemandeSoinPage() {
                   value={formData.nom}
                   onChange={(e) => setFormData({...formData, nom: e.target.value})}
                   className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="Jean Dupont"
+                  placeholder="Dupont"
                 />
               </div>
             </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-stone-700 mb-2">Email</label>
+              <label className="block text-sm font-bold text-stone-700 mb-2">Date de naissance</label>
+              <input
+                type="date"
+                required
+                value={formData.dateNaissance}
+                onChange={(e) => setFormData({...formData, dateNaissance: e.target.value})}
+                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-stone-700 mb-2">Telephone</label>
               <div className="relative">
-                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
                 <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  type="tel"
+                  value={formData.telephone}
+                  onChange={(e) => setFormData({...formData, telephone: e.target.value})}
                   className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="jean@exemple.fr"
+                  placeholder="06 12 34 56 78"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-stone-700 mb-2">Telephone</label>
+            <label className="block text-sm font-bold text-stone-700 mb-2">Email</label>
             <div className="relative">
-              <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+              <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
               <input
-                type="tel"
-                value={formData.telephone}
-                onChange={(e) => setFormData({...formData, telephone: e.target.value})}
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="06 12 34 56 78"
+                placeholder="jean@exemple.fr"
               />
             </div>
           </div>
@@ -172,10 +230,11 @@ export default function DemandeSoinPage() {
 
           <button
             type="submit"
-            className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all flex items-center justify-center gap-3"
+            disabled={isSubmitting}
+            className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send size={20} />
-            Envoyer ma demande
+            {isSubmitting ? 'Envoi en cours...' : 'Envoyer ma demande'}
           </button>
 
           <p className="text-center text-stone-400 text-sm">

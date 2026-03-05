@@ -232,6 +232,13 @@ export default function HomePage() {
             <p className="text-indigo-200 text-sm font-medium">Jean-Francois traite chaque demande personnellement sous 24h.</p>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="py-8 bg-stone-950 text-stone-500">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <p className="text-xs">SIRET : 344 616 412 00062 | TVA intracommunautaire : FR6534461641200062</p>
+          </div>
+        </footer>
       </div>
     </LayoutWrapper>
   )

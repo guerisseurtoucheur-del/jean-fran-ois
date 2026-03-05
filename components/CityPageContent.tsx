@@ -4,21 +4,9 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { MapPin, Phone, Star, CheckCircle, ArrowRight, Shield, Clock, Zap, Heart, Users, Award, Sparkles, Plus, Minus } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
+import { CityData } from '@/data/cities'
 
-interface CityData {
-  name: string
-  slug: string
-  department: string
-  departmentCode: string
-  region: string
-  population: string
-  coordinates: { lat: number; lng: number }
-  nearbyAreas: string[]
-  localTestimonials: Array<{ name: string; text: string; condition: string }>
-  specificConditions: string[]
-}
-
-interface CityPageClientProps {
+interface CityPageContentProps {
   city: CityData
 }
 
@@ -44,7 +32,7 @@ const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, ans
   )
 }
 
-export default function CityPageClient({ city }: CityPageClientProps) {
+export default function CityPageContent({ city }: CityPageContentProps) {
   return (
     <LayoutWrapper>
       <div className="page-fade">
@@ -55,7 +43,6 @@ export default function CityPageClient({ city }: CityPageClientProps) {
           </div>
           
           <div className="max-w-6xl mx-auto relative z-10">
-            {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-indigo-200 text-sm mb-8">
               <Link href="/" className="hover:text-white transition-colors">Accueil</Link>
               <span>/</span>
@@ -235,19 +222,19 @@ export default function CityPageClient({ city }: CityPageClientProps) {
             <div className="bg-stone-50 rounded-3xl p-8">
               <FAQItem 
                 question={`Comment se deroule un soin a distance pour ${city.name} ?`}
-                answer={`C'est tres simple : vous m'envoyez votre photo via le formulaire de demande de soin. Je me connecte ensuite a votre energie pour effectuer le soin. La distance n'est pas un obstacle - l'energie ne connait pas de frontieres. Les habitants de ${city.name} ressentent souvent les effets dans l'heure qui suit.`}
+                answer={`C'est tres simple : vous m'envoyez votre photo via le formulaire de demande de soin. Je me connecte ensuite a votre energie pour effectuer le soin. La distance n'est pas un obstacle.`}
               />
               <FAQItem 
                 question="Etes-vous disponible en urgence ?"
-                answer="Oui, pour les brulures et zonas qui necessitent une intervention rapide en tant que coupeur de feu, je reponds dans les meilleurs delais. N'hesitez pas a appeler directement au 09 55 55 44 62."
+                answer="Oui, pour les brulures et zonas qui necessitent une intervention rapide, je reponds dans les meilleurs delais. Appelez au 09 55 55 44 62."
               />
               <FAQItem 
-                question={`Intervenez-vous aussi sur les villes autour de ${city.name} ?`}
-                answer={`Absolument ! J'interviens pour tous les habitants de ${city.region} : ${city.nearbyAreas.join(', ')}, et bien plus. Le soin a distance fonctionne partout en France.`}
+                question={`Intervenez-vous sur les villes autour de ${city.name} ?`}
+                answer={`Absolument ! J'interviens pour ${city.nearbyAreas.join(', ')}, et toute la France. Le soin a distance fonctionne partout.`}
               />
               <FAQItem 
                 question="Quel est le tarif d'une seance ?"
-                answer="Je fonctionne sur la base du don libre. Chacun donne selon ses moyens et sa satisfaction. L'important est votre bien-etre."
+                answer="Je fonctionne sur la base du don libre. Chacun donne selon ses moyens et sa satisfaction."
               />
             </div>
           </div>

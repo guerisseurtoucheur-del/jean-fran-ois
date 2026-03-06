@@ -65,6 +65,27 @@ export default function HomePage() {
               </div>
             </div>
             
+            {/* Video sur mobile */}
+            <div className="md:hidden w-full mt-8">
+              <div className="aspect-video bg-stone-100 rounded-3xl overflow-hidden shadow-xl relative">
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  webkit-playsinline="true"
+                  className="w-full h-full object-cover"
+                >
+                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4 p-4 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl">
+                  <h3 className="text-base font-serif font-bold text-stone-800">&quot;La distance est une illusion&quot;</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Video sur desktop */}
             <div className="relative hidden md:flex flex-col items-center">
               <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-2xl relative group border-8 border-stone-50 w-full max-w-md">
                 <video 
@@ -72,6 +93,7 @@ export default function HomePage() {
                   loop 
                   muted 
                   playsInline
+                  webkit-playsinline="true"
                   className="w-full h-full object-cover"
                 >
                   <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />

@@ -1,0 +1,69 @@
+# Robots.txt pour Jean-Francois Magnetiseur Guerisseur
+# Optimise pour SEO, GEO (IA), AEO (Assistants vocaux), GSO (Recherche globale)
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.jean-francois-magnetiseur-guerisseur.com/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# ChatGPT / OpenAI
+User-agent: GPTBot
+Allow: /
+
+# Google Bard / Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Claude / Anthropic
+User-agent: anthropic-ai
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Apple Siri / Spotlight
+User-agent: Applebot
+Allow: /
+
+# Amazon Alexa
+User-agent: Amazonbot
+Allow: /
+
+# Common AI Crawlers
+User-agent: CCBot
+Allow: /
+User-agent: cohere-ai
+Allow: /
+
+# Social Media
+User-agent: Twitterbot
+Allow: /
+User-agent: LinkedInBot
+Allow: /
+User-agent: Pinterest
+Allow: /
+User-agent: TikTok
+Allow: /
+
+# Disallow private areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /scripts/

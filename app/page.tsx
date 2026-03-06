@@ -239,6 +239,52 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* FAQ Section - AEO Optimized */}
+        <section className="py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-serif font-bold text-stone-900 mb-4">Questions Frequentes</h2>
+              <p className="text-stone-500">Reponses aux questions les plus posees sur le magnetisme a distance</p>
+            </div>
+            <div className="space-y-6">
+              {[
+                {
+                  q: "Comment fonctionne le soin a distance sur photo ?",
+                  a: "Vous envoyez une photo recente de votre visage via le formulaire. Jean-Francois se connecte a votre energie et realise le soin. L'effet est souvent ressenti dans l'heure, quelle que soit la distance."
+                },
+                {
+                  q: "Qu'est-ce qu'un coupeur de feu ?",
+                  a: "Un coupeur de feu est un guerisseur capable de soulager instantanement la douleur des brulures par imposition des mains ou a distance. Jean-Francois pratique cette technique reconnue meme dans certains hopitaux."
+                },
+                {
+                  q: "Le magnetisme peut-il soulager un zona ?",
+                  a: "Oui, le magnetisme est particulierement efficace sur le zona. Jean-Francois traite de nombreux cas de zona a distance avec des resultats rapides sur la douleur et l'evolution des lesions."
+                },
+                {
+                  q: "Combien coute un soin energetique a distance ?",
+                  a: "Jean-Francois pratique le don libre. Vous donnez selon vos moyens et votre satisfaction apres le soin via PayPal."
+                },
+                {
+                  q: "Ou se trouve le cabinet de Jean-Francois ?",
+                  a: "Le cabinet est situe a Alencon (61) en Normandie. Mais grace aux soins sur photo, Jean-Francois intervient partout en France : Paris, Lyon, Marseille, Toulouse, Nice, Nantes, Bordeaux, Lille..."
+                },
+                {
+                  q: "Quels problemes peuvent etre traites a distance ?",
+                  a: "Zona, brulures (coupeur de feu), eczema, douleurs chroniques (dos, articulations), troubles du sommeil, stress et anxiete. Le magnetisme agit sur de nombreux maux."
+                }
+              ].map((faq, i) => (
+                <details key={i} className="group bg-stone-50 rounded-2xl p-6 cursor-pointer hover:bg-stone-100 transition-all">
+                  <summary className="flex justify-between items-center font-bold text-stone-900 list-none">
+                    <span>{faq.q}</span>
+                    <span className="text-indigo-600 group-open:rotate-45 transition-transform text-2xl">+</span>
+                  </summary>
+                  <p className="mt-4 text-stone-600 leading-relaxed">{faq.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CTA Final */}
         <section className="py-24 bg-indigo-600 text-white overflow-hidden relative">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -mr-48 -mt-48"></div>

@@ -134,6 +134,9 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
             </Link>
           )}
 
+          <div className="px-3 py-2 bg-amber-50 border-t border-amber-100">
+            <p className="text-[9px] text-amber-700 text-center">Le magnetisme ne remplace pas la medecine. Consultez toujours votre medecin en priorite.</p>
+          </div>
           <div className="p-2 sm:p-4 bg-white border-t border-stone-100">
             <div className="flex gap-2 bg-stone-50 p-1 rounded-full border border-stone-200">
               <input 

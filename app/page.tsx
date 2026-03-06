@@ -310,7 +310,8 @@ export default function HomePage() {
 
         {/* Footer */}
         <footer className="py-8 bg-stone-950 text-stone-500">
-          <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="max-w-7xl mx-auto px-6 text-center space-y-3">
+            <p className="text-xs text-amber-500/80">Le magnetisme est une pratique complementaire qui ne remplace pas la medecine conventionnelle. Consultez toujours votre medecin en priorite.</p>
             <p className="text-xs">SIRET : 344 616 412 00062 | TVA intracommunautaire : FR6534461641200062</p>
           </div>
         </footer>

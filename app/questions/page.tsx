@@ -133,6 +133,11 @@ export default function QuestionsPage() {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Disclaimer */}
+          <div className="px-4 py-2 bg-amber-50 border-t border-amber-100">
+            <p className="text-[10px] text-amber-700 text-center">Le magnetisme ne remplace pas la medecine. Consultez toujours votre medecin en priorite.</p>
+          </div>
+
           {/* Input */}
           <form onSubmit={handleSubmit} className="border-t border-stone-100 p-4">
             <div className="flex gap-3">

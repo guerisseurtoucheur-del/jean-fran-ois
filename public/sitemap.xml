@@ -157,4 +157,62 @@
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
+  
+  <!-- Pages par probleme/symptome -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-zona</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/coupeur-de-feu</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-eczema</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-douleurs-dos</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/magnetiseur-stress-anxiete</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Blog -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/blog</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/blog/magnetisme-zona-traitement-naturel</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/blog/coupeur-de-feu-brulures-tradition</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/blog/soin-energetique-distance-photo-comment-ca-marche</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

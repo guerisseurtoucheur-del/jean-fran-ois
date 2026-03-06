@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { MessageCircle, X, Send, Sparkles, Loader2, Minus, Heart, ArrowRight, MapPin, ExternalLink, Globe } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, Loader2, Minus, Heart, ArrowRight, MapPin, ExternalLink, Globe, FileText } from 'lucide-react';
+import Link from 'next/link';
 
 interface GroundingLink {
   title: string;
@@ -113,6 +114,25 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
             ))}
             {loading && <div className="text-stone-400 text-[10px] animate-pulse italic">Jean-François réfléchit...</div>}
           </div>
+
+          {/* Bandeau incitation formulaire */}
+          {hasInteracted && !loading && (
+            <Link 
+              href="/demande-soin" 
+              className="mx-4 mb-2 p-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-2xl flex items-center justify-between gap-3 hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                  <FileText size={18} />
+                </div>
+                <div>
+                  <p className="font-bold text-sm">Pret pour un soin ?</p>
+                  <p className="text-[10px] opacity-90">Envoyez votre photo maintenant</p>
+                </div>
+              </div>
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          )}
 
           <div className="p-4 bg-white border-t border-stone-100">
             <div className="flex gap-2 bg-stone-50 p-1 rounded-full border border-stone-200">

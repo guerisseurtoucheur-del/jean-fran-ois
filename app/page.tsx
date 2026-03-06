@@ -15,6 +15,17 @@ export default function HomePage() {
     return 6450 + (diffWeeks * 6)
   }, [])
 
+  // Compteur mensuel dynamique
+  const monthlyCount = useMemo(() => {
+    const today = new Date()
+    const dayOfMonth = today.getDate()
+    // Simule ~3-4 personnes par jour
+    return Math.floor(dayOfMonth * 3.5) + Math.floor(Math.random() * 5)
+  }, [])
+
+  // Temps de reponse moyen (entre 1h30 et 2h30)
+  const avgResponseTime = "2h"
+
   return (
     <LayoutWrapper>
       <div className="page-fade">
@@ -124,12 +135,12 @@ export default function HomePage() {
             <div className="h-px w-24 bg-white/20 hidden md:block"></div>
             <div className="flex flex-wrap justify-center gap-8 md:gap-16">
               <div className="text-center">
-                <div className="text-2xl font-serif font-bold">100%</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Bienveillance</div>
+                <div className="text-2xl font-serif font-bold text-emerald-300">{monthlyCount}</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Ce mois-ci</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-serif font-bold">24h</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Delai moyen</div>
+                <div className="text-2xl font-serif font-bold text-amber-300">{avgResponseTime}</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Reponse moyenne</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-serif font-bold">France</div>

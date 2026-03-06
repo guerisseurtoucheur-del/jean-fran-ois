@@ -80,9 +80,9 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           {/* Actions */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             {isClient && (
-              <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-emerald-50 border border-emerald-100 rounded-full">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
+                <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
               </div>
             )}
             

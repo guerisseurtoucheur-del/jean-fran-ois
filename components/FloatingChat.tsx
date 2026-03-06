@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { MessageCircle, X, Send, Sparkles, Loader2, Minus, Heart, ArrowRight, MapPin, ExternalLink, Globe } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, Loader2, Minus, Heart, ArrowRight, MapPin, ExternalLink, Globe, FileText } from 'lucide-react';
+import Link from 'next/link';
 
 interface GroundingLink {
   title: string;
@@ -78,21 +79,21 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-[999] flex flex-col items-end pointer-events-none">
+    <div className="fixed bottom-20 right-3 md:bottom-6 md:right-6 z-[999] flex flex-col items-end pointer-events-none">
       {isOpen && (
-        <div className="mb-4 w-[calc(100vw-32px)] sm:w-[400px] h-[550px] bg-white rounded-[2.5rem] shadow-2xl border border-stone-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 pointer-events-auto">
-          <div className="p-6 bg-indigo-600 text-white flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <Globe size={18} className="animate-pulse" />
+        <div className="mb-3 w-[calc(100vw-24px)] sm:w-[400px] h-[calc(100vh-140px)] sm:h-[550px] max-h-[600px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl border border-stone-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 pointer-events-auto">
+          <div className="p-4 sm:p-6 bg-indigo-600 text-white flex justify-between items-center">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Globe size={16} className="animate-pulse" />
               <div>
-                <p className="font-serif font-bold text-sm">Assistant Jean-François</p>
-                <p className="text-[9px] uppercase tracking-widest font-bold opacity-70">Expertise France Entière</p>
+                <p className="font-serif font-bold text-xs sm:text-sm">Assistant Jean-François</p>
+                <p className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold opacity-70">Expertise France Entière</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X size={18} /></button>
+            <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors active:bg-white/20"><X size={18} /></button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-stone-50" ref={scrollRef}>
+          <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4 bg-stone-50 overscroll-contain" ref={scrollRef}>
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className="max-w-[90%] space-y-2">
@@ -114,10 +115,42 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
             {loading && <div className="text-stone-400 text-[10px] animate-pulse italic">Jean-François réfléchit...</div>}
           </div>
 
-          <div className="p-4 bg-white border-t border-stone-100">
+          {/* Bandeau incitation formulaire */}
+          {hasInteracted && !loading && (
+            <Link 
+              href="/demande-soin" 
+              className="mx-2 sm:mx-4 mb-2 p-2 sm:p-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-between gap-2 sm:gap-3 hover:from-emerald-600 hover:to-emerald-700 active:from-emerald-700 active:to-emerald-800 transition-all shadow-lg group"
+            >
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                  <FileText size={16} />
+                </div>
+                <div>
+                  <p className="font-bold text-xs sm:text-sm">Pret pour un soin ?</p>
+                  <p className="text-[9px] sm:text-[10px] opacity-90">Envoyez votre photo maintenant</p>
+                </div>
+              </div>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform flex-shrink-0" />
+            </Link>
+          )}
+
+          <div className="p-2 sm:p-4 bg-white border-t border-stone-100">
             <div className="flex gap-2 bg-stone-50 p-1 rounded-full border border-stone-200">
-              <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} placeholder="Votre question sur le soin à distance..." className="flex-1 bg-transparent px-4 py-3 outline-none text-xs" />
-              <button onClick={handleSend} disabled={loading} className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all"><Send size={14} /></button>
+              <input 
+                value={input} 
+                onChange={(e) => setInput(e.target.value)} 
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
+                placeholder="Votre question..." 
+                className="flex-1 bg-transparent px-3 sm:px-4 py-3 outline-none text-xs min-w-0" 
+                autoComplete="off"
+              />
+              <button 
+                onClick={handleSend} 
+                disabled={loading} 
+                className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 active:bg-indigo-800 transition-all flex-shrink-0 touch-manipulation"
+              >
+                <Send size={14} />
+              </button>
             </div>
           </div>
         </div>
@@ -126,7 +159,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
       {/* Bouton avec effets énergétiques renforcés */}
       <button 
         onClick={() => setIsOpen(!isOpen)} 
-        className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(79,70,229,0.5)] transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto group z-10
+        className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(79,70,229,0.5)] transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto group z-10 touch-manipulation
           ${isOpen 
             ? 'bg-stone-900 text-white' 
             : 'bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 text-white ring-4 ring-white shadow-indigo-500/50'}`}
@@ -141,13 +174,13 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
         
         <div className="relative z-20">
           {isOpen ? (
-            <X size={32} className="animate-in zoom-in duration-300" />
+            <X size={24} className="sm:w-8 sm:h-8 animate-in zoom-in duration-300" />
           ) : (
             <div className="relative">
-              <MessageCircle size={32} className="group-hover:rotate-12 transition-transform duration-300" />
+              <MessageCircle size={24} className="sm:w-8 sm:h-8 group-hover:rotate-12 transition-transform duration-300" />
               {/* Badge de notification animé */}
-              <span className="absolute -top-1 -right-1 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center animate-bounce shadow-lg">
-                 <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+              <span className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center animate-bounce shadow-lg">
+                 <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse"></span>
               </span>
             </div>
           )}

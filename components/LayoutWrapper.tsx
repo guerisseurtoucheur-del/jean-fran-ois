@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, CreditCard, Clock, Mail, MapPin } from 'lucide-react'
+import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, CreditCard, Clock, Mail, MapPin, BookOpen } from 'lucide-react'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
@@ -11,6 +11,7 @@ interface LayoutWrapperProps {
 
 const navItems = [
   { id: '/', label: 'Accueil', icon: Home },
+  { id: '/blog', label: 'Blog', icon: BookOpen },
   { id: '/questions', label: 'Questions', icon: MessageCircle },
   { id: '/demande-soin', label: 'Soin Photo', icon: Heart },
   { id: '/paiement', label: 'Reglement', icon: CreditCard },

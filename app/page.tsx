@@ -65,22 +65,18 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Video sur mobile */}
+            {/* Image sur mobile */}
             <div className="md:hidden w-full mt-8">
-              <div className="aspect-video bg-stone-100 rounded-3xl overflow-hidden shadow-xl relative">
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  webkit-playsinline="true"
+              <div className="aspect-square bg-stone-100 rounded-3xl overflow-hidden shadow-xl relative">
+                <img 
+                  src="/logo.png" 
+                  alt="Jean-Francois Magnetiseur Guerisseur" 
                   className="w-full h-full object-cover"
-                >
-                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />
-                </video>
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4 p-4 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl">
                   <h3 className="text-base font-serif font-bold text-stone-800">&quot;La distance est une illusion&quot;</h3>
+                  <p className="text-stone-500 text-xs italic mt-1">Mon travail energetique vous rejoint instantanement.</p>
                 </div>
               </div>
             </div>

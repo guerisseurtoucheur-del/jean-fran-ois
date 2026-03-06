@@ -156,6 +156,14 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
         </div>
       )}
 
+      {/* Bulle au-dessus du bouton */}
+      {!isOpen && (
+        <div className="mb-2 px-4 py-2 bg-white rounded-2xl shadow-lg border border-stone-100 pointer-events-auto animate-bounce relative">
+          <p className="text-xs font-bold text-stone-800">Une question ?</p>
+          <div className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-r border-b border-stone-100 transform rotate-45"></div>
+        </div>
+      )}
+
       {/* Bouton avec effets énergétiques renforcés */}
       <button 
         onClick={() => setIsOpen(!isOpen)} 

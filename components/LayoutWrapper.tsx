@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, CreditCard, Clock, Users, Mail, MapPin, Sparkles } from 'lucide-react'
+import { Menu, X, Phone, Heart, MessageCircle, Home, LayoutDashboard, CreditCard, Clock, Mail, MapPin } from 'lucide-react'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
@@ -20,12 +20,12 @@ const navItems = [
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentTime, setCurrentTime] = useState(new Date())
   const [liveUsers, setLiveUsers] = useState(14)
   const [scrolled, setScrolled] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
+    setIsClient(true)
     const userTimer = setInterval(() => {
       setLiveUsers(prev => Math.max(8, Math.min(25, prev + Math.floor(Math.random() * 3) - 1)))
     }, 5000)
@@ -34,7 +34,6 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     window.addEventListener('scroll', handleScroll)
     
     return () => {
-      clearInterval(timer)
       clearInterval(userTimer)
       window.removeEventListener('scroll', handleScroll)
     }
@@ -50,9 +49,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-4 cursor-pointer group shrink-0">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform">
-              <Sparkles className="text-white" size={20} />
-            </div>
+            <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform object-cover" />
             <div className="flex flex-col">
               <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-Francois</span>
               <div className="flex items-center gap-1.5 mt-1">
@@ -81,10 +78,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
 
           {/* Actions */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
-            </div>
+            {isClient && (
+              <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
+              </div>
+            )}
             
             <a href="tel:0955554462" className="hidden sm:flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-all">
               <Phone size={14} />
@@ -140,9 +139,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           <div className="grid md:grid-cols-4 gap-12">
             <div className="md:col-span-2 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center">
-                  <Sparkles className="text-white" size={24} />
-                </div>
+                <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-14 h-14 rounded-2xl object-cover" />
                 <div>
                   <span className="text-2xl font-serif font-bold">Jean-Francois</span>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-indigo-400 font-bold">Magnetiseur Guerisseur</p>

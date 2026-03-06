@@ -1,14 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
-import { Globe, MapPin, Zap, ShieldCheck, Phone, Star, Wind, Clock, Sparkles, Heart } from 'lucide-react'
+import { Globe, MapPin, Zap, ShieldCheck, Phone, Star, Wind, Sparkles, Heart } from 'lucide-react'
 import { citiesData } from '@/data/cities'
 import LayoutWrapper from '@/components/LayoutWrapper'
 
 export default function HomePage() {
-  const [currentTime, setCurrentTime] = useState(new Date())
-
   const relievedCount = useMemo(() => {
     const startDate = new Date('2024-01-01')
     const today = new Date()
@@ -16,19 +14,6 @@ export default function HomePage() {
     const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7))
     return 6450 + (diffWeeks * 6)
   }, [])
-
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const formattedDate = currentTime.toLocaleDateString('fr-FR', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-  })
-
-  const formattedTime = currentTime.toLocaleTimeString('fr-FR', {
-    hour: '2-digit', minute: '2-digit', second: '2-digit'
-  })
 
   return (
     <LayoutWrapper>
@@ -81,16 +66,16 @@ export default function HomePage() {
             </div>
             
             <div className="relative hidden md:flex flex-col items-center">
-              <div className="mb-8 flex flex-col items-center">
-                <div className="flex items-center gap-3 bg-white border border-stone-100 px-6 py-3 rounded-full shadow-xl">
-                  <Clock size={16} className="text-indigo-600" />
-                  <span className="text-stone-900 font-mono font-bold text-lg">{formattedTime}</span>
-                  <span className="text-stone-400 text-[10px] font-bold uppercase tracking-widest">{formattedDate}</span>
-                </div>
-              </div>
-
               <div className="aspect-[4/5] bg-stone-100 rounded-[5rem] overflow-hidden shadow-2xl relative group border-8 border-stone-50 w-full max-w-md">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" alt="Energie a distance France" className="w-full h-full object-cover group-hover:scale-110 transition-all duration-[2000ms]" />
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl">
                   <h3 className="text-xl font-serif font-bold text-stone-800 mb-2">&quot;La distance est une illusion&quot;</h3>
@@ -247,6 +232,13 @@ export default function HomePage() {
             <p className="text-indigo-200 text-sm font-medium">Jean-Francois traite chaque demande personnellement sous 24h.</p>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="py-8 bg-stone-950 text-stone-500">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <p className="text-xs">SIRET : 344 616 412 00062 | TVA intracommunautaire : FR6534461641200062</p>
+          </div>
+        </footer>
       </div>
     </LayoutWrapper>
   )

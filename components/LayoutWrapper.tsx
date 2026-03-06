@@ -61,15 +61,15 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           </Link>
 
           {/* Navigation Bureau */}
-          <nav className="hidden xl:flex items-center gap-2">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.id}
                 href={item.id}
-                className={`flex items-center gap-2 px-4 py-2 rounded-2xl transition-all relative group ${isActive(item.id) ? 'text-indigo-600 bg-indigo-50/50' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'}`}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all relative group ${isActive(item.id) ? 'text-indigo-600 bg-indigo-50/50' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'}`}
               >
                 <item.icon size={14} className={isActive(item.id) ? 'text-indigo-600' : 'text-stone-300 group-hover:text-stone-500'} />
-                <span className="text-[10px] font-bold uppercase tracking-widest">{item.label}</span>
+                <span className="text-[9px] font-bold uppercase tracking-wider">{item.label}</span>
                 {isActive(item.id) && (
                   <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-indigo-600 rounded-full"></span>
                 )}
@@ -91,7 +91,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               <span className="text-[10px] font-bold uppercase tracking-wider">09 55 55 44 62</span>
             </a>
             
-            <button onClick={() => setIsMenuOpen(true)} className="xl:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-all">
+            <button onClick={() => setIsMenuOpen(true)} className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-all">
               <Menu size={22} />
             </button>
           </div>

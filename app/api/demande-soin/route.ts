@@ -58,7 +58,7 @@ Photo jointe: ${photo ? 'Oui - ' + photoName : 'Non'}
         },
         body: JSON.stringify({
           from: 'Demande de Soin <onboarding@resend.dev>',
-          to: ['guerisseurtoucheurdelame@gmail.com'],
+          to: ['guerisseurtoucheur@gmail.com'],
           subject: `Nouvelle demande de soin - ${prenom} ${nom}`,
           text: emailContent,
           attachments: attachments,

@@ -81,15 +81,15 @@ export default function NewsletterPopup() {
               </button>
               <div className="flex items-center gap-3 mb-2">
                 <Mail size={24} />
-                <span className="text-xs uppercase tracking-widest font-bold opacity-80">Newsletter</span>
+                <span className="text-xs uppercase tracking-widest font-bold opacity-80">Contact</span>
               </div>
-              <h3 className="text-2xl font-serif font-bold">Restez informe</h3>
-              <p className="text-indigo-100 text-sm mt-1">Conseils magnetisme et bien-etre</p>
+              <h3 className="text-2xl font-serif font-bold">Besoin d&apos;un soin ?</h3>
+              <p className="text-indigo-100 text-sm mt-1">Laissez vos coordonnees</p>
             </div>
             
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <p className="text-stone-600 text-sm">
-                Recevez mes conseils sur le magnetisme, les soins energetiques et des temoignages de guerison.
+                Laissez vos coordonnees et je vous recontacterai pour discuter de votre situation.
               </p>
               
               <div>
@@ -118,11 +118,11 @@ export default function NewsletterPopup() {
                 disabled={loading}
                 className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition-all disabled:opacity-50"
               >
-                {loading ? 'Inscription...' : "M'inscrire gratuitement"}
+                {loading ? 'Envoi...' : "Etre recontacte"}
               </button>
               
               <p className="text-center text-stone-400 text-xs">
-                Pas de spam. Desabonnement en 1 clic.
+                Vos donnees restent confidentielles.
               </p>
             </form>
           </>

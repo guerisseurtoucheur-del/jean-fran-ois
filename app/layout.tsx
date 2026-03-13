@@ -109,13 +109,6 @@ export default function RootLayout({
                 },
                 "geoRadius": "1000"
               },
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "5",
-                "reviewCount": "3",
-                "bestRating": "5",
-                "worstRating": "1"
-              },
               "sameAs": [
                 "https://maps.app.goo.gl/7T8BscaocjerZRNWA"
               ]

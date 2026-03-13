@@ -181,6 +181,25 @@ export default function RootLayout({
                 "target": "https://www.jean-francois-magnetiseur-guerisseur.com/?q={search_term_string}",
                 "query-input": "required name=search_term_string"
               }
+            },
+            {
+              "@type": "VideoObject",
+              "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#video",
+              "name": "Jean-Francois Magnetiseur Guerisseur - Presentation",
+              "description": "Decouvrez Jean-Francois, magnetiseur guerisseur specialise dans les soins energetiques a distance sur photo. Coupeur de feu, traitement du zona, eczema et douleurs chroniques partout en France.",
+              "thumbnailUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/logo.png",
+              "uploadDate": "2024-01-01",
+              "contentUrl": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4",
+              "embedUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/",
+              "duration": "PT30S",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Jean-Francois Magnetiseur Guerisseur",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://www.jean-francois-magnetiseur-guerisseur.com/logo.png"
+                }
+              }
             }
           ]
         })}} />

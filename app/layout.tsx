@@ -190,7 +190,7 @@ export default function RootLayout({
               "thumbnailUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/logo.png",
               "uploadDate": "2024-01-01",
               "contentUrl": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4",
-              "embedUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/",
+              "embedUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/presentation",
               "duration": "PT30S",
               "publisher": {
                 "@type": "Organization",

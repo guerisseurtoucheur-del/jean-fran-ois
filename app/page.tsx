@@ -30,25 +30,25 @@ export default function HomePage() {
     <LayoutWrapper>
       <div className="page-fade">
         {/* Hero Section */}
-        <section className="relative min-h-[95vh] flex items-center px-6 overflow-hidden bg-white">
-          <div className="energy-field w-96 h-96 bg-indigo-100 -top-20 -left-20"></div>
-          <div className="energy-field w-[500px] h-[500px] bg-amber-50 -bottom-40 -right-20" style={{ animationDelay: '2s' }}></div>
+        <section className="relative min-h-[95vh] flex items-center px-6 overflow-hidden bg-[#faf8f5]">
+          <div className="energy-field w-96 h-96 bg-[#4a6741]/20 -top-20 -left-20"></div>
+          <div className="energy-field w-[500px] h-[500px] bg-[#c9a962]/20 -bottom-40 -right-20" style={{ animationDelay: '2s' }}></div>
 
           <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center relative z-10">
             <div className="space-y-10">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
-                  <div className="inline-flex items-center gap-3 px-4 py-2 bg-indigo-600 text-white rounded-full w-fit shadow-lg shadow-indigo-100">
+                  <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#4a6741] text-white rounded-full w-fit shadow-lg shadow-[#4a6741]/20">
                     <Globe size={14} className="animate-spin-slow" />
                     <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Action Energetique France Entiere</span>
                   </div>
-                  <div className="flex items-center gap-3 text-stone-400 text-xs font-medium">
-                    <MapPin size={14} className="text-indigo-500" />
+                  <div className="flex items-center gap-3 text-[#6b6259] text-xs font-medium">
+                    <MapPin size={14} className="text-[#4a6741]" />
                     <span>Cabinet a Alencon (61) & <strong>Soins sur photo a distance</strong></span>
                   </div>
                 </div>
 
-                <p className="text-2xl font-serif italic text-indigo-600 leading-relaxed border-l-4 border-indigo-100 pl-6 py-2">
+                <p className="text-2xl font-serif italic text-[#4a6741] leading-relaxed border-l-4 border-[#4a6741]/30 pl-6 py-2">
                   "L&apos;energie est le lien invisible <br/>
                   qui nous unit tous : <br/>
                   mon souffle vous rejoint."
@@ -65,7 +65,7 @@ export default function HomePage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-5 pt-4">
-                <Link href="/demande-soin" className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all btn-glow flex items-center justify-center gap-3 group shadow-xl">
+                <Link href="/demande-soin" className="px-10 py-5 bg-[#4a6741] text-white rounded-2xl font-bold text-lg hover:bg-[#3a5233] transition-all btn-glow flex items-center justify-center gap-3 group shadow-xl">
                   <span>Demarrer un soin sur photo</span>
                   <Sparkles size={20} />
                 </Link>
@@ -125,7 +125,7 @@ export default function HomePage() {
         </section>
 
         {/* Section Compteur */}
-        <section className="py-12 bg-indigo-600 relative overflow-hidden">
+        <section className="py-12 bg-[#4a6741] relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_100%)] from-white"></div>
           </div>
@@ -138,76 +138,76 @@ export default function HomePage() {
                 <div className="text-5xl font-serif font-bold tabular-nums">
                   {relievedCount.toLocaleString('fr-FR')}
                 </div>
-                <div className="text-xs font-bold uppercase tracking-[0.3em] text-indigo-200 mt-1">Personnes soulagees a ce jour</div>
+                <div className="text-xs font-bold uppercase tracking-[0.3em] text-white/70 mt-1">Personnes soulagees a ce jour</div>
               </div>
             </div>
             <div className="h-px w-24 bg-white/20 hidden md:block"></div>
             <div className="flex flex-wrap justify-center gap-8 md:gap-16">
               <div className="text-center">
-                <div className="text-2xl font-serif font-bold text-emerald-300">{monthlyCount}</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Ce mois-ci</div>
+                <div className="text-2xl font-serif font-bold text-[#c9a962]">{monthlyCount}</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Ce mois-ci</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-serif font-bold text-amber-300">{avgResponseTime}</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Reponse moyenne</div>
+                <div className="text-2xl font-serif font-bold text-[#c9a962]">{avgResponseTime}</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Reponse moyenne</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-serif font-bold">France</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Action nationale</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-white/70">Action nationale</div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Section SEO */}
-        <section className="py-24 bg-stone-50">
+        <section className="py-24 bg-[#f5f0e8]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid md:grid-cols-3 gap-12">
               <div className="space-y-4">
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm border border-stone-100">
+                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#4a6741] shadow-sm border border-[#4a6741]/10">
                   <Wind size={24} />
                 </div>
-                <h3 className="text-2xl font-serif font-bold">Le Souffle Vital</h3>
-                <p className="text-stone-500 text-sm leading-relaxed">Le magnetisme utilise les courants energetiques universels. En me connectant a votre photo, je focalise mon intention pour debloquer vos centres energetiques.</p>
+                <h3 className="text-2xl font-serif font-bold text-[#3d3630]">Le Souffle Vital</h3>
+                <p className="text-[#6b6259] text-sm leading-relaxed">Le magnetisme utilise les courants energetiques universels. En me connectant a votre photo, je focalise mon intention pour debloquer vos centres energetiques.</p>
               </div>
               <div className="space-y-4">
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm border border-stone-100">
+                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#4a6741] shadow-sm border border-[#4a6741]/10">
                   <Zap size={24} />
                 </div>
-                <h3 className="text-2xl font-serif font-bold">Action Immediate</h3>
-                <p className="text-stone-500 text-sm leading-relaxed">Que ce soit pour un zona, une brulure (coupeur de feu) ou un eczema, l&apos;energie ne connait pas de delai de route. L&apos;effet est souvent ressenti dans l&apos;heure.</p>
+                <h3 className="text-2xl font-serif font-bold text-[#3d3630]">Action Immediate</h3>
+                <p className="text-[#6b6259] text-sm leading-relaxed">Que ce soit pour un zona, une brulure (coupeur de feu) ou un eczema, l&apos;energie ne connait pas de delai de route. L&apos;effet est souvent ressenti dans l&apos;heure.</p>
               </div>
               <div className="space-y-4">
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm border border-stone-100">
+                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#4a6741] shadow-sm border border-[#4a6741]/10">
                   <ShieldCheck size={24} />
                 </div>
-                <h3 className="text-2xl font-serif font-bold">Serenite Partout</h3>
-                <p className="text-stone-500 text-sm leading-relaxed">Depuis Alencon, j&apos;accompagne quotidiennement des patients habitant aux quatre coins de la France (Paris, Lille, Toulouse...) avec les memes resultats probants.</p>
+                <h3 className="text-2xl font-serif font-bold text-[#3d3630]">Serenite Partout</h3>
+                <p className="text-[#6b6259] text-sm leading-relaxed">Depuis Alencon, j&apos;accompagne quotidiennement des patients habitant aux quatre coins de la France (Paris, Lille, Toulouse...) avec les memes resultats probants.</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Temoignages */}
-        <section className="py-32 bg-white">
+        <section className="py-32 bg-[#faf8f5]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col items-center gap-6 mb-16">
               <div className="flex items-center gap-4 w-full">
-                <div className="h-px flex-1 bg-stone-100"></div>
-                <h2 className="text-3xl font-serif font-bold italic text-stone-400">Paroles de patients (France Entiere)</h2>
-                <div className="h-px flex-1 bg-stone-100"></div>
+                <div className="h-px flex-1 bg-[#4a6741]/20"></div>
+                <h2 className="text-3xl font-serif font-bold italic text-[#4a6741]">Paroles de patients (France Entiere)</h2>
+                <div className="h-px flex-1 bg-[#4a6741]/20"></div>
               </div>
               <a 
                 href="https://maps.app.goo.gl/7T8BscaocjerZRNWA" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-6 py-3 bg-white border-2 border-stone-200 rounded-full hover:border-indigo-500 hover:shadow-lg transition-all group"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-white border-2 border-[#4a6741]/20 rounded-full hover:border-[#4a6741] hover:shadow-lg transition-all group"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#4285F4"/>
                   <circle cx="12" cy="9" r="2.5" fill="#fff"/>
                 </svg>
-                <span className="font-bold text-stone-700 group-hover:text-indigo-600 transition-colors">Voir les avis Google</span>
+                <span className="font-bold text-[#3d3630] group-hover:text-[#4a6741] transition-colors">Voir les avis Google</span>
                 <span className="text-amber-500 font-bold">5/5</span>
                 <div className="flex gap-0.5 text-amber-400">
                   {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
@@ -226,14 +226,14 @@ export default function HomePage() {
                 { name: "Alain P.", city: "Lille (59)", text: "Je recommande vivement Jean-Francois pour son efficacite sur les brulures. Un vrai coupeur de feu.", subject: "Brulures" },
                 { name: "Isabelle B.", city: "Toulouse (31)", text: "Mon eczema s'est apaise des la premiere connexion. Merci pour cette aide precieuse.", subject: "Eczema" }
               ].map((t, i) => (
-                <div key={i} className="p-8 bg-stone-50 rounded-[2.5rem] space-y-4 hover:bg-white hover:shadow-xl transition-all border border-transparent hover:border-stone-100">
-                  <div className="flex gap-1 text-amber-400">
+                <div key={i} className="p-8 bg-white rounded-[2.5rem] space-y-4 hover:shadow-xl transition-all border border-[#4a6741]/10 hover:border-[#4a6741]/30">
+                  <div className="flex gap-1 text-[#c9a962]">
                     {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
                   </div>
-                  <p className="text-stone-600 italic text-sm">&quot;{t.text}&quot;</p>
+                  <p className="text-[#6b6259] italic text-sm">&quot;{t.text}&quot;</p>
                   <div>
-                    <p className="font-bold text-stone-900 text-xs">{t.name}</p>
-                    <p className="text-[10px] text-indigo-500 uppercase font-bold tracking-widest">{t.city}</p>
+                    <p className="font-bold text-[#3d3630] text-xs">{t.name}</p>
+                    <p className="text-[10px] text-[#4a6741] uppercase font-bold tracking-widest">{t.city}</p>
                   </div>
                 </div>
               ))}
@@ -242,15 +242,15 @@ export default function HomePage() {
         </section>
 
         {/* City Grid SEO */}
-        <section className="py-20 bg-stone-950 text-white/40">
+        <section className="py-20 bg-[#3d3630] text-white/40">
           <div className="max-w-7xl mx-auto px-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-indigo-500">Rayonnement energetique national - Cliquez pour decouvrir</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-[#c9a962]">Rayonnement energetique national - Cliquez pour decouvrir</p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
               {Object.values(citiesData).map(city => (
                 <Link 
                   key={city.slug} 
                   href={`/magnetiseur-${city.slug}`}
-                  className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-indigo-500 py-3 rounded-xl"
+                  className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
                 >
                   Magnetiseur {city.name}
                 </Link>
@@ -260,11 +260,11 @@ export default function HomePage() {
         </section>
 
         {/* FAQ Section - AEO Optimized */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-[#faf8f5]">
           <div className="max-w-4xl mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-serif font-bold text-stone-900 mb-4">Questions Frequentes</h2>
-              <p className="text-stone-500">Reponses aux questions les plus posees sur le magnetisme a distance</p>
+              <h2 className="text-4xl font-serif font-bold text-[#3d3630] mb-4">Questions Frequentes</h2>
+              <p className="text-[#6b6259]">Reponses aux questions les plus posees sur le magnetisme a distance</p>
             </div>
             <div className="space-y-6">
               {[
@@ -293,12 +293,12 @@ export default function HomePage() {
                   a: "Zona, brulures (coupeur de feu), eczema, douleurs chroniques (dos, articulations), troubles du sommeil, stress et anxiete. Le magnetisme agit sur de nombreux maux."
                 }
               ].map((faq, i) => (
-                <details key={i} className="group bg-stone-50 rounded-2xl p-6 cursor-pointer hover:bg-stone-100 transition-all">
-                  <summary className="flex justify-between items-center font-bold text-stone-900 list-none">
+                <details key={i} className="group bg-white rounded-2xl p-6 cursor-pointer hover:shadow-md transition-all border border-[#4a6741]/10">
+                  <summary className="flex justify-between items-center font-bold text-[#3d3630] list-none">
                     <span>{faq.q}</span>
-                    <span className="text-indigo-600 group-open:rotate-45 transition-transform text-2xl">+</span>
+                    <span className="text-[#4a6741] group-open:rotate-45 transition-transform text-2xl">+</span>
                   </summary>
-                  <p className="mt-4 text-stone-600 leading-relaxed">{faq.a}</p>
+                  <p className="mt-4 text-[#6b6259] leading-relaxed">{faq.a}</p>
                 </details>
               ))}
             </div>
@@ -306,19 +306,19 @@ export default function HomePage() {
         </section>
 
         {/* CTA Final */}
-        <section className="py-24 bg-indigo-600 text-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+        <section className="py-24 bg-[#4a6741] text-white overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#c9a962]/20 rounded-full blur-[100px] -mr-48 -mt-48"></div>
           <div className="max-w-4xl mx-auto px-6 text-center space-y-10 relative z-10">
             <h2 className="text-4xl md:text-5xl font-serif font-bold italic">Pret a retrouver votre equilibre ?</h2>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <Link href="/demande-soin" className="px-12 py-6 bg-white text-indigo-600 rounded-3xl font-bold text-xl hover:shadow-2xl transition-all">Soin a distance immediat</Link>
+              <Link href="/demande-soin" className="px-12 py-6 bg-white text-[#4a6741] rounded-3xl font-bold text-xl hover:shadow-2xl transition-all">Soin a distance immediat</Link>
             </div>
-            <p className="text-indigo-200 text-sm font-medium">Jean-Francois traite chaque demande personnellement sous 24h.</p>
+            <p className="text-white/70 text-sm font-medium">Jean-Francois traite chaque demande personnellement sous 24h.</p>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="py-8 bg-stone-950 text-stone-500">
+        <footer className="py-8 bg-[#3d3630] text-[#9a918a]">
           <div className="max-w-7xl mx-auto px-6 text-center space-y-3">
             <p className="text-xs text-amber-500/80">Le magnetisme est une pratique complementaire qui ne remplace pas la medecine conventionnelle. Consultez toujours votre medecin en priorite.</p>
             <p className="text-xs">SIRET : 344 616 412 00062 | TVA intracommunautaire : FR6534461641200062</p>

@@ -50,12 +50,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-4 cursor-pointer group shrink-0">
-            <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl shadow-xl shadow-indigo-100 group-hover:scale-105 transition-transform object-cover" />
+            <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl shadow-xl shadow-[#4a6741]/20 group-hover:scale-105 transition-transform object-cover" />
             <div className="flex flex-col">
-              <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-stone-900 leading-none">Jean-Francois</span>
+              <span className="text-lg sm:text-2xl font-serif font-bold tracking-tight text-[#3d3630] leading-none">Jean-Francois</span>
               <div className="flex items-center gap-1.5 mt-1">
-                <span className="w-3 h-px bg-indigo-400"></span>
-                <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] font-extrabold text-indigo-500">Magnetiseur</span>
+                <span className="w-3 h-px bg-[#4a6741]"></span>
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] font-extrabold text-[#4a6741]">Magnetiseur</span>
               </div>
             </div>
           </Link>
@@ -66,12 +66,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               <Link
                 key={item.id}
                 href={item.id}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all relative group ${isActive(item.id) ? 'text-indigo-600 bg-indigo-50/50' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-50'}`}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all relative group ${isActive(item.id) ? 'text-[#4a6741] bg-[#4a6741]/10' : 'text-[#6b6259] hover:text-[#3d3630] hover:bg-[#f5f0e8]'}`}
               >
-                <item.icon size={14} className={isActive(item.id) ? 'text-indigo-600' : 'text-stone-300 group-hover:text-stone-500'} />
+                <item.icon size={14} className={isActive(item.id) ? 'text-[#4a6741]' : 'text-[#9a918a] group-hover:text-[#6b6259]'} />
                 <span className="text-[9px] font-bold uppercase tracking-wider">{item.label}</span>
                 {isActive(item.id) && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-indigo-600 rounded-full"></span>
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#4a6741] rounded-full"></span>
                 )}
               </Link>
             ))}
@@ -80,9 +80,9 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           {/* Actions */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             {isClient && (
-              <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-emerald-50 border border-emerald-100 rounded-full">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-emerald-600">{liveUsers} en ligne</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-[#4a6741]/10 border border-[#4a6741]/20 rounded-full">
+                <div className="w-2 h-2 bg-[#4a6741] rounded-full animate-pulse"></div>
+                <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-[#4a6741]">{liveUsers} en ligne</span>
               </div>
             )}
             
@@ -113,15 +113,15 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
                 key={item.id}
                 href={item.id}
                 onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center gap-4 w-full p-4 rounded-2xl text-base font-bold transition-all ${isActive(item.id) ? 'bg-indigo-600 text-white shadow-xl' : 'text-stone-600 bg-stone-50/50 hover:bg-stone-50'}`}
+                className={`flex items-center gap-4 w-full p-4 rounded-2xl text-base font-bold transition-all ${isActive(item.id) ? 'bg-[#4a6741] text-white shadow-xl' : 'text-[#3d3630] bg-[#f5f0e8]/50 hover:bg-[#f5f0e8]'}`}
               >
-                <item.icon size={20} className={isActive(item.id) ? 'text-white' : 'text-indigo-400'} />
+                <item.icon size={20} className={isActive(item.id) ? 'text-white' : 'text-[#4a6741]'} />
                 {item.label}
               </Link>
             ))}
           </nav>
-          <div className="mt-auto pt-8 border-t border-stone-100">
-            <a href="tel:0955554462" className="flex items-center justify-center gap-3 w-full p-4 bg-indigo-600 text-white rounded-2xl font-bold">
+          <div className="mt-auto pt-8 border-t border-[#4a6741]/20">
+            <a href="tel:0955554462" className="flex items-center justify-center gap-3 w-full p-4 bg-[#4a6741] text-white rounded-2xl font-bold">
               <Phone size={20} />
               09 55 55 44 62
             </a>
@@ -135,7 +135,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-stone-950 text-white py-20">
+      <footer className="bg-[#3d3630] text-white py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12">
             <div className="md:col-span-2 space-y-6">
@@ -143,15 +143,15 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
                 <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-14 h-14 rounded-2xl object-cover" />
                 <div>
                   <span className="text-2xl font-serif font-bold">Jean-Francois</span>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-indigo-400 font-bold">Magnetiseur Guerisseur</p>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-[#c9a962] font-bold">Magnetiseur Guerisseur</p>
                 </div>
               </div>
-              <p className="text-stone-400 text-sm max-w-sm leading-relaxed">Praticien expert en magnetisme et soins energetiques a distance. Intervention sur photo partout en France.</p>
+              <p className="text-[#9a918a] text-sm max-w-sm leading-relaxed">Praticien expert en magnetisme et soins energetiques a distance. Intervention sur photo partout en France.</p>
             </div>
             
             <div className="space-y-4">
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-indigo-400">Contact</h4>
-              <div className="space-y-3 text-stone-400 text-sm">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#c9a962]">Contact</h4>
+              <div className="space-y-3 text-[#9a918a] text-sm">
                 <a href="tel:0955554462" className="flex items-center gap-3 hover:text-white transition-colors">
                   <Phone size={14} /> 09 55 55 44 62
                 </a>
@@ -165,8 +165,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
             </div>
             
             <div className="space-y-4">
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-indigo-400">Horaires</h4>
-              <div className="space-y-2 text-stone-400 text-sm">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#c9a962]">Horaires</h4>
+              <div className="space-y-2 text-[#9a918a] text-sm">
                 <div className="flex items-center gap-2">
                   <Clock size={14} />
                   <span>Lun-Ven: 9h - 19h</span>
@@ -179,9 +179,9 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
             </div>
           </div>
           
-          <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-stone-500 text-xs">2024 Jean-Francois Magnetiseur. Tous droits reserves.</p>
-            <a href="https://maps.app.goo.gl/7T8BscaocjerZRNWA" target="_blank" rel="noopener noreferrer" className="text-xs text-stone-500 hover:text-indigo-400 transition-colors">
+          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-[#9a918a] text-xs">2024 Jean-Francois Magnetiseur. Tous droits reserves.</p>
+            <a href="https://maps.app.goo.gl/7T8BscaocjerZRNWA" target="_blank" rel="noopener noreferrer" className="text-xs text-[#9a918a] hover:text-[#c9a962] transition-colors">
               Voir sur Google Maps
             </a>
           </div>
@@ -203,8 +203,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               href={item.id}
               className={`flex flex-col items-center justify-center w-16 h-16 rounded-2xl transition-all duration-200 ease-in-out transform active:scale-90 ${
                 isActive(item.id) 
-                  ? 'text-indigo-600'
-                  : 'text-stone-400 hover:text-stone-900'
+                  ? 'text-[#4a6741]'
+                  : 'text-[#9a918a] hover:text-[#3d3630]'
               }`}
             >
               <item.icon size={24} strokeWidth={isActive(item.id) ? 2.5 : 2} />

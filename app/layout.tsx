@@ -135,6 +135,8 @@ export default function RootLayout({
             },
             {
               "@type": "FAQPage",
+              "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#faq",
+              "name": "Questions frequentes sur le magnetisme et les soins a distance",
               "mainEntity": [
                 {
                   "@type": "Question",

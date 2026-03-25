@@ -227,7 +227,7 @@ export default function HomePage() {
                 { name: "Isabelle B.", city: "Toulouse (31)", text: "Mon eczema s'est apaise des la premiere connexion. Merci pour cette aide precieuse.", subject: "Eczema" }
               ].map((t, i) => (
                 <div key={i} className="p-8 bg-white rounded-[2.5rem] space-y-4 hover:shadow-xl transition-all border border-[#4a6741]/10 hover:border-[#4a6741]/30">
-                  <div className="flex gap-1 text-[#c9a962]">
+                  <div className="flex gap-1 text-amber-400">
                     {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
                   </div>
                   <p className="text-[#6b6259] italic text-sm">&quot;{t.text}&quot;</p>

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import ChatWrapper from '@/components/ChatWrapper'
-import NewsletterPopup from '@/components/NewsletterPopup'
 
 export const metadata: Metadata = {
   title: 'Jean-Francois | Magnetiseur Guerisseur a Distance sur Photo - France Entiere',
@@ -136,6 +135,8 @@ export default function RootLayout({
             },
             {
               "@type": "FAQPage",
+              "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#faq",
+              "name": "Questions frequentes sur le magnetisme et les soins a distance",
               "mainEntity": [
                 {
                   "@type": "Question",
@@ -207,7 +208,6 @@ export default function RootLayout({
       <body className="bg-white text-stone-900">
         {children}
         <ChatWrapper />
-        <NewsletterPopup />
       </body>
     </html>
   )

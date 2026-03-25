@@ -9,6 +9,22 @@ export const metadata = {
 
 const articles = [
   {
+    slug: 'magnetisme-migraines-soulager-naturellement',
+    title: 'Magnetisme et Migraines : Comment Soulager Naturellement',
+    excerpt: 'Decouvrez comment le magnetisme peut aider a reduire la frequence et l\'intensite des migraines sans medicaments.',
+    date: '2026-03-13',
+    readTime: '6 min',
+    category: 'Migraines'
+  },
+  {
+    slug: 'magnetisme-arthrose-retrouver-mobilite',
+    title: 'Magnetisme et Arthrose : Retrouver sa Mobilite',
+    excerpt: 'Comment le magnetisme peut aider a soulager les douleurs articulaires et ameliorer la qualite de vie des personnes atteintes d\'arthrose.',
+    date: '2026-03-13',
+    readTime: '7 min',
+    category: 'Arthrose'
+  },
+  {
     slug: 'magnetisme-zona-traitement-naturel',
     title: 'Magnetisme et Zona : Un Traitement Naturel Efficace',
     excerpt: 'Decouvrez comment le magnetisme peut soulager rapidement les douleurs du zona et accelerer la guerison. Temoignages et explications.',

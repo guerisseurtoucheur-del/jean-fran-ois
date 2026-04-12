@@ -88,6 +88,46 @@ function LandingPageContent() {
         </div>
       </section>
 
+      {/* Section Jean-Francois - Bien visible */}
+      <section className="py-12 px-6 bg-white border-y border-[#4a6741]/10">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+          <div className="flex-shrink-0">
+            <div className="relative">
+              <img 
+                src="/logo.png" 
+                alt="Jean-Francois Magnetiseur Guerisseur" 
+                className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#4a6741] shadow-xl"
+              />
+              <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-[#4a6741] rounded-full flex items-center justify-center">
+                <CheckCircle size={20} className="text-white" />
+              </div>
+            </div>
+          </div>
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#3d3630] mb-2">
+              Jean-Francois
+            </h2>
+            <p className="text-[#4a6741] font-bold uppercase tracking-wider text-sm mb-4">
+              Magnetiseur Guerisseur depuis 20+ ans
+            </p>
+            <p className="text-[#6b6259] max-w-md">
+              Depuis Alencon, j'accompagne des personnes de toute la France vers le soulagement. 
+              Mon don, je l'ai decouvert jeune et je le mets a votre service.
+            </p>
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+              <div className="flex items-center gap-2 text-[#3d3630]">
+                <Users size={16} className="text-[#4a6741]" />
+                <span className="text-sm font-bold">2 847+ personnes aidees</span>
+              </div>
+              <div className="flex items-center gap-2 text-[#3d3630]">
+                <Star size={16} className="text-amber-400" fill="currentColor" />
+                <span className="text-sm font-bold">5/5 sur Google</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Bande de confiance */}
       <section className="bg-[#4a6741] py-6 px-6">
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-8 text-white text-center">

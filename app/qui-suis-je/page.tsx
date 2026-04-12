@@ -16,18 +16,20 @@ export default function QuiSuisJePage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid md:grid-cols-2 gap-16 items-center">
               {/* Photo */}
-              <div className="relative">
-                <div className="aspect-[4/5] bg-stone-100 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
-                  <img 
-                    src="/logo.png" 
-                    alt="Jean-Francois Magnetiseur Guerisseur" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                {/* Badge experience */}
-                <div className="absolute -bottom-6 -right-6 bg-[#4a6741] text-white px-8 py-4 rounded-2xl shadow-xl">
-                  <div className="text-3xl font-serif font-bold">20+</div>
-                  <div className="text-xs uppercase tracking-widest opacity-80">ans d&apos;experience</div>
+              <div className="relative flex justify-center">
+                <div className="relative">
+                  <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-8 border-[#4a6741] bg-stone-100">
+                    <img 
+                      src="/logo.png" 
+                      alt="Jean-Francois Magnetiseur Guerisseur" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Badge experience */}
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#4a6741] text-white px-8 py-4 rounded-2xl shadow-xl">
+                    <div className="text-3xl font-serif font-bold text-center">20+</div>
+                    <div className="text-xs uppercase tracking-widest opacity-80 text-center">ans d&apos;experience</div>
+                  </div>
                 </div>
               </div>
 

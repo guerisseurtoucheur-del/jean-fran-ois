@@ -5,7 +5,7 @@ import ChatWrapper from '@/components/ChatWrapper'
 export const metadata: Metadata = {
   title: 'Jean-Francois | Magnetiseur Guerisseur a Distance sur Photo - France Entiere',
   description: 'Soin energetique a distance par Jean-Francois, magnetiseur expert. Action immediate sur photo partout en France pour zona, eczema, brulures et douleurs. Cabinet a Alencon.',
-  keywords: 'magnetiseur a distance, guerisseur sur photo, soin energetique france, coupeur de feu a distance, magnetisme zona photo, jean-francois magnetiseur, magnetiseur alencon, guerisseur normandie',
+  keywords: 'magnetiseur, magnetiseur a distance, guerisseur, guerisseur sur photo, soin energetique, coupeur de feu, barreur de feu, magnetisme zona, magnetisme eczema, magnetisme brulure, magnetisme douleur, magnetiseur paris, magnetiseur lyon, magnetiseur marseille, magnetiseur bordeaux, magnetiseur lille, magnetiseur toulouse, magnetiseur nantes, magnetiseur alencon, guerisseur normandie, soin a distance photo, energie guerison, Jean-Francois magnetiseur',
   authors: [{ name: 'Jean-Francois - Magnetiseur Guerisseur' }],
   openGraph: {
     type: 'website',
@@ -55,7 +55,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
-        <meta name="theme-color" content="#4f46e5" />
+        <meta name="theme-color" content="#4a6741" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

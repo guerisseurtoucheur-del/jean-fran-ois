@@ -8,6 +8,14 @@
     <priority>1.0</priority>
   </url>
   
+  <!-- Page Qui suis-je - E-E-A-T -->
+  <url>
+    <loc>https://www.jean-francois-magnetiseur-guerisseur.com/qui-suis-je</loc>
+    <lastmod>2026-04-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
   <!-- Pages principales -->
   <url>
     <loc>https://www.jean-francois-magnetiseur-guerisseur.com/demande-soin</loc>

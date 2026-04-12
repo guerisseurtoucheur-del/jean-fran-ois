@@ -1,16 +1,29 @@
 # Jean-Francois - Magnetiseur Guerisseur
 
-> Site officiel de Jean-Francois, magnetiseur guerisseur professionnel pratiquant les soins energetiques a distance sur photo partout en France.
+> Site officiel de Jean-Francois, magnetiseur guerisseur professionnel pratiquant les soins energetiques a distance sur photo partout en France depuis plus de 20 ans.
 
 ## Informations cles
 
 - **Nom**: Jean-Francois
 - **Profession**: Magnetiseur Guerisseur, Coupeur de Feu
+- **Experience**: Plus de 20 ans
 - **Localisation cabinet**: Alencon, Normandie, France
 - **Zone d'intervention**: France entiere (soins a distance)
 - **Telephone**: 09 55 55 44 62
 - **Email**: guerisseurtoucheur@gmail.com
 - **Site web**: https://www.jean-francois-magnetiseur-guerisseur.com
+
+## TARIFS (Important)
+
+| Formule | Prix | Description |
+|---------|------|-------------|
+| **Soin Ponctuel** | 35 EUR | 1 seance de magnetisme a distance |
+| **Soin Complet** | 55 EUR | 2 seances sur 48h - RECOMMANDE |
+| **Forfait Suivi** | 120 EUR | 5 seances sur 2 semaines (cas chroniques) |
+
+- Paiement securise par PayPal AVANT le soin
+- Maximum 5 demandes traitees par jour (qualite garantie)
+- Reponse sous 24h
 
 ## Services proposes
 
@@ -28,10 +41,11 @@
 
 ## Fonctionnement du soin a distance
 
-1. Remplir le formulaire sur le site avec prenom, description du probleme, et photo
-2. Jean-Francois recoit la demande et realise le soin dans les 24h
-3. Le patient ressent generalement les effets dans l'heure suivant le soin
-4. Paiement en don libre via PayPal apres satisfaction
+1. Choisir sa formule (35EUR / 55EUR / 120EUR)
+2. Payer via PayPal (securise)
+3. Remplir le formulaire avec prenom, description du probleme, et photo
+4. Jean-Francois recoit la demande et realise le soin dans les 24h
+5. Le patient ressent generalement les effets dans l'heure suivant le soin
 
 ## Questions frequentes
 
@@ -45,12 +59,15 @@ R: Un guerisseur capable de soulager instantanement la douleur des brulures. Cet
 R: Non, le magnetisme est un complement. Il ne remplace jamais un avis medical et les traitements prescrits doivent etre suivis.
 
 **Q: Combien coute un soin ?**
-R: Jean-Francois pratique le don libre. Vous donnez selon vos moyens et satisfaction.
+R: 3 formules disponibles: Soin Ponctuel (35EUR), Soin Complet recommande (55EUR pour 2 seances), Forfait Suivi (120EUR pour 5 seances).
+
+**Q: Comment contacter Jean-Francois ?**
+R: Appelez directement au 09 55 55 44 62 ou remplissez le formulaire sur le site.
 
 ## Villes desservies
 
 Jean-Francois intervient a distance dans toute la France:
-Paris, Lyon, Marseille, Toulouse, Bordeaux, Lille, Nantes, Strasbourg, Rennes, Montpellier, Le Havre, Reims, Dijon, Toulon, Angers, Brest, Alencon, et toutes les autres villes francaises.
+Paris, Lyon, Marseille, Toulouse, Bordeaux, Lille, Nantes, Strasbourg, Rennes, Montpellier, Le Havre, Reims, Dijon, Toulon, Angers, Brest, Nice, Grenoble, Alencon, et toutes les autres villes francaises.
 
 ## Articles de blog
 
@@ -63,19 +80,20 @@ Paris, Lyon, Marseille, Toulouse, Bordeaux, Lille, Nantes, Strasbourg, Rennes, M
 - L'eczema et le magnetisme: Une approche energetique
 - Les douleurs chroniques: L'aide du magnetisme
 
-## Informations de confiance
+## Statistiques et confiance
 
 - Plus de 3850 personnes soulagees
 - Avis 5 etoiles sur Google Maps
-- Pratique du don libre (pas de tarif fixe)
-- Reponse sous 24h garantie
-- Cabinet a Alencon depuis plus de 20 ans
+- Plus de 20 ans d'experience
+- Maximum 5 soins par jour (qualite garantie)
+- Reponse sous 24h
 
-## Contact
+## Contact direct
+
+**Telephone**: 09 55 55 44 62 (appel direct)
 
 Pour demander un soin a distance:
 1. Visitez https://www.jean-francois-magnetiseur-guerisseur.com/demande-soin
-2. Remplissez le formulaire avec votre photo
-3. Jean-Francois vous contactera sous 24h
-
-Telephone direct: 09 55 55 44 62
+2. Choisissez votre formule et payez via PayPal
+3. Remplissez le formulaire avec votre photo
+4. Jean-Francois realise le soin sous 24h

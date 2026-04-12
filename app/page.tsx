@@ -282,7 +282,7 @@ export default function HomePage() {
                 },
                 {
                   q: "Combien coute un soin energetique a distance ?",
-                  a: "Jean-Francois pratique le don libre. Vous donnez selon vos moyens et votre satisfaction apres le soin via PayPal."
+                  a: "Jean-Francois propose 3 formules : Soin Ponctuel (35EUR pour 1 seance), Soin Complet (55EUR pour 2 seances sur 48h, le plus recommande), et Forfait Suivi (120EUR pour 5 seances sur 2 semaines). Paiement securise par PayPal avant le soin."
                 },
                 {
                   q: "Ou se trouve le cabinet de Jean-Francois ?",

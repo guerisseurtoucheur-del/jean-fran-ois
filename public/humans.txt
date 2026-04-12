@@ -1,0 +1,36 @@
+/* TEAM */
+
+Magnetiseur: Jean-Francois
+Role: Magnetiseur Guerisseur, Coupeur de Feu
+Location: Alencon, Normandie, France
+Contact: guerisseurtoucheur@gmail.com
+Phone: 09 55 55 44 62
+
+/* SITE */
+
+Last update: 2026/04/12
+Language: French
+Standards: HTML5, CSS3, ES6+
+Framework: Next.js 15
+Hosting: Vercel
+Design: Tailwind CSS
+
+/* SERVICES */
+
+- Soin energetique a distance sur photo
+- Coupeur de feu / Barreur de feu
+- Traitement du zona par magnetisme
+- Soulagement de l'eczema
+- Douleurs chroniques et migraines
+
+/* COVERAGE */
+
+Service Area: France entiere
+Cabinet: Alencon (61000)
+Mode: A distance via photo
+
+/* PHILOSOPHY */
+
+"L'energie est le lien invisible qui nous unit tous.
+Mon souffle vous rejoint, ou que vous soyez."
+- Jean-Francois

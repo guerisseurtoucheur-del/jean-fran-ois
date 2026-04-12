@@ -1,69 +1,177 @@
 # Robots.txt pour Jean-Francois Magnetiseur Guerisseur
-# Optimise pour SEO, GEO (IA), AEO (Assistants vocaux), GSO (Recherche globale)
+# Optimise pour SEO, AEO (IA), GEO (Generative Engine Optimization)
+# Derniere mise a jour: Avril 2026
 
+# Tous les robots autorises par defaut
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
-# Sitemap
-Sitemap: https://www.jean-francois-magnetiseur-guerisseur.com/sitemap.xml
+# ============================================
+# MOTEURS DE RECHERCHE PRINCIPAUX
+# ============================================
 
-# Google
+# Google (Search, Images, Video, News)
 User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-Video
+User-agent: Googlebot-News
 Allow: /
-Crawl-delay: 1
 
-# Bing
+# Bing / Microsoft
 User-agent: Bingbot
+User-agent: msnbot
 Allow: /
-Crawl-delay: 1
 
-# ChatGPT / OpenAI
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Yandex (Russie)
+User-agent: YandexBot
+Allow: /
+
+# Baidu (Chine)
+User-agent: Baiduspider
+Allow: /
+
+# ============================================
+# INTELLIGENCE ARTIFICIELLE - LLMs
+# ============================================
+
+# OpenAI / ChatGPT
 User-agent: GPTBot
+User-agent: ChatGPT-User
 Allow: /
 
-# Google Bard / Gemini
+# Google Gemini / Bard
 User-agent: Google-Extended
+User-agent: Gemini
 Allow: /
 
-# Claude / Anthropic
+# Anthropic / Claude
 User-agent: anthropic-ai
-Allow: /
 User-agent: ClaudeBot
+User-agent: Claude-Web
 Allow: /
 
 # Perplexity AI
 User-agent: PerplexityBot
 Allow: /
 
-# Meta AI
+# Meta AI / Llama
 User-agent: FacebookBot
+User-agent: Meta-ExternalAgent
+User-agent: meta-externalagent
 Allow: /
+
+# Mistral AI
+User-agent: MistralBot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+User-agent: CohereBot
+Allow: /
+
+# Common Crawl (datasets IA)
+User-agent: CCBot
+Allow: /
+
+# Hugging Face
+User-agent: HuggingFaceBot
+Allow: /
+
+# You.com AI
+User-agent: YouBot
+Allow: /
+
+# Brave Search AI
+User-agent: BraveBot
+Allow: /
+
+# Neeva AI (acquis par Snowflake)
+User-agent: NeevaBot
+Allow: /
+
+# ============================================
+# ASSISTANTS VOCAUX
+# ============================================
 
 # Apple Siri / Spotlight
 User-agent: Applebot
+User-agent: AppleBot
 Allow: /
 
 # Amazon Alexa
 User-agent: Amazonbot
 Allow: /
 
-# Common AI Crawlers
-User-agent: CCBot
-Allow: /
-User-agent: cohere-ai
-Allow: /
+# ============================================
+# RESEAUX SOCIAUX
+# ============================================
 
-# Social Media
 User-agent: Twitterbot
-Allow: /
 User-agent: LinkedInBot
-Allow: /
 User-agent: Pinterest
-Allow: /
-User-agent: TikTok
+User-agent: TikTokBot
+User-agent: Slackbot
+User-agent: WhatsApp
+User-agent: TelegramBot
+User-agent: Discordbot
 Allow: /
 
-# Disallow private areas
+# ============================================
+# OUTILS SEO ET ANALYTICS
+# ============================================
+
+User-agent: Screaming Frog SEO Spider
+User-agent: SemrushBot
+User-agent: AhrefsBot
+User-agent: MJ12bot
+User-agent: DotBot
+Allow: /
+
+# ============================================
+# FICHIERS SPECIAUX POUR IA
+# ============================================
+
+# Fichiers accessibles a tous
+Allow: /llms.txt
+Allow: /ai.txt
+Allow: /robots.txt
+Allow: /sitemap.xml
+Allow: /humans.txt
+
+# ============================================
+# ZONES PRIVEES - NE PAS INDEXER
+# ============================================
+
 Disallow: /api/
 Disallow: /_next/
 Disallow: /scripts/
+Disallow: /*.json$
+Disallow: /admin/
+
+# ============================================
+# SITEMAPS
+# ============================================
+
+Sitemap: https://www.jean-francois-magnetiseur-guerisseur.com/sitemap.xml
+
+# ============================================
+# INFORMATIONS SUPPLEMENTAIRES
+# ============================================
+
+# Ce site autorise explicitement tous les crawlers IA
+# pour l'entrainement et la recuperation d'informations.
+# 
+# Pour plus d'informations sur ce site:
+# - llms.txt: /llms.txt (format Markdown pour LLMs)
+# - ai.txt: /ai.txt (informations structurees pour IA)
+# 
+# Contact: guerisseurtoucheur@gmail.com

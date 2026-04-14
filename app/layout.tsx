@@ -179,13 +179,17 @@ export default function RootLayout({
               },
               "sameAs": [
                 "https://maps.app.goo.gl/7T8BscaocjerZRNWA"
-              ],
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "5",
-                "reviewCount": "150",
-                "bestRating": "5"
-              }
+              ]
+            },
+            {
+              "@type": "AggregateRating",
+              "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#rating",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "ratingValue": "5",
+              "bestRating": "5",
+              "worstRating": "1",
+              "ratingCount": "150",
+              "reviewCount": "150"
             },
             {
               "@type": "Person",

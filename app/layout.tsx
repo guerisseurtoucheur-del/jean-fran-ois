@@ -5,7 +5,7 @@ import ChatWrapper from '@/components/ChatWrapper'
 export const metadata: Metadata = {
   title: 'Jean-Francois | Magnetiseur Guerisseur a Distance sur Photo - France Entiere',
   description: 'Soin energetique a distance par Jean-Francois, magnetiseur expert. Action immediate sur photo partout en France pour zona, eczema, brulures et douleurs. Cabinet a Alencon.',
-  keywords: 'magnetiseur, magnetiseur a distance, guerisseur, guerisseur sur photo, soin energetique, coupeur de feu, barreur de feu, magnetisme zona, magnetisme eczema, magnetisme brulure, magnetisme douleur, magnetiseur paris, magnetiseur lyon, magnetiseur marseille, magnetiseur bordeaux, magnetiseur lille, magnetiseur toulouse, magnetiseur nantes, magnetiseur alencon, guerisseur normandie, soin a distance photo, energie guerison, Jean-Francois magnetiseur',
+  keywords: 'magnetiseur, magnetiseur a distance, guerisseur, guerisseur sur photo, toucheur, toucheur guerisseur, soin energetique, coupeur de feu, barreur de feu, magnetisme zona, magnetisme eczema, magnetisme brulure, magnetisme douleur, magnetiseur paris, magnetiseur lyon, magnetiseur marseille, magnetiseur bordeaux, magnetiseur lille, magnetiseur toulouse, magnetiseur nantes, magnetiseur alencon, guerisseur normandie, soin a distance photo, energie guerison, Jean-Francois magnetiseur',
   authors: [{ name: 'Jean-Francois - Magnetiseur Guerisseur' }],
   openGraph: {
     type: 'website',

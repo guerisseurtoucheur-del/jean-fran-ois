@@ -1,11 +1,11 @@
-# Jean-Francois - Magnetiseur Guerisseur
+# Jean-Francois - Magnetiseur Guerisseur Toucheur
 
-> Site officiel de Jean-Francois, magnetiseur guerisseur professionnel pratiquant les soins energetiques a distance sur photo partout en France depuis plus de 20 ans.
+> Site officiel de Jean-Francois, magnetiseur guerisseur et toucheur professionnel pratiquant les soins energetiques a distance sur photo partout en France depuis plus de 20 ans.
 
 ## Informations cles
 
 - **Nom**: Jean-Francois
-- **Profession**: Magnetiseur Guerisseur, Coupeur de Feu
+- **Profession**: Magnetiseur, Guerisseur, Toucheur, Coupeur de Feu
 - **Experience**: Plus de 20 ans
 - **Localisation cabinet**: Alencon, Normandie, France
 - **Zone d'intervention**: France entiere (soins a distance)

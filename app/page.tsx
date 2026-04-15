@@ -61,7 +61,7 @@ export default function HomePage() {
               </h1>
               
               <p className="text-xl text-stone-600 font-light max-w-lg leading-relaxed">
-                Jean-Francois, magnetiseur expert. Je soulage vos maux par le souffle et l&apos;energie, <strong>que vous soyez a Paris, Lyon, Marseille ou partout en France.</strong>
+                Jean-Francois, magnetiseur guerisseur et toucheur expert. Je soulage vos maux par le souffle et l&apos;energie, <strong>que vous soyez a Paris, Lyon, Marseille ou partout en France.</strong>
               </p>
               
               <div className="flex flex-col sm:flex-row gap-5 pt-4">

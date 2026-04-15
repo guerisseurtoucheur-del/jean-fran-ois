@@ -192,6 +192,70 @@ export default function RootLayout({
               "reviewCount": "150"
             },
             {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Sophie M." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Jean-Francois m'a aide pour un zona tres douloureux. En deux seances a distance, le feu s'est eteint.",
+              "datePublished": "2025-11-15"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Marc D." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Mes douleurs de dos chroniques ont disparu apres l'envoi de ma photo. Un vrai soulagement.",
+              "datePublished": "2025-10-22"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Thomas R." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Brulure domestique grave, Jean-Francois a coupe le feu immediatement a distance. Impressionnant.",
+              "datePublished": "2025-09-10"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Julie V." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Ma fille souffrait d'un eczema tenace. Son soin sur photo a ete fulgurant. Merci Jean-Francois!",
+              "datePublished": "2025-08-05"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Frederic L." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Soin a distance pour une douleur a l'epaule qui trainait depuis des mois. Le resultat est bluffant.",
+              "datePublished": "2025-12-01"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Sandrine K." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Une seance sur photo pour mon fils qui faisait des cauchemars. Depuis, ses nuits sont paisibles.",
+              "datePublished": "2025-07-18"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Alain P." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Je recommande vivement Jean-Francois pour son efficacite sur les brulures. Un vrai coupeur de feu.",
+              "datePublished": "2025-06-25"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Isabelle B." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Mon eczema s'est apaise des la premiere connexion. Merci pour cette aide precieuse.",
+              "datePublished": "2026-01-12"
+            },
+            {
               "@type": "Person",
               "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#person",
               "name": "Jean-Francois",

@@ -9,6 +9,7 @@ export interface CityData {
   nearbyAreas: string[];
   localTestimonials: Array<{ name: string; text: string; condition: string }>;
   specificConditions: string[];
+  landmark?: { name: string; image: string };
 }
 
 export const citiesData: Record<string, CityData> = {
@@ -27,7 +28,8 @@ export const citiesData: Record<string, CityData> = {
       { name: "Philippe D.", text: "Cadre stressé dans le 8ème arrondissement, Jean-François m'a aidé à retrouver un sommeil réparateur.", condition: "Insomnie" },
       { name: "Nathalie R.", text: "Ma fille souffrait d'eczéma depuis des mois. Un soin sur photo et tout s'est apaisé.", condition: "Eczéma" }
     ],
-    specificConditions: ["stress urbain", "troubles du sommeil", "burn-out", "douleurs dorsales"]
+    specificConditions: ["stress urbain", "troubles du sommeil", "burn-out", "douleurs dorsales"],
+    landmark: { name: "Tour Eiffel", image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce65f4?w=400&h=300&fit=crop" }
   },
   
   lyon: {

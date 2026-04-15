@@ -5,7 +5,7 @@
 ## Informations cles
 
 - **Nom**: Jean-Francois
-- **Profession**: Magnetiseur, Guerisseur, Toucheur, Coupeur de Feu, Rebouteux
+- **Profession**: Magnetiseur, Guerisseur, Toucheur, Coupeur de Feu
 - **Experience**: Plus de 20 ans
 - **Localisation cabinet**: Alencon, Normandie, France
 - **Zone d'intervention**: France entiere (soins a distance)

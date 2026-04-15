@@ -167,30 +167,33 @@ export default function CityPageContent({ city }: CityPageContentProps) {
                     </Link>
                   </div>
                 </div>
-                <div className="relative hidden lg:flex justify-center">
+                <div className="relative hidden lg:flex flex-col items-center gap-6">
+                  {/* Photo de Jean-Francois */}
                   <div className="relative">
-                    {/* Image du monument en arriere-plan */}
-                    {city.landmark && (
-                      <div className="absolute -top-8 -right-8 w-40 h-40 rounded-2xl overflow-hidden shadow-lg border-4 border-white/80 rotate-6 z-0">
+                    <div className="w-72 h-72 rounded-full overflow-hidden shadow-2xl border-8 border-white">
+                      <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-xl bg-white flex items-center gap-2">
+                      {[...Array(5)].map((_, i) => <Star key={i} size={18} className="text-amber-400" fill="currentColor" />)}
+                      <span className="font-bold ml-2" style={{ color: theme.primary }}>5/5</span>
+                    </div>
+                  </div>
+                  {/* Image du monument - bien visible en dessous */}
+                  {city.landmark && (
+                    <div className="flex items-center gap-4 mt-4 px-6 py-4 rounded-2xl bg-white/80 backdrop-blur shadow-lg border border-gray-100">
+                      <div className="w-20 h-20 rounded-xl overflow-hidden shadow-md flex-shrink-0">
                         <img 
                           src={city.landmark.image} 
                           alt={`${city.landmark.name} - ${city.name}`} 
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                          <p className="text-white text-xs font-medium text-center">{city.landmark.name}</p>
-                        </div>
                       </div>
-                    )}
-                    {/* Photo de Jean-Francois */}
-                    <div className="w-72 h-72 rounded-full overflow-hidden shadow-2xl border-8 border-white relative z-10">
-                      <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-full h-full object-cover" />
+                      <div>
+                        <p className="text-sm font-bold" style={{ color: theme.primary }}>{city.landmark.name}</p>
+                        <p className="text-xs text-gray-500">Soin a distance pour {city.name}</p>
+                      </div>
                     </div>
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-xl bg-white flex items-center gap-2 z-20">
-                      {[...Array(5)].map((_, i) => <Star key={i} size={18} className="text-amber-400" fill="currentColor" />)}
-                      <span className="font-bold ml-2" style={{ color: theme.primary }}>5/5</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

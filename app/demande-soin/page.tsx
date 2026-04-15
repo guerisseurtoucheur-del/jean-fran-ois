@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Upload, Send, CheckCircle, User, Mail, Phone, FileText, Sparkles, Star, Zap, Heart } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const forfaits = [
   {
@@ -34,6 +35,7 @@ const forfaits = [
 ]
 
 export default function DemandeSoinPage() {
+  const router = useRouter()
   const [step, setStep] = useState(1)
   const [selectedForfait, setSelectedForfait] = useState<string | null>(null)
   const [formData, setFormData] = useState({
@@ -85,7 +87,7 @@ export default function DemandeSoinPage() {
       })
       
       if (response.ok) {
-        setSubmitted(true)
+        router.push('/merci')
       } else {
         alert('Erreur lors de l\'envoi. Veuillez reessayer.')
       }

@@ -13,8 +13,9 @@ const typeConsultations = [
     description: 'Sur photo, ou que vous soyez',
     zone: 'France entiere',
     tarif: 'Tarifs fixes',
+    paiement: 'Paiement securise PayPal ou CB',
     icon: Globe,
-    color: 'bg-blue-500'
+    color: 'bg-[#4a6741]'
   },
   {
     id: 'cabinet',
@@ -258,10 +259,18 @@ export default function DemandeSoinPage() {
                       <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
                         type.tarif === 'Don libre' 
                           ? 'bg-amber-100 text-amber-700' 
-                          : 'bg-blue-100 text-blue-700'
+                          : 'bg-[#4a6741]/10 text-[#4a6741]'
                       }`}>
                         {type.tarif}
                       </span>
+                      {type.id === 'distance' && (
+                        <div className="mt-3 flex items-center gap-2 text-xs text-[#6b6259]">
+                          <svg className="w-4 h-4 text-[#4a6741]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                          </svg>
+                          <span>Paiement securise PayPal ou CB</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )

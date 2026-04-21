@@ -357,13 +357,16 @@ export default function DemandeSoinPage() {
 
                 <button
                   onClick={handlePayment}
-                  className="w-full py-4 bg-[#0070ba] text-white rounded-2xl font-bold text-lg hover:bg-[#005ea6] transition-all flex items-center justify-center gap-3"
+                  className="w-full py-4 bg-[#0070ba] text-white rounded-2xl font-bold text-lg hover:bg-[#005ea6] transition-all flex flex-col items-center justify-center gap-1"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.641.641 0 0 1 .633-.54h6.012c2.656 0 4.507 1.725 4.287 4.174-.2 2.22-1.984 3.895-4.65 3.895H8.89l-.95 5.46a.641.641 0 0 1-.633.54l-.232 4.088z"/>
-                    <path d="M19.885 8.088c-.2 2.22-1.983 3.895-4.65 3.895h-2.336l-.95 5.46a.641.641 0 0 1-.633.54H8.07l-.232.268a.641.641 0 0 0 .633.74h3.258a.641.641 0 0 0 .633-.54l.026-.15.5-2.874.032-.174a.641.641 0 0 1 .633-.54h.399c2.587 0 4.611-1.05 5.203-4.087.247-1.268.119-2.327-.534-3.072a2.607 2.607 0 0 0-.736-.566z"/>
-                  </svg>
-                  Payer {selectedForfaitData?.prix} EUR avec PayPal
+                  <div className="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.641.641 0 0 1 .633-.54h6.012c2.656 0 4.507 1.725 4.287 4.174-.2 2.22-1.984 3.895-4.65 3.895H8.89l-.95 5.46a.641.641 0 0 1-.633.54l-.232 4.088z"/>
+                      <path d="M19.885 8.088c-.2 2.22-1.983 3.895-4.65 3.895h-2.336l-.95 5.46a.641.641 0 0 1-.633.54H8.07l-.232.268a.641.641 0 0 0 .633.74h3.258a.641.641 0 0 0 .633-.54l.026-.15.5-2.874.032-.174a.641.641 0 0 1 .633-.54h.399c2.587 0 4.611-1.05 5.203-4.087.247-1.268.119-2.327-.534-3.072a2.607 2.607 0 0 0-.736-.566z"/>
+                    </svg>
+                    Payer {selectedForfaitData?.prix} EUR
+                  </div>
+                  <span className="text-sm font-normal opacity-90">PayPal ou Carte Bancaire</span>
                 </button>
 
                 {/* Mention paiement simple - pas de boutons cliquables */}

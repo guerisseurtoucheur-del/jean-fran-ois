@@ -1,12 +1,42 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Upload, Send, CheckCircle, User, Mail, Phone, FileText, Sparkles, Star, Zap, Heart } from 'lucide-react'
+import { Upload, Send, CheckCircle, User, Mail, Phone, FileText, Sparkles, Star, Zap, Heart, Globe, Building2, Home, MapPin } from 'lucide-react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const forfaits = [
+const typeConsultations = [
+  {
+    id: 'distance',
+    nom: 'Soin a distance',
+    description: 'Sur photo, ou que vous soyez',
+    zone: 'France entiere',
+    tarif: 'Tarifs fixes',
+    icon: Globe,
+    color: 'bg-blue-500'
+  },
+  {
+    id: 'cabinet',
+    nom: 'Au cabinet',
+    description: 'Consultation a Alencon',
+    zone: 'Alencon',
+    tarif: 'Don libre',
+    icon: Building2,
+    color: 'bg-[#4a6741]'
+  },
+  {
+    id: 'domicile',
+    nom: 'A domicile',
+    description: 'Jean-Francois se deplace',
+    zone: '30km autour d\'Alencon',
+    tarif: 'Don libre',
+    icon: Home,
+    color: 'bg-amber-600'
+  }
+]
+
+const forfaitsDistance = [
   {
     id: 'ponctuel',
     nom: 'Soin Ponctuel',
@@ -36,7 +66,8 @@ const forfaits = [
 
 export default function DemandeSoinPage() {
   const router = useRouter()
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0) // 0 = choix type, 1 = forfait/paiement (distance) ou formulaire (cabinet/domicile), 2 = formulaire (distance)
+  const [typeConsultation, setTypeConsultation] = useState<string | null>(null)
   const [selectedForfait, setSelectedForfait] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     prenom: '',
@@ -44,6 +75,7 @@ export default function DemandeSoinPage() {
     dateNaissance: '',
     email: '',
     telephone: '',
+    adresse: '',
     probleme: '',
     details: ''
   })
@@ -52,7 +84,13 @@ export default function DemandeSoinPage() {
   const [submitted, setSubmitted] = useState(false)
   const [paymentDone, setPaymentDone] = useState(false)
 
-  const selectedForfaitData = forfaits.find(f => f.id === selectedForfait)
+  const selectedForfaitData = forfaitsDistance.find(f => f.id === selectedForfait)
+  const selectedTypeData = typeConsultations.find(t => t.id === typeConsultation)
+
+  const handleSelectType = (type: string) => {
+    setTypeConsultation(type)
+    setStep(1)
+  }
 
   const handlePayment = () => {
     if (selectedForfaitData) {
@@ -68,15 +106,26 @@ export default function DemandeSoinPage() {
     
     try {
       const formDataToSend = new FormData()
+      formDataToSend.append('typeConsultation', selectedTypeData?.nom || '')
       formDataToSend.append('prenom', formData.prenom)
       formDataToSend.append('nom', formData.nom)
       formDataToSend.append('dateNaissance', formData.dateNaissance)
       formDataToSend.append('email', formData.email)
       formDataToSend.append('telephone', formData.telephone)
+      if (typeConsultation === 'domicile') {
+        formDataToSend.append('adresse', formData.adresse)
+      }
       formDataToSend.append('probleme', formData.probleme)
       formDataToSend.append('details', formData.details)
-      formDataToSend.append('forfait', selectedForfaitData?.nom || '')
-      formDataToSend.append('montant', String(selectedForfaitData?.prix || 0))
+      
+      if (typeConsultation === 'distance') {
+        formDataToSend.append('forfait', selectedForfaitData?.nom || '')
+        formDataToSend.append('montant', String(selectedForfaitData?.prix || 0))
+      } else {
+        formDataToSend.append('forfait', 'Don libre')
+        formDataToSend.append('montant', '0')
+      }
+      
       if (photo) {
         formDataToSend.append('photo', photo)
       }
@@ -87,7 +136,11 @@ export default function DemandeSoinPage() {
       })
       
       if (response.ok) {
-        router.push('/merci')
+        if (typeConsultation === 'distance') {
+          router.push('/merci')
+        } else {
+          setSubmitted(true)
+        }
       } else {
         alert('Erreur lors de l\'envoi. Veuillez reessayer.')
       }
@@ -104,7 +157,8 @@ export default function DemandeSoinPage() {
     }
   }
 
-  if (submitted) {
+  // Page de confirmation pour cabinet/domicile
+  if (submitted && typeConsultation !== 'distance') {
     return (
       <LayoutWrapper>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
@@ -112,7 +166,20 @@ export default function DemandeSoinPage() {
             <CheckCircle size={40} className="text-emerald-600" />
           </div>
           <h1 className="text-3xl font-serif font-bold text-[#3d3630] mb-4">Demande envoyee !</h1>
-          <p className="text-[#6b6259] mb-8">Jean-Francois a bien recu votre demande de soin ({selectedForfaitData?.nom} - {selectedForfaitData?.prix}EUR). Il commencera votre soin dans les plus brefs delais.</p>
+          <p className="text-[#6b6259] mb-4">
+            Jean-Francois a bien recu votre demande de consultation {typeConsultation === 'cabinet' ? 'au cabinet' : 'a domicile'}.
+          </p>
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8 text-left">
+            <h3 className="font-bold text-amber-800 mb-2">Prochaine etape :</h3>
+            <p className="text-amber-700">
+              Jean-Francois vous contactera rapidement par telephone au <strong>{formData.telephone}</strong> pour convenir d&apos;un rendez-vous.
+            </p>
+          </div>
+          <div className="bg-stone-50 rounded-2xl p-6 mb-8">
+            <p className="text-[#6b6259]">
+              <strong>Rappel :</strong> La consultation {typeConsultation === 'cabinet' ? 'au cabinet' : 'a domicile'} fonctionne sur le principe du don libre. Vous donnez ce que vous souhaitez apres la seance.
+            </p>
+          </div>
           <Link href="/" className="inline-flex items-center gap-2 px-8 py-4 bg-[#4a6741] text-white rounded-2xl font-bold hover:bg-[#3a5233] transition-all">
             Retour a l&apos;accueil
           </Link>
@@ -127,30 +194,102 @@ export default function DemandeSoinPage() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#4a6741]/10 text-[#4a6741] rounded-full text-sm font-bold mb-4">
             <Sparkles size={16} />
-            Soin a distance sur photo
+            Demande de consultation
           </div>
           <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#3d3630] mb-4">Demande de Soin</h1>
-          <p className="text-[#6b6259] max-w-xl mx-auto">Choisissez votre formule, payez en ligne, puis envoyez votre photo pour recevoir votre soin energetique.</p>
+          <p className="text-[#6b6259] max-w-xl mx-auto">Choisissez votre mode de consultation avec Jean-Francois</p>
         </div>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${step >= 1 ? 'bg-[#4a6741] text-white' : 'bg-stone-100 text-stone-400'}`}>
-            <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">1</span>
-            Forfait & Paiement
+        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-10 flex-wrap">
+          <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold ${step >= 0 ? 'bg-[#4a6741] text-white' : 'bg-stone-100 text-stone-400'}`}>
+            <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">1</span>
+            <span className="hidden sm:inline">Type de consultation</span>
+            <span className="sm:hidden">Type</span>
           </div>
-          <div className="w-8 h-0.5 bg-stone-200"></div>
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${step >= 2 ? 'bg-[#4a6741] text-white' : 'bg-stone-100 text-stone-400'}`}>
-            <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">2</span>
-            Vos informations
-          </div>
+          <div className="w-4 sm:w-8 h-0.5 bg-stone-200"></div>
+          {typeConsultation === 'distance' ? (
+            <>
+              <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold ${step >= 1 ? 'bg-[#4a6741] text-white' : 'bg-stone-100 text-stone-400'}`}>
+                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">2</span>
+                <span className="hidden sm:inline">Forfait & Paiement</span>
+                <span className="sm:hidden">Paiement</span>
+              </div>
+              <div className="w-4 sm:w-8 h-0.5 bg-stone-200"></div>
+              <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold ${step >= 2 ? 'bg-[#4a6741] text-white' : 'bg-stone-100 text-stone-400'}`}>
+                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">3</span>
+                <span className="hidden sm:inline">Vos informations</span>
+                <span className="sm:hidden">Infos</span>
+              </div>
+            </>
+          ) : (
+            <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold ${step >= 1 ? 'bg-[#4a6741] text-white' : 'bg-stone-100 text-stone-400'}`}>
+              <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">2</span>
+              <span className="hidden sm:inline">Vos informations</span>
+              <span className="sm:hidden">Infos</span>
+            </div>
+          )}
         </div>
 
-        {step === 1 && (
+        {/* ETAPE 0 : Choix du type de consultation */}
+        {step === 0 && (
           <div className="space-y-8">
+            <div className="grid md:grid-cols-3 gap-6">
+              {typeConsultations.map((type) => {
+                const Icon = type.icon
+                return (
+                  <div
+                    key={type.id}
+                    onClick={() => handleSelectType(type.id)}
+                    className="relative bg-white rounded-3xl p-6 cursor-pointer transition-all border-2 border-stone-100 hover:border-[#4a6741] hover:shadow-xl group"
+                  >
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 ${type.color} text-white group-hover:scale-110 transition-transform`}>
+                      <Icon size={28} />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#3d3630] mb-2">{type.nom}</h3>
+                    <p className="text-[#6b6259] text-sm mb-4">{type.description}</p>
+                    
+                    <div className="flex items-center gap-2 text-sm text-[#9a918a] mb-2">
+                      <MapPin size={14} />
+                      <span>{type.zone}</span>
+                    </div>
+                    
+                    <div className="mt-4 pt-4 border-t border-stone-100">
+                      <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
+                        type.tarif === 'Don libre' 
+                          ? 'bg-amber-100 text-amber-700' 
+                          : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {type.tarif}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="bg-stone-50 rounded-2xl p-6 text-center">
+              <p className="text-[#6b6259] text-sm">
+                <strong>Vous etes loin d&apos;Alencon ?</strong> Le soin a distance sur photo est tout aussi efficace. L&apos;energie n&apos;a pas de frontiere.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* ETAPE 1 pour DISTANCE : Choix du forfait */}
+        {step === 1 && typeConsultation === 'distance' && (
+          <div className="space-y-8">
+            {/* Bouton retour */}
+            <button 
+              onClick={() => { setStep(0); setTypeConsultation(null); }}
+              className="text-[#4a6741] font-medium hover:underline flex items-center gap-2"
+            >
+              ← Changer le type de consultation
+            </button>
+
             {/* Forfaits */}
             <div className="grid md:grid-cols-3 gap-6">
-              {forfaits.map((forfait) => {
+              {forfaitsDistance.map((forfait) => {
                 const Icon = forfait.icon
                 return (
                   <div
@@ -226,7 +365,168 @@ export default function DemandeSoinPage() {
           </div>
         )}
 
-        {step === 2 && (
+        {/* ETAPE 1 pour CABINET/DOMICILE : Formulaire direct (sans paiement) */}
+        {step === 1 && (typeConsultation === 'cabinet' || typeConsultation === 'domicile') && (
+          <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl border border-stone-100 p-6 sm:p-10 space-y-6">
+            {/* Bouton retour */}
+            <button 
+              type="button"
+              onClick={() => { setStep(0); setTypeConsultation(null); }}
+              className="text-[#4a6741] font-medium hover:underline flex items-center gap-2"
+            >
+              ← Changer le type de consultation
+            </button>
+
+            {/* Info type consultation */}
+            <div className={`rounded-2xl p-4 flex items-center gap-4 ${
+              typeConsultation === 'cabinet' ? 'bg-[#4a6741]/10' : 'bg-amber-50'
+            }`}>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                typeConsultation === 'cabinet' ? 'bg-[#4a6741] text-white' : 'bg-amber-600 text-white'
+              }`}>
+                {typeConsultation === 'cabinet' ? <Building2 size={24} /> : <Home size={24} />}
+              </div>
+              <div>
+                <p className={`font-bold ${typeConsultation === 'cabinet' ? 'text-[#4a6741]' : 'text-amber-700'}`}>
+                  {typeConsultation === 'cabinet' ? 'Consultation au cabinet - Alencon' : 'Consultation a domicile - 30km autour d\'Alencon'}
+                </p>
+                <p className="text-sm text-[#6b6259]">Don libre - Jean-Francois vous contactera pour fixer un rendez-vous</p>
+              </div>
+            </div>
+
+            {/* Form Fields */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-bold text-[#3d3630] mb-2">Prenom</label>
+                <div className="relative">
+                  <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input
+                    type="text"
+                    required
+                    value={formData.prenom}
+                    onChange={(e) => setFormData({...formData, prenom: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741]"
+                    placeholder="Jean"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[#3d3630] mb-2">Nom</label>
+                <div className="relative">
+                  <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input
+                    type="text"
+                    required
+                    value={formData.nom}
+                    onChange={(e) => setFormData({...formData, nom: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741]"
+                    placeholder="Dupont"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-bold text-[#3d3630] mb-2">Telephone</label>
+                <div className="relative">
+                  <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input
+                    type="tel"
+                    required
+                    value={formData.telephone}
+                    onChange={(e) => setFormData({...formData, telephone: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741]"
+                    placeholder="06 12 34 56 78"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-[#3d3630] mb-2">Email</label>
+                <div className="relative">
+                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741]"
+                    placeholder="jean@exemple.fr"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Adresse pour domicile uniquement */}
+            {typeConsultation === 'domicile' && (
+              <div>
+                <label className="block text-sm font-bold text-[#3d3630] mb-2">Votre adresse complete</label>
+                <div className="relative">
+                  <MapPin size={18} className="absolute left-4 top-4 text-stone-400" />
+                  <textarea
+                    required
+                    rows={2}
+                    value={formData.adresse}
+                    onChange={(e) => setFormData({...formData, adresse: e.target.value})}
+                    className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741] resize-none"
+                    placeholder="12 rue de la Paix, 61000 Alencon"
+                  />
+                </div>
+                <p className="text-xs text-[#9a918a] mt-1">Deplacement dans un rayon de 30km autour d&apos;Alencon</p>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-bold text-[#3d3630] mb-2">Type de probleme</label>
+              <select
+                required
+                value={formData.probleme}
+                onChange={(e) => setFormData({...formData, probleme: e.target.value})}
+                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741]"
+              >
+                <option value="">Selectionnez...</option>
+                <option value="zona">Zona</option>
+                <option value="brulure">Brulure / Coup de soleil</option>
+                <option value="eczema">Eczema / Psoriasis</option>
+                <option value="douleurs">Douleurs chroniques</option>
+                <option value="stress">Stress / Anxiete</option>
+                <option value="sommeil">Troubles du sommeil</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-[#3d3630] mb-2">Decrivez votre situation</label>
+              <div className="relative">
+                <FileText size={18} className="absolute left-4 top-4 text-stone-400" />
+                <textarea
+                  required
+                  rows={4}
+                  value={formData.details}
+                  onChange={(e) => setFormData({...formData, details: e.target.value})}
+                  className="w-full pl-12 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4a6741] resize-none"
+                  placeholder="Decrivez vos symptomes, depuis combien de temps, les traitements deja essayes..."
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-4 bg-[#4a6741] text-white rounded-2xl font-bold text-lg hover:bg-[#3a5233] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send size={20} />
+              {isSubmitting ? 'Envoi en cours...' : 'Envoyer ma demande de rendez-vous'}
+            </button>
+
+            <p className="text-center text-[#9a918a] text-sm">
+              Jean-Francois vous contactera rapidement pour convenir d&apos;un rendez-vous.
+            </p>
+          </form>
+        )}
+
+        {/* ETAPE 2 pour DISTANCE : Formulaire apres paiement */}
+        {step === 2 && typeConsultation === 'distance' && (
           <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl border border-stone-100 p-6 sm:p-10 space-y-6">
             {/* Confirmation paiement */}
             <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-center gap-4">

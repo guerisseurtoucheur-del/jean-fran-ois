@@ -14,7 +14,7 @@ const navItems = [
   { id: '/qui-suis-je', label: 'Qui suis-je', icon: User },
   { id: '/blog', label: 'Blog', icon: BookOpen },
   { id: '/questions', label: 'Questions', icon: MessageCircle },
-  { id: '/demande-soin', label: 'Soin Photo', icon: Heart },
+  { id: '/demande-soin', label: 'Soins / RDV', icon: Heart },
   { id: '/espace-patient', label: 'Mon Espace', icon: LayoutDashboard },
 ]
 

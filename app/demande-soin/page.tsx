@@ -366,52 +366,15 @@ export default function DemandeSoinPage() {
                   Payer {selectedForfaitData?.prix} EUR avec PayPal
                 </button>
 
-                {/* Moyens de paiement acceptes */}
-                <div className="flex flex-col items-center gap-3 mt-5">
-                  <div className="flex items-center gap-2 text-sm text-[#6b6259]">
-                    <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    <span>Paiement 100% securise</span>
-                  </div>
-                  <div className="flex items-center gap-3 bg-stone-50 rounded-xl px-5 py-3 border border-stone-100">
-                    {/* PayPal */}
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0070ba] rounded-lg">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
-                        <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.641.641 0 0 1 .633-.54h6.012c2.656 0 4.507 1.725 4.287 4.174-.2 2.22-1.984 3.895-4.65 3.895H8.89l-.95 5.46a.641.641 0 0 1-.633.54l-.232 4.088z"/>
-                      </svg>
-                      <span className="text-white text-xs font-bold">PayPal</span>
-                    </div>
-                    <span className="text-[#9a918a] text-sm">ou</span>
-                    {/* Cartes bancaires */}
-                    <div className="flex items-center gap-2">
-                      {/* Visa */}
-                      <div className="w-10 h-6 bg-white rounded border border-stone-200 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="10" viewBox="0 0 50 16" fill="none">
-                          <path d="M19.5 0.5L16.5 15.5H20.5L23.5 0.5H19.5Z" fill="#1434CB"/>
-                          <path d="M33.5 0.8C32.5 0.4 31 0 29 0C24.5 0 21.5 2.3 21.5 5.5C21.5 8 23.5 9.3 25 10.2C26.5 11.1 27 11.7 27 12.5C27 13.7 25.5 14.2 24.2 14.2C22.2 14.2 21.2 13.9 19.5 13.1L19 12.9L18.5 16C19.7 16.5 21.7 16.9 24 16.9C28.8 16.9 31.7 14.7 31.7 11.2C31.7 9.2 30.5 7.7 28 6.5C26.5 5.7 25.5 5.2 25.5 4.3C25.5 3.5 26.4 2.7 28.3 2.7C29.9 2.7 31 3 32 3.4L32.5 3.6L33.5 0.8Z" fill="#1434CB"/>
-                          <path d="M40 0.5C39 0.5 38.2 0.8 37.7 1.9L31 15.5H35.8L36.7 12.8H42.5L43 15.5H47.5L43.5 0.5H40ZM37.8 9.8C38.2 8.8 39.8 4.4 39.8 4.4C39.8 4.4 40.2 3.3 40.5 2.5L40.8 4.2C40.8 4.2 41.8 9 42 9.8H37.8Z" fill="#1434CB"/>
-                          <path d="M15 0.5L10.5 10.8L10 8.2C9 5.2 6.3 2 3 0.5L7 15.4H12L20 0.5H15Z" fill="#1434CB"/>
-                          <path d="M6.5 0.5H0L0 0.8C5.5 2.1 9 5.5 10 8.2L8.8 1.9C8.6 1 8 0.6 7 0.5H6.5Z" fill="#F9A533"/>
-                        </svg>
-                      </div>
-                      {/* Mastercard */}
-                      <div className="w-10 h-6 bg-white rounded border border-stone-200 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15" viewBox="0 0 32 20" fill="none">
-                          <circle cx="10" cy="10" r="9" fill="#EB001B"/>
-                          <circle cx="22" cy="10" r="9" fill="#F79E1B"/>
-                          <path d="M16 3.5C17.8 5 19 7.3 19 10C19 12.7 17.8 15 16 16.5C14.2 15 13 12.7 13 10C13 7.3 14.2 5 16 3.5Z" fill="#FF5F00"/>
-                        </svg>
-                      </div>
-                      {/* CB */}
-                      <div className="w-10 h-6 bg-gradient-to-r from-green-600 to-green-500 rounded flex items-center justify-center">
-                        <span className="text-white text-[8px] font-bold">CB</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {/* Mention paiement simple - pas de boutons cliquables */}
+                <p className="text-center text-[#6b6259] text-sm mt-5">
+                  <svg className="w-4 h-4 text-green-600 inline mr-1.5 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  Paiement securise via PayPal <span className="text-[#9a918a]">(carte bancaire acceptee)</span>
+                </p>
 
-                <p className="text-center text-[#9a918a] text-xs mt-4">
+                <p className="text-center text-[#9a918a] text-xs mt-3">
                   Apres le paiement, vous pourrez envoyer votre photo et vos informations
                 </p>
               </div>

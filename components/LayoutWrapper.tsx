@@ -189,30 +189,60 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       </footer>
 
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/80 backdrop-blur-lg border-t border-stone-100 shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.05)] z-[100]">
-        <div className="flex justify-around items-center h-full max-w-md mx-auto px-2">
-          {[
-            { id: '/', label: 'Accueil', icon: Home },
-            { id: '/demande-soin', label: 'Soin', icon: Heart },
-            { id: '/questions', label: 'Chat', icon: MessageCircle },
-            { id: '/paiement', label: 'Don', icon: CreditCard },
-            { id: '/espace-patient', label: 'Espace', icon: LayoutDashboard },
-          ].map((item) => (
-            <Link
-              key={item.id}
-              href={item.id}
-              className={`flex flex-col items-center justify-center w-16 h-16 rounded-2xl transition-all duration-200 ease-in-out transform active:scale-90 ${
-                isActive(item.id) 
-                  ? 'text-[#4a6741]'
-                  : 'text-[#9a918a] hover:text-[#3d3630]'
-              }`}
-            >
-              <item.icon size={24} strokeWidth={isActive(item.id) ? 2.5 : 2} />
-              <span className={`text-[10px] font-bold mt-1 tracking-tight ${isActive(item.id) ? 'opacity-100' : 'opacity-70'}`}>
-                {item.label}
-              </span>
-            </Link>
-          ))}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/95 backdrop-blur-lg border-t border-stone-200 shadow-[0_-5px_30px_-5px_rgba(0,0,0,0.1)] z-[100]">
+        <div className="flex justify-around items-center h-full max-w-md mx-auto px-2 relative">
+          {/* Accueil */}
+          <Link
+            href="/"
+            className={`flex flex-col items-center justify-center w-14 h-14 rounded-xl transition-all ${
+              isActive('/') ? 'text-[#4a6741]' : 'text-[#9a918a]'
+            }`}
+          >
+            <Home size={22} strokeWidth={isActive('/') ? 2.5 : 2} />
+            <span className="text-[9px] font-bold mt-1">Accueil</span>
+          </Link>
+
+          {/* Questions */}
+          <Link
+            href="/questions"
+            className={`flex flex-col items-center justify-center w-14 h-14 rounded-xl transition-all ${
+              isActive('/questions') ? 'text-[#4a6741]' : 'text-[#9a918a]'
+            }`}
+          >
+            <MessageCircle size={22} strokeWidth={isActive('/questions') ? 2.5 : 2} />
+            <span className="text-[9px] font-bold mt-1">Questions</span>
+          </Link>
+
+          {/* CTA Principal - Soins / RDV - Au centre, plus grand */}
+          <Link
+            href="/demande-soin"
+            className="flex flex-col items-center justify-center w-20 h-20 -mt-8 rounded-full bg-[#4a6741] text-white shadow-xl shadow-[#4a6741]/40 border-4 border-white transition-all active:scale-95"
+          >
+            <Heart size={26} fill="currentColor" />
+            <span className="text-[8px] font-bold mt-0.5 uppercase tracking-tight">Soins/RDV</span>
+          </Link>
+
+          {/* Blog */}
+          <Link
+            href="/blog"
+            className={`flex flex-col items-center justify-center w-14 h-14 rounded-xl transition-all ${
+              isActive('/blog') ? 'text-[#4a6741]' : 'text-[#9a918a]'
+            }`}
+          >
+            <BookOpen size={22} strokeWidth={isActive('/blog') ? 2.5 : 2} />
+            <span className="text-[9px] font-bold mt-1">Blog</span>
+          </Link>
+
+          {/* Espace */}
+          <Link
+            href="/espace-patient"
+            className={`flex flex-col items-center justify-center w-14 h-14 rounded-xl transition-all ${
+              isActive('/espace-patient') ? 'text-[#4a6741]' : 'text-[#9a918a]'
+            }`}
+          >
+            <LayoutDashboard size={22} strokeWidth={isActive('/espace-patient') ? 2.5 : 2} />
+            <span className="text-[9px] font-bold mt-1">Espace</span>
+          </Link>
         </div>
       </nav>
     </div>

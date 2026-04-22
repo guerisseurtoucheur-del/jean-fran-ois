@@ -27,15 +27,16 @@ const knowledgeBase = {
 
 **SOINS A DISTANCE (sur photo) - Tarifs fixes :**
 • Soin Ponctuel : **35€** (1 séance)
-• Soin Complet : **55€** (2 séances sur 48h) - *Le plus populaire*
+• Soin Complet : **55€** (2 séances sur 48h) - *Le plus demande*
 • Forfait Suivi : **120€** (5 séances sur 2 semaines)
 
-Paiement sécurisé par PayPal ou Carte Bancaire.
+Paiement securise par PayPal ou Carte Bancaire.
 
-**AU CABINET ou A DOMICILE (près d'Alençon) :**
-C'est au **don libre** - vous donnez selon vos moyens.
+**AU CABINET ou A DOMICILE (pres d'Alencon) :**
+C'est au **don libre** : vous choisissez vous-meme la somme en fonction de vos moyens et de votre ressenti apres le soin. Jean-Francois veut que le soin reste accessible a tous.
 
-👉 Rendez-vous sur la page "Soins/RDV" pour réserver.`
+Pour prendre rendez-vous : **09 55 55 44 62**
+Ou rendez-vous sur la page "Soins/RDV" pour reserver en ligne.`
   },
 
   // Comment ca marche
@@ -174,42 +175,122 @@ Jean-François pratique les soins à distance depuis plus de 20 ans avec des ré
   // Jean-Francois
   jeanfrancois: {
     keywords: ['jean-francois', 'jean francois', 'qui', 'parcours', 'experience', 'expérience', 'formation', 'depuis'],
-    response: `**Qui est Jean-François ?**
+    response: `**Qui est Jean-Francois ?**
 
-Jean-François est magnétiseur guérisseur et toucheur depuis **plus de 20 ans**. Il a découvert son don très jeune et a choisi d'en faire sa mission de vie.
+Jean-Francois est magnetiseur guerisseur et toucheur depuis **plus de 20 ans**. Ce n'est pas un debutant - deux decennies de pratique lui ont permis d'affiner sa sensibilite et sa comprehension profonde des energies.
 
 **Son expertise :**
-• Coupeur de feu reconnu
-• Spécialiste du zona et des brûlures
-• Expert en soins à distance sur photo
-• Plus de 20 ans d'expérience
+• Coupeur de feu reconnu (brulures, zona)
+• Specialiste des maladies de peau (eczema, psoriasis)
+• Expert en soulagement des douleurs chroniques
+• Maitre des soins a distance sur photo
 
 **Sa philosophie :**
-"L'énergie est le lien invisible qui nous unit tous. Mon souffle vous rejoint, où que vous soyez."
+Pour Jean-Francois, le magnetisme est un PARTAGE. C'est pourquoi au cabinet et a domicile, il fonctionne au don libre - pour que le soin reste accessible a tous, peu importe les moyens financiers.
 
-**Son cabinet :**
-Basé à Alençon (61), il reçoit sur rendez-vous ou se déplace dans un rayon de 30km. Pour le reste de la France, il pratique les soins à distance sur photo.
+**Sa disponibilite :**
+Profondement ancre dans sa region, la Normandie, Jean-Francois intervient avec la meme devotion en face a face ou a distance sur photo pour toute la France.
 
-📞 **09 55 55 44 62**`
+**Contact : 09 55 55 44 62**
+**Email : contact@jean-francois-magnetiseur-guerisseur.com**`
   },
 
   // Don libre
   donLibre: {
-    keywords: ['don libre', 'gratuit', 'moyens', 'pauvre', 'argent', 'finance'],
-    response: `**Le don libre, comment ça marche ?**
+    keywords: ['don libre', 'gratuit', 'moyens', 'pauvre', 'argent', 'finance', 'accessible'],
+    response: `**Le don libre, comment ca marche ?**
 
-Pour les consultations **au cabinet** (Alençon) ou **à domicile** (30km autour), Jean-François pratique le **don libre**.
+Pour les consultations **au cabinet** (Alencon) ou **a domicile** (30km autour), Jean-Francois pratique le **don libre**.
 
-**Qu'est-ce que ça signifie ?**
-Vous donnez ce que vous voulez, selon vos moyens et votre ressenti après le soin. Il n'y a pas de montant minimum ni maximum.
+**Qu'est-ce que ca signifie ?**
+C'est VOUS qui choisissez la somme, en fonction de :
+• Vos moyens financiers
+• Votre ressenti apres le soin
+• Ce que vous estimez juste
+
+Il n'y a pas de montant minimum ni maximum. Certains donnent 20€, d'autres 50€ ou plus. Chacun donne selon sa situation.
 
 **Pourquoi ce choix ?**
-Jean-François croit que le soin doit être accessible à tous, quelle que soit la situation financière.
+Pour Jean-Francois, le magnetisme est un PARTAGE. Le soin doit rester accessible a tous, peu importe la situation financiere. Personne ne doit etre prive de soin a cause de l'argent.
 
-**Note importante :**
-Les soins à distance (sur photo) ont des tarifs fixes (35€, 55€, 120€) car ils nécessitent un paiement en ligne préalable.
+**Note :** Les soins a distance (sur photo) ont des tarifs fixes (35€, 55€, 120€) car ils necessitent un paiement en ligne prealable.
 
-👉 Prenez RDV au **09 55 55 44 62**`
+**Contact : 09 55 55 44 62**`
+  },
+
+  // Questions "pouvez-vous m'aider"
+  aide: {
+    keywords: ['aider', 'aide', 'soigner', 'traiter', 'possible', 'capable', 'peau', 'probleme', 'problème', 'mal', 'maux'],
+    response: `**Oui, Jean-Francois peut vous aider pour de nombreux problemes !**
+
+**Problemes de peau :**
+Oui, Jean-Francois peut vous aider pour les problemes de peau : eczema, psoriasis, zona, brulures, dermatites, acne...
+
+**Douleurs chroniques :**
+Oui, il peut soulager : mal de dos, sciatique, cervicales, arthrose, tendinites, migraines, douleurs articulaires...
+
+**Dents des bebes :**
+Oui, Jean-Francois soulage les douleurs de dentition des bebes. Le magnetisme apaise la douleur et calme l'enfant naturellement.
+
+**Douleurs gastriques :**
+Oui, il intervient sur les troubles digestifs : douleurs gastriques, maux de ventre, crampes, reflux...
+
+**Troubles emotionnels :**
+Oui, il accompagne : stress, anxiete, insomnie, burn-out, fatigue chronique, depression legere...
+
+**Specialite - Coupeur de feu :**
+Oui, c'est meme sa specialite ! Brulures, zona, coups de soleil, effets de la radiotherapie...
+
+**Accompagnement medical :**
+Oui, en complement de vos traitements : chimio, cicatrisation, convalescence...
+
+N'hesitez pas a decrire votre situation pour un avis personnalise.
+**Contact : 09 55 55 44 62**`
+  },
+
+  // Dents des bebes
+  dentsBebes: {
+    keywords: ['dent', 'dents', 'bebe', 'bébé', 'bebes', 'bébés', 'dentition', 'pousse', 'gencive', 'nourrisson', 'enfant'],
+    response: `**Oui, Jean-Francois soulage les douleurs de dentition des bebes !**
+
+La poussee dentaire est souvent une periode difficile pour les bebes et leurs parents. Le magnetisme permet d'apaiser naturellement la douleur et de calmer l'enfant.
+
+**Comment ca marche ?**
+Jean-Francois peut intervenir :
+- En presentiel au cabinet ou a domicile (autour d'Alencon)
+- A distance sur photo (toute la France)
+
+Un soin sur photo du bebe peut rapidement soulager les douleurs liees a la poussee des dents.
+
+**Tarifs :**
+- Cabinet/Domicile : don libre
+- A distance : 35€ la seance
+
+**Contact : 09 55 55 44 62**`
+  },
+
+  // Douleurs gastriques
+  gastrique: {
+    keywords: ['gastrique', 'estomac', 'ventre', 'digestion', 'digestif', 'crampe', 'reflux', 'intestin', 'ballonnement', 'nausee'],
+    response: `**Oui, Jean-Francois intervient sur les troubles gastriques et digestifs !**
+
+Le magnetisme peut aider a soulager :
+- Douleurs gastriques et maux d'estomac
+- Crampes abdominales
+- Reflux gastrique
+- Ballonnements
+- Troubles digestifs divers
+- Nausees
+
+**Comment ca marche ?**
+Jean-Francois travaille sur le reequilibrage energetique de la zone abdominale pour soulager les tensions et les douleurs.
+
+**Options de consultation :**
+- Cabinet a Alencon (don libre)
+- A domicile - 30km autour d'Alencon (don libre)
+- A distance sur photo - France entiere (35€, 55€ ou 120€)
+
+**Contact : 09 55 55 44 62**`
   }
 };
 
@@ -237,26 +318,28 @@ const findBestResponse = (userMessage: string): string | null => {
   return null;
 };
 
-// System prompt complet pour l'IA
-const systemPrompt = `Tu es l'assistant virtuel officiel de Jean-François, magnétiseur guérisseur et toucheur professionnel depuis plus de 20 ans. Tu es son associé digital ultra compétent.
+// System prompt complet pour l'IA - Instructions officielles de Jean-François
+const systemPrompt = `Agis comme l'assistant personnel de Jean-François, magnétiseur-guérisseur à Alençon (Orne, Normandie). Jean-François pratique depuis 20 ans. Ton rôle est de renseigner les gens sur ses services avec bienveillance et clarté.
 
 === INFORMATIONS ESSENTIELLES ===
 
-CONTACT :
+LOCALISATION :
+- Cabinet : 6 Rue du 14E Hussards, 61000 Alençon (Normandie)
+- Déplacements à domicile : rayon de 30 km autour d'Alençon
 - Téléphone : 09 55 55 44 62
-- Cabinet : 6 Rue du 14E Hussards, 61000 Alençon
 - Horaires : Lun-Ven 9h-19h, Sam 9h-12h
-- Email : contact@jean-francois-magnetiseur-guerisseur.com
 
-=== LES 3 TYPES DE CONSULTATION ===
+=== TARIFS ===
 
-REGLE D'OR : Les TARIFS FIXES = uniquement soins A DISTANCE. Cabinet et domicile = DON LIBRE.
+TARIFS EN PRESENTIEL (Cabinet et Domicile) :
+Il n'y a PAS de tarif fixe. Jean-François fonctionne au DON LIBRE.
+Le patient donne ce qu'il veut ou peut, selon ses moyens.
 
-1. SOIN A DISTANCE (sur photo) - TARIFS FIXES - France entière
-   - Soin Ponctuel : 35€ (1 séance)
-   - Soin Complet : 55€ (2 séances sur 48h) - LE PLUS POPULAIRE
-   - Forfait Suivi : 120€ (5 séances sur 2 semaines)
-   Paiement sécurisé PayPal ou Carte Bancaire AVANT le soin.
+SOINS SUR PHOTOS (Tarifs fixes) :
+- 35€ la séance (soin ponctuel)
+- 55€ pour 2 séances sur 48 heures (soin complet - le plus demandé)
+- 120€ pour 5 séances sur 2 semaines (forfait suivi)
+Paiement sécurisé PayPal ou Carte Bancaire AVANT le soin.
    Processus : paiement → envoi photo + description → Jean-François effectue le soin
 
 2. AU CABINET - DON LIBRE (Alençon uniquement)
@@ -265,29 +348,45 @@ REGLE D'OR : Les TARIFS FIXES = uniquement soins A DISTANCE. Cabinet et domicile
 3. A DOMICILE - DON LIBRE (30km autour d'Alençon)
    Jean-François se déplace. Sur RDV au 09 55 55 44 62.
 
-=== SPECIALITES ===
+=== QUI EST JEAN-FRANCOIS ===
 
-Jean-François est reconnu pour :
-- COUPEUR DE FEU : brûlures, coups de soleil, zona, effets radiothérapie
-- MALADIES DE PEAU : eczéma, psoriasis, dermatites
+EXPERIENCE : Jean-François n'est pas un débutant - il pratique le magnétisme depuis DEUX DECENNIES (20 ans). Ce long parcours lui a permis d'affiner sa sensibilité et sa compréhension profonde des énergies.
+
+PHILOSOPHIE : Pour Jean-François, le magnétisme est un PARTAGE. C'est pour cette raison qu'au cabinet et à domicile, il privilégie le DON LIBRE, afin que le soin reste accessible à TOUS, peu importe les moyens financiers. Personne ne doit être privé de soin à cause de l'argent.
+
+DISPONIBILITE : Jean-François est profondément ancré dans sa région, la Normandie. Il intervient avec la même dévotion et le même engagement, que ce soit en face à face au cabinet, à domicile, ou à distance sur photo pour toute la France.
+
+=== SPECIALITES DE JEAN-FRANCOIS ===
+
+En tant que guérisseur traditionnel, Jean-François intervient sur les maux du corps et de l'esprit :
+- COUPEUR DE FEU : brûlures, coups de soleil, zona, effets radiothérapie/chimiothérapie
+- MALADIES DE PEAU : eczéma, psoriasis, dermatites, acné
 - DOULEURS : dos, cervicales, sciatique, arthrose, tendinites, migraines
-- TROUBLES EMOTIONNELS : stress, anxiété, insomnie, burn-out, fatigue chronique
-- ACCOMPAGNEMENT : chimio, cicatrisation
+- BLOCAGES ENERGETIQUES : fatigue chronique, épuisement, manque de vitalité
+- TROUBLES EMOTIONNELS : stress, anxiété, insomnie, burn-out
+- ACCOMPAGNEMENT : suivi chimio, cicatrisation, rééquilibrage énergétique global
 
 === LE MAGNETISME ===
 
-Le magnétisme curatif utilise l'énergie vitale pour soulager. Jean-François canalise cette énergie et la transmet au patient. Cela fonctionne aussi bien en présence qu'à distance (sur photo). L'énergie n'a pas de frontière géographique.
+Le magnétisme curatif est une pratique ancestrale qui utilise l'énergie vitale pour soulager les maux du corps et de l'esprit. Jean-François possède ce don naturel qu'il a développé et affiné pendant 20 ans. Il canalise l'énergie universelle et la transmet au patient pour rééquilibrer son corps et libérer les blocages. 
 
-=== REGLES DE REPONSE ===
+Cette transmission fonctionne aussi bien en présence physique qu'à distance sur photo - l'énergie n'a pas de frontière géographique. La distance n'affaiblit en rien l'efficacité du soin.
 
-1. Sois CLAIR et CONCIS (pas de pavés)
-2. Distingue TOUJOURS tarifs fixes (distance) vs don libre (cabinet/domicile)
+=== TON ET ATTITUDE ===
+
+Tu dois être :
+- RESPECTUEUX et BIENVEILLANT
+- CALME et RASSURANT  
+- CLAIR et CONCIS (pas de longs pavés)
+- PROFESSIONNEL mais CHALEUREUX
+
+=== REGLES IMPORTANTES ===
+
+1. Ne JAMAIS remplacer un avis médical - explique que le magnétisme AIDE EN COMPLEMENT
+2. Distingue TOUJOURS tarifs fixes (soins sur photo) vs don libre (cabinet/domicile)
 3. Oriente vers la page /demande-soin pour réserver
-4. Ne fais JAMAIS de diagnostic médical
-5. Rappelle que le magnétisme COMPLETE la médecine, ne la remplace pas
-6. Sois chaleureux et rassurant
-7. Utilise des emojis avec parcimonie (📞, 👉, ✨)
-8. Propose toujours une action concrète à la fin
+4. Quand on te pose une question, réponds PRECISEMENT au nom de Jean-François
+5. Propose toujours une action concrète à la fin (appeler, réserver, etc.)
 
 === REPONSES TYPES ===
 

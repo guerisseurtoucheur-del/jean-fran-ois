@@ -218,13 +218,13 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 { name: "Sophie M.", city: "Lyon (69)", text: "Jean-Francois m'a aide pour un zona tres douloureux. En deux seances a distance, le feu s'est eteint.", subject: "Zona" },
-                { name: "Marc D.", city: "Paris (75)", text: "Mes douleurs de dos chroniques ont disparu apres l'envoi de ma photo. Un vrai soulagement.", subject: "Dos" },
-                { name: "Thomas R.", city: "Nantes (44)", text: "Brulure domestique grave, Jean-Francois a 'coupe le feu' immediatement a distance.", subject: "Feu" },
+                { name: "Emilie C.", city: "Rennes (35)", text: "Mon bebe de 8 mois souffrait de ses poussees dentaires. Une seance sur photo et il etait apaise. Miracle pour les dents des bebes !", subject: "Dents bebe" },
+                { name: "Laurent M.", city: "Marseille (13)", text: "Des douleurs gastriques depuis des annees. Apres 2 seances avec Jean-Francois, un soulagement incroyable.", subject: "Gastrique" },
                 { name: "Julie V.", city: "Strasbourg (67)", text: "Ma fille souffrait d'un eczema tenace. Son soin sur photo a ete fulgurant.", subject: "Eczema" },
-                { name: "Frederic L.", city: "Bordeaux (33)", text: "Soin a distance pour une douleur a l'epaule qui trainait depuis des mois. Le resultat est bluffant.", subject: "Epaule" },
-                { name: "Sandrine K.", city: "Nice (06)", text: "Une seance sur photo pour mon fils qui faisait des cauchemars. Depuis, ses nuits sont paisibles.", subject: "Sommeil" },
+                { name: "Stephanie R.", city: "Nantes (44)", text: "Ma petite fille faisait ses dents et pleurait toutes les nuits. Le resultat a ete immediat. Un vrai miracle !", subject: "Dents bebe" },
+                { name: "Patrick H.", city: "Bordeaux (33)", text: "Problemes de digestion et crampes d'estomac chroniques. Jean-Francois m'a aide a retrouver un confort digestif.", subject: "Digestion" },
                 { name: "Alain P.", city: "Lille (59)", text: "Je recommande vivement Jean-Francois pour son efficacite sur les brulures. Un vrai coupeur de feu.", subject: "Brulures" },
-                { name: "Isabelle B.", city: "Toulouse (31)", text: "Mon eczema s'est apaise des la premiere connexion. Merci pour cette aide precieuse.", subject: "Eczema" }
+                { name: "Marc D.", city: "Paris (75)", text: "Mes douleurs de dos chroniques ont disparu apres l'envoi de ma photo. Un vrai soulagement.", subject: "Dos" }
               ].map((t, i) => (
                 <div key={i} className="p-8 bg-white rounded-[2.5rem] space-y-4 hover:shadow-xl transition-all border border-[#4a6741]/10 hover:border-[#4a6741]/30">
                   <div className="flex gap-1 text-amber-400">

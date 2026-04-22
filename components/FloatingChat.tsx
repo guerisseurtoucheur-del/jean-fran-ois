@@ -528,6 +528,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
           {hasInteracted && !loading && (
             <Link 
               href="/demande-soin" 
+              onClick={() => setIsOpen(false)}
               className="mx-2 sm:mx-4 mb-2 p-2 sm:p-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-between gap-2 sm:gap-3 hover:from-emerald-600 hover:to-emerald-700 active:from-emerald-700 active:to-emerald-800 transition-all shadow-lg group"
             >
               <div className="flex items-center gap-2 sm:gap-3">

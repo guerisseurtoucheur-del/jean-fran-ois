@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { MessageCircle, X, Send, Sparkles, Loader2, Minus, Heart, ArrowRight, MapPin, ExternalLink, Globe, FileText } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, ArrowRight, ExternalLink, Globe, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 interface GroundingLink {
@@ -19,14 +18,293 @@ interface FloatingChatProps {
   onNavigate: (tab: string) => void;
 }
 
+// Base de connaissances complete sur Jean-Francois et le magnetisme
+const knowledgeBase = {
+  // Tarifs et prix
+  tarifs: {
+    keywords: ['tarif', 'prix', 'coute', 'coût', 'combien', 'euro', 'payer', 'paiement', 'gratuit', 'cher'],
+    response: `**Nos tarifs sont clairs et transparents :**
+
+**SOINS A DISTANCE (sur photo) - Tarifs fixes :**
+• Soin Ponctuel : **35€** (1 séance)
+• Soin Complet : **55€** (2 séances sur 48h) - *Le plus populaire*
+• Forfait Suivi : **120€** (5 séances sur 2 semaines)
+
+Paiement sécurisé par PayPal ou Carte Bancaire.
+
+**AU CABINET ou A DOMICILE (près d'Alençon) :**
+C'est au **don libre** - vous donnez selon vos moyens.
+
+👉 Rendez-vous sur la page "Soins/RDV" pour réserver.`
+  },
+
+  // Comment ca marche
+  fonctionnement: {
+    keywords: ['comment', 'fonctionne', 'marche', 'deroule', 'déroule', 'etape', 'étape', 'processus', 'faire'],
+    response: `**Comment se déroule un soin à distance :**
+
+1️⃣ **Choisissez votre formule** (35€, 55€ ou 120€)
+2️⃣ **Payez en ligne** (PayPal ou CB sécurisé)
+3️⃣ **Envoyez votre photo** + décrivez votre problème
+4️⃣ **Jean-François effectue le soin** à distance
+5️⃣ **Vous ressentez les bienfaits** (souvent dès les premières heures)
+
+La distance n'a aucune importance pour le magnétisme. L'énergie se transmet par la photo, où que vous soyez en France.
+
+👉 Prêt à essayer ? Rendez-vous sur "Soins/RDV"`
+  },
+
+  // Magnetisme et soins
+  magnetisme: {
+    keywords: ['magnetisme', 'magnétisme', 'magnetiseur', 'magnétiseur', 'guerisseur', 'guérisseur', 'energie', 'énergie', 'don', 'pouvoir'],
+    response: `**Qu'est-ce que le magnétisme curatif ?**
+
+Le magnétisme est une pratique ancestrale qui utilise l'énergie vitale pour soulager les maux du corps et de l'esprit. Jean-François possède ce don depuis plus de **20 ans**.
+
+**Comment ça fonctionne :**
+Le magnétiseur canalise l'énergie universelle et la transmet au patient pour rééquilibrer son corps. Cette transmission fonctionne aussi bien en présence qu'à distance (sur photo).
+
+**Jean-François est reconnu pour :**
+• Couper le feu (brûlures, zona)
+• Apaiser les maladies de peau
+• Soulager les douleurs chroniques
+• Calmer le stress et l'anxiété
+
+Le magnétisme **complète** la médecine, il ne la remplace pas.`
+  },
+
+  // Coupeur de feu
+  coupeurFeu: {
+    keywords: ['coupeur', 'barreur', 'feu', 'brulure', 'brûlure', 'zona', 'radiotherapie', 'radiothérapie', 'chimio'],
+    response: `**Jean-François est un Coupeur de Feu reconnu**
+
+Le "coupeur de feu" (ou barreur de feu) est un don rare qui permet de soulager rapidement :
+
+• **Brûlures domestiques** (eau chaude, huile, fer à repasser...)
+• **Coups de soleil** sévères
+• **Zona** et ses douleurs intenses
+• **Effets de la radiothérapie** (brûlures internes)
+
+**Efficacité remarquable :**
+Le soulagement est souvent ressenti en quelques heures. De nombreux hôpitaux orientent les patients vers des coupeurs de feu en complément des soins médicaux.
+
+**En cas de brûlure :**
+1. Refroidissez sous l'eau froide 15 min
+2. Contactez Jean-François immédiatement
+3. Il peut agir à distance, même en urgence
+
+📞 **09 55 55 44 62**`
+  },
+
+  // Problemes traites
+  problemes: {
+    keywords: ['zona', 'eczema', 'eczéma', 'psoriasis', 'douleur', 'dos', 'stress', 'anxiete', 'anxiété', 'insomnie', 'sommeil', 'migraine', 'arthrose', 'sciatique', 'tendinite', 'depression', 'dépression'],
+    response: `**Les problèmes que Jean-François peut soulager :**
+
+**Maladies de peau :**
+• Zona (coupeur de feu)
+• Eczéma, psoriasis
+• Brûlures, coups de soleil
+
+**Douleurs physiques :**
+• Mal de dos, cervicales
+• Sciatique, lumbago
+• Arthrose, tendinites
+• Migraines
+
+**Troubles émotionnels :**
+• Stress, anxiété
+• Troubles du sommeil
+• Fatigue chronique
+• Burn-out
+
+**Accompagnement médical :**
+• Effets de la chimiothérapie
+• Brûlures de radiothérapie
+• Cicatrisation post-opératoire
+
+⚠️ Le magnétisme complète la médecine. Consultez toujours votre médecin en priorité.`
+  },
+
+  // Contact et localisation
+  contact: {
+    keywords: ['contact', 'telephone', 'téléphone', 'appeler', 'adresse', 'cabinet', 'alencon', 'alençon', 'horaire', 'rendez-vous', 'rdv', 'ou', 'localisation'],
+    response: `**Coordonnées de Jean-François :**
+
+📞 **Téléphone : 09 55 55 44 62**
+
+📍 **Cabinet :** 6 Rue du 14E Hussards, 61000 Alençon
+
+🕐 **Horaires :**
+• Lun-Ven : 9h - 19h
+• Samedi : 9h - 12h
+
+📧 **Email :** contact@jean-francois-magnetiseur-guerisseur.com
+
+**3 façons de consulter :**
+1. **À distance** (sur photo) - France entière
+2. **Au cabinet** - Alençon
+3. **À domicile** - 30km autour d'Alençon
+
+👉 Réservez sur la page "Soins/RDV"`
+  },
+
+  // Distance et efficacite
+  distance: {
+    keywords: ['distance', 'loin', 'photo', 'efficace', 'marche', 'possible', 'france', 'etranger', 'étranger'],
+    response: `**Les soins à distance sont tout aussi efficaces !**
+
+C'est une question fréquente et légitime. Voici pourquoi ça fonctionne :
+
+**L'énergie n'a pas de frontière :**
+Le magnétisme se transmet par l'intention et la connexion énergétique. Une photo récente suffit à Jean-François pour "voir" et traiter le problème.
+
+**Témoignages de patients :**
+Des milliers de personnes en France ont été soulagées à distance, de Paris à Marseille, de Lille à Toulouse.
+
+**Avantages du soin à distance :**
+• Pas de déplacement
+• Disponible partout en France
+• Aussi efficace qu'en cabinet
+• Idéal pour les urgences (brûlures, zona)
+
+Jean-François pratique les soins à distance depuis plus de 20 ans avec des résultats remarquables.`
+  },
+
+  // Jean-Francois
+  jeanfrancois: {
+    keywords: ['jean-francois', 'jean francois', 'qui', 'parcours', 'experience', 'expérience', 'formation', 'depuis'],
+    response: `**Qui est Jean-François ?**
+
+Jean-François est magnétiseur guérisseur et toucheur depuis **plus de 20 ans**. Il a découvert son don très jeune et a choisi d'en faire sa mission de vie.
+
+**Son expertise :**
+• Coupeur de feu reconnu
+• Spécialiste du zona et des brûlures
+• Expert en soins à distance sur photo
+• Plus de 20 ans d'expérience
+
+**Sa philosophie :**
+"L'énergie est le lien invisible qui nous unit tous. Mon souffle vous rejoint, où que vous soyez."
+
+**Son cabinet :**
+Basé à Alençon (61), il reçoit sur rendez-vous ou se déplace dans un rayon de 30km. Pour le reste de la France, il pratique les soins à distance sur photo.
+
+📞 **09 55 55 44 62**`
+  },
+
+  // Don libre
+  donLibre: {
+    keywords: ['don libre', 'gratuit', 'moyens', 'pauvre', 'argent', 'finance'],
+    response: `**Le don libre, comment ça marche ?**
+
+Pour les consultations **au cabinet** (Alençon) ou **à domicile** (30km autour), Jean-François pratique le **don libre**.
+
+**Qu'est-ce que ça signifie ?**
+Vous donnez ce que vous voulez, selon vos moyens et votre ressenti après le soin. Il n'y a pas de montant minimum ni maximum.
+
+**Pourquoi ce choix ?**
+Jean-François croit que le soin doit être accessible à tous, quelle que soit la situation financière.
+
+**Note importante :**
+Les soins à distance (sur photo) ont des tarifs fixes (35€, 55€, 120€) car ils nécessitent un paiement en ligne préalable.
+
+👉 Prenez RDV au **09 55 55 44 62**`
+  }
+};
+
+// Fonction pour trouver la meilleure reponse
+const findBestResponse = (userMessage: string): string | null => {
+  const messageLower = userMessage.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  
+  let bestMatch: { key: string; score: number } | null = null;
+  
+  for (const [key, data] of Object.entries(knowledgeBase)) {
+    const matchCount = data.keywords.filter(keyword => {
+      const keywordNormalized = keyword.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return messageLower.includes(keywordNormalized);
+    }).length;
+    
+    if (matchCount > 0 && (!bestMatch || matchCount > bestMatch.score)) {
+      bestMatch = { key, score: matchCount };
+    }
+  }
+  
+  if (bestMatch) {
+    return knowledgeBase[bestMatch.key as keyof typeof knowledgeBase].response;
+  }
+  
+  return null;
+};
+
+// System prompt complet pour l'IA
+const systemPrompt = `Tu es l'assistant virtuel officiel de Jean-François, magnétiseur guérisseur et toucheur professionnel depuis plus de 20 ans. Tu es son associé digital ultra compétent.
+
+=== INFORMATIONS ESSENTIELLES ===
+
+CONTACT :
+- Téléphone : 09 55 55 44 62
+- Cabinet : 6 Rue du 14E Hussards, 61000 Alençon
+- Horaires : Lun-Ven 9h-19h, Sam 9h-12h
+- Email : contact@jean-francois-magnetiseur-guerisseur.com
+
+=== LES 3 TYPES DE CONSULTATION ===
+
+REGLE D'OR : Les TARIFS FIXES = uniquement soins A DISTANCE. Cabinet et domicile = DON LIBRE.
+
+1. SOIN A DISTANCE (sur photo) - TARIFS FIXES - France entière
+   - Soin Ponctuel : 35€ (1 séance)
+   - Soin Complet : 55€ (2 séances sur 48h) - LE PLUS POPULAIRE
+   - Forfait Suivi : 120€ (5 séances sur 2 semaines)
+   Paiement sécurisé PayPal ou Carte Bancaire AVANT le soin.
+   Processus : paiement → envoi photo + description → Jean-François effectue le soin
+
+2. AU CABINET - DON LIBRE (Alençon uniquement)
+   Le patient donne ce qu'il veut selon ses moyens. Sur RDV au 09 55 55 44 62.
+
+3. A DOMICILE - DON LIBRE (30km autour d'Alençon)
+   Jean-François se déplace. Sur RDV au 09 55 55 44 62.
+
+=== SPECIALITES ===
+
+Jean-François est reconnu pour :
+- COUPEUR DE FEU : brûlures, coups de soleil, zona, effets radiothérapie
+- MALADIES DE PEAU : eczéma, psoriasis, dermatites
+- DOULEURS : dos, cervicales, sciatique, arthrose, tendinites, migraines
+- TROUBLES EMOTIONNELS : stress, anxiété, insomnie, burn-out, fatigue chronique
+- ACCOMPAGNEMENT : chimio, cicatrisation
+
+=== LE MAGNETISME ===
+
+Le magnétisme curatif utilise l'énergie vitale pour soulager. Jean-François canalise cette énergie et la transmet au patient. Cela fonctionne aussi bien en présence qu'à distance (sur photo). L'énergie n'a pas de frontière géographique.
+
+=== REGLES DE REPONSE ===
+
+1. Sois CLAIR et CONCIS (pas de pavés)
+2. Distingue TOUJOURS tarifs fixes (distance) vs don libre (cabinet/domicile)
+3. Oriente vers la page /demande-soin pour réserver
+4. Ne fais JAMAIS de diagnostic médical
+5. Rappelle que le magnétisme COMPLETE la médecine, ne la remplace pas
+6. Sois chaleureux et rassurant
+7. Utilise des emojis avec parcimonie (📞, 👉, ✨)
+8. Propose toujours une action concrète à la fin
+
+=== REPONSES TYPES ===
+
+Si "combien ça coûte" : Explique les 3 options avec tarifs fixes (distance) vs don libre (cabinet/domicile)
+Si "comment ça marche" : Explique les étapes du soin à distance
+Si "c'est efficace" : Rassure sur l'efficacité des soins à distance, 20+ ans d'expérience
+Si urgence brûlure : Conseille refroidir + appeler 09 55 55 44 62 immédiatement`;
+
 const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: 'Bonjour ! Je suis l\'assistant de Jean-François. Je peux vous renseigner sur nos soins à distance partout en France ou sur notre cabinet à Alençon. Que puis-je faire pour vous ?' }
+    { role: 'model', text: 'Bonjour ! Je suis l\'assistant de Jean-François, magnétiseur guérisseur depuis plus de 20 ans. Je connais tout sur nos soins à distance, nos tarifs et le magnétisme. Comment puis-je vous aider ?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,62 +323,62 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
     setMessages(newMessages);
     setLoading(true);
     
+    // D'abord, essayer de trouver une reponse dans la base de connaissances
+    const localResponse = findBestResponse(userMsg);
+    
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '' });
       
-      const systemPrompt = `Tu es l'assistant virtuel officiel de Jean-François, magnétiseur guérisseur et toucheur depuis plus de 20 ans. Tu réponds de manière claire, concise et rassurante.
-
-CONTACT : Téléphone 09 55 55 44 62 | Cabinet : 6 Rue du 14E Hussards, 61000 Alençon | Horaires : Lun-Ven 9h-19h, Sam 9h-12h
-
-=== LES 3 TYPES DE CONSULTATION ===
-
-ATTENTION : Les TARIFS FIXES ne concernent QUE les soins A DISTANCE. Cabinet et domicile = DON LIBRE.
-
-1. SOIN A DISTANCE (sur photo) - TARIFS FIXES - France entière
-   - Soin Ponctuel : 35€ (1 séance)
-   - Soin Complet : 55€ (2 séances) - LE PLUS POPULAIRE
-   - Forfait Suivi : 120€ (5 séances)
-   Paiement PayPal ou CB avant le soin. Ensuite envoi photo + description.
-
-2. AU CABINET (Alençon) - DON LIBRE
-   Vous donnez ce que vous voulez. Sur RDV au 09 55 55 44 62.
-
-3. A DOMICILE (30km autour Alençon) - DON LIBRE
-   Jean-François se déplace. Sur RDV au 09 55 55 44 62.
-
-SPÉCIALITÉS : Coupeur de feu (brûlures, zona), eczéma, psoriasis, douleurs dos/articulations, stress, anxiété.
-
-Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour réserver.`;
-
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: newMessages.map(m => ({ role: m.role, parts: [{ text: m.text }] })),
         config: {
           systemInstruction: systemPrompt,
-          tools: [{ googleSearch: {} }, { googleMaps: {} }]
+          maxOutputTokens: 500,
+          temperature: 0.7,
         },
       });
 
-      const groundingLinks: GroundingLink[] = [];
-      const chunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+      const responseText = response.text || localResponse || "Je n'ai pas compris votre question. Pouvez-vous reformuler ?";
+      setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+      setRetryCount(0);
       
-      chunks.forEach((chunk: any) => {
-        if (chunk.web) groundingLinks.push({ title: chunk.web.title, uri: chunk.web.uri });
-        if (chunk.maps) groundingLinks.push({ title: "Localisation", uri: chunk.maps.uri });
-      });
-
-      const responseText = response.text || "Je n'ai pas pu générer une réponse. Veuillez réessayer.";
-      setMessages(prev => [...prev, { 
-        role: 'model', 
-        text: responseText,
-        links: groundingLinks.length > 0 ? groundingLinks : undefined
-      }]);
     } catch (error) {
-      console.error("Erreur FloatingChat:", error);
-      setMessages(prev => [...prev, { 
-        role: 'model', 
-        text: "Désolé, je rencontre un petit souci technique. Vous pouvez me reposer votre question ou appeler directement Jean-François au 09 55 55 44 62." 
-      }]);
+      console.error("Erreur API:", error);
+      
+      // Utiliser la reponse locale si disponible
+      if (localResponse) {
+        setMessages(prev => [...prev, { role: 'model', text: localResponse }]);
+        setRetryCount(0);
+      } else {
+        // Reponse de fallback generique
+        const fallbackResponses = [
+          `Je suis là pour vous aider ! Voici les informations essentielles :
+
+**Tarifs soins à distance (sur photo) :**
+• 35€ (1 séance) | 55€ (2 séances) | 120€ (5 séances)
+
+**Cabinet & Domicile (Alençon) :** Don libre
+
+📞 **Appelez le 09 55 55 44 62** ou visitez la page "Soins/RDV" pour réserver.`,
+          
+          `Jean-François peut vous soulager à distance ! 
+
+**Comment ça marche :**
+1. Choisissez votre formule (35€, 55€ ou 120€)
+2. Payez en ligne
+3. Envoyez votre photo
+4. Recevez votre soin
+
+👉 Rendez-vous sur "Soins/RDV" pour commencer.`
+        ];
+        
+        setMessages(prev => [...prev, { 
+          role: 'model', 
+          text: fallbackResponses[retryCount % fallbackResponses.length]
+        }]);
+        setRetryCount(prev => prev + 1);
+      }
     } finally {
       setLoading(false);
     }
@@ -115,7 +393,7 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
               <Globe size={16} className="animate-pulse" />
               <div>
                 <p className="font-serif font-bold text-xs sm:text-sm">Assistant Jean-François</p>
-                <p className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold opacity-70">Expertise France Entière</p>
+                <p className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold opacity-70">Expert Magnétisme</p>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors active:bg-white/20"><X size={18} /></button>
@@ -125,7 +403,7 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className="max-w-[90%] space-y-2">
-                  <div className={`p-4 rounded-2xl text-xs leading-relaxed ${m.role === 'user' ? 'bg-[#b45334] text-white shadow-lg' : 'bg-white text-stone-800 border border-stone-100 shadow-sm'}`}>
+                  <div className={`p-4 rounded-2xl text-xs leading-relaxed whitespace-pre-line ${m.role === 'user' ? 'bg-[#b45334] text-white shadow-lg' : 'bg-white text-stone-800 border border-stone-100 shadow-sm'}`}>
                     {m.text}
                   </div>
                   {m.links && (
@@ -140,10 +418,14 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
                 </div>
               </div>
             ))}
-            {loading && <div className="text-stone-400 text-[10px] animate-pulse italic">Jean-François réfléchit...</div>}
+            {loading && (
+              <div className="flex items-center gap-2 text-stone-400 text-[10px]">
+                <Loader2 size={12} className="animate-spin" />
+                <span className="italic">Jean-François réfléchit...</span>
+              </div>
+            )}
           </div>
 
-          {/* Bandeau incitation formulaire */}
           {hasInteracted && !loading && (
             <Link 
               href="/demande-soin" 
@@ -178,16 +460,15 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
               <button 
                 onClick={handleSend} 
                 disabled={loading} 
-                className="p-3 bg-[#b45334] text-white rounded-full hover:bg-[#9a4429] active:bg-[#8b3a25] transition-all flex-shrink-0 touch-manipulation"
+                className="p-3 bg-[#b45334] text-white rounded-full hover:bg-[#9a4429] active:bg-[#8b3a25] transition-all flex-shrink-0 touch-manipulation disabled:opacity-50"
               >
-                <Send size={14} />
+                {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Bulle au-dessus du bouton */}
       {!isOpen && (
         <div className="mb-2 px-4 py-2 bg-white rounded-2xl shadow-lg border border-stone-100 pointer-events-auto animate-bounce relative">
           <p className="text-xs font-bold text-stone-800">Une question ?</p>
@@ -195,7 +476,6 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
         </div>
       )}
 
-      {/* Bouton avec effets énergétiques renforcés */}
       <button 
         onClick={() => setIsOpen(!isOpen)} 
         className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(180,83,52,0.5)] transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto group z-10 touch-manipulation
@@ -203,7 +483,6 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
             ? 'bg-stone-900 text-white' 
             : 'bg-gradient-to-br from-[#c45d3a] via-[#b45334] to-[#8b3a25] text-white ring-4 ring-white shadow-[#b45334]/50'}`}
       >
-        {/* Cercles d'énergie animés à l'extérieur */}
         {!isOpen && (
           <>
             <span className="absolute -inset-2 rounded-full bg-[#c45d3a] animate-ping opacity-30"></span>
@@ -217,7 +496,6 @@ Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour r�
           ) : (
             <div className="relative">
               <MessageCircle size={24} className="sm:w-8 sm:h-8 group-hover:rotate-12 transition-transform duration-300" />
-              {/* Badge de notification animé */}
               <span className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center animate-bounce shadow-lg">
                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse"></span>
               </span>

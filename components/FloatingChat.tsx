@@ -27,15 +27,16 @@ const knowledgeBase = {
 
 **SOINS A DISTANCE (sur photo) - Tarifs fixes :**
 • Soin Ponctuel : **35€** (1 séance)
-• Soin Complet : **55€** (2 séances sur 48h) - *Le plus populaire*
+• Soin Complet : **55€** (2 séances sur 48h) - *Le plus demande*
 • Forfait Suivi : **120€** (5 séances sur 2 semaines)
 
-Paiement sécurisé par PayPal ou Carte Bancaire.
+Paiement securise par PayPal ou Carte Bancaire.
 
-**AU CABINET ou A DOMICILE (près d'Alençon) :**
-C'est au **don libre** - vous donnez selon vos moyens.
+**AU CABINET ou A DOMICILE (pres d'Alencon) :**
+C'est au **don libre** : vous choisissez vous-meme la somme en fonction de vos moyens et de votre ressenti apres le soin. Jean-Francois veut que le soin reste accessible a tous.
 
-👉 Rendez-vous sur la page "Soins/RDV" pour réserver.`
+Pour prendre rendez-vous : **09 55 55 44 62**
+Ou rendez-vous sur la page "Soins/RDV" pour reserver en ligne.`
   },
 
   // Comment ca marche
@@ -174,42 +175,71 @@ Jean-François pratique les soins à distance depuis plus de 20 ans avec des ré
   // Jean-Francois
   jeanfrancois: {
     keywords: ['jean-francois', 'jean francois', 'qui', 'parcours', 'experience', 'expérience', 'formation', 'depuis'],
-    response: `**Qui est Jean-François ?**
+    response: `**Qui est Jean-Francois ?**
 
-Jean-François est magnétiseur guérisseur et toucheur depuis **plus de 20 ans**. Il a découvert son don très jeune et a choisi d'en faire sa mission de vie.
+Jean-Francois est magnetiseur guerisseur et toucheur depuis **plus de 20 ans**. Ce n'est pas un debutant - deux decennies de pratique lui ont permis d'affiner sa sensibilite et sa comprehension profonde des energies.
 
 **Son expertise :**
-• Coupeur de feu reconnu
-• Spécialiste du zona et des brûlures
-• Expert en soins à distance sur photo
-• Plus de 20 ans d'expérience
+• Coupeur de feu reconnu (brulures, zona)
+• Specialiste des maladies de peau (eczema, psoriasis)
+• Expert en soulagement des douleurs chroniques
+• Maitre des soins a distance sur photo
 
 **Sa philosophie :**
-"L'énergie est le lien invisible qui nous unit tous. Mon souffle vous rejoint, où que vous soyez."
+Pour Jean-Francois, le magnetisme est un PARTAGE. C'est pourquoi au cabinet et a domicile, il fonctionne au don libre - pour que le soin reste accessible a tous, peu importe les moyens financiers.
 
-**Son cabinet :**
-Basé à Alençon (61), il reçoit sur rendez-vous ou se déplace dans un rayon de 30km. Pour le reste de la France, il pratique les soins à distance sur photo.
+**Sa disponibilite :**
+Profondement ancre dans sa region, la Normandie, Jean-Francois intervient avec la meme devotion en face a face ou a distance sur photo pour toute la France.
 
-📞 **09 55 55 44 62**`
+**Contact : 09 55 55 44 62**
+**Email : contact@jean-francois-magnetiseur-guerisseur.com**`
   },
 
   // Don libre
   donLibre: {
-    keywords: ['don libre', 'gratuit', 'moyens', 'pauvre', 'argent', 'finance'],
-    response: `**Le don libre, comment ça marche ?**
+    keywords: ['don libre', 'gratuit', 'moyens', 'pauvre', 'argent', 'finance', 'accessible'],
+    response: `**Le don libre, comment ca marche ?**
 
-Pour les consultations **au cabinet** (Alençon) ou **à domicile** (30km autour), Jean-François pratique le **don libre**.
+Pour les consultations **au cabinet** (Alencon) ou **a domicile** (30km autour), Jean-Francois pratique le **don libre**.
 
-**Qu'est-ce que ça signifie ?**
-Vous donnez ce que vous voulez, selon vos moyens et votre ressenti après le soin. Il n'y a pas de montant minimum ni maximum.
+**Qu'est-ce que ca signifie ?**
+C'est VOUS qui choisissez la somme, en fonction de :
+• Vos moyens financiers
+• Votre ressenti apres le soin
+• Ce que vous estimez juste
+
+Il n'y a pas de montant minimum ni maximum. Certains donnent 20€, d'autres 50€ ou plus. Chacun donne selon sa situation.
 
 **Pourquoi ce choix ?**
-Jean-François croit que le soin doit être accessible à tous, quelle que soit la situation financière.
+Pour Jean-Francois, le magnetisme est un PARTAGE. Le soin doit rester accessible a tous, peu importe la situation financiere. Personne ne doit etre prive de soin a cause de l'argent.
 
-**Note importante :**
-Les soins à distance (sur photo) ont des tarifs fixes (35€, 55€, 120€) car ils nécessitent un paiement en ligne préalable.
+**Note :** Les soins a distance (sur photo) ont des tarifs fixes (35€, 55€, 120€) car ils necessitent un paiement en ligne prealable.
 
-👉 Prenez RDV au **09 55 55 44 62**`
+**Contact : 09 55 55 44 62**`
+  },
+
+  // Questions "pouvez-vous m'aider"
+  aide: {
+    keywords: ['aider', 'aide', 'soigner', 'traiter', 'possible', 'capable', 'peau', 'probleme', 'problème', 'mal', 'maux'],
+    response: `**Oui, Jean-Francois peut vous aider pour de nombreux problemes !**
+
+**Problemes de peau :**
+Oui, Jean-Francois peut vous aider pour les problemes de peau : eczema, psoriasis, zona, brulures, dermatites, acne...
+
+**Douleurs chroniques :**
+Oui, il peut soulager : mal de dos, sciatique, cervicales, arthrose, tendinites, migraines, douleurs articulaires...
+
+**Troubles emotionnels :**
+Oui, il accompagne : stress, anxiete, insomnie, burn-out, fatigue chronique, depression legere...
+
+**Specialite - Coupeur de feu :**
+Oui, c'est meme sa specialite ! Brulures, zona, coups de soleil, effets de la radiotherapie...
+
+**Accompagnement medical :**
+Oui, en complement de vos traitements : chimio, cicatrisation, convalescence...
+
+N'hesitez pas a decrire votre situation pour un avis personnalise.
+**Contact : 09 55 55 44 62**`
   }
 };
 

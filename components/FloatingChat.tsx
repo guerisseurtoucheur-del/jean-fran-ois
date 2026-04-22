@@ -81,20 +81,18 @@ Le magnétisme **complète** la médecine, il ne la remplace pas.`
 
 Le "coupeur de feu" (ou barreur de feu) est un don rare qui permet de soulager rapidement :
 
-• **Brûlures domestiques** (eau chaude, huile, fer à repasser...)
-• **Coups de soleil** sévères
-• **Zona** et ses douleurs intenses
-• **Effets de la radiothérapie** (brûlures internes)
+- Brulures domestiques (eau chaude, huile, fer a repasser...)
+- Coups de soleil severes
+- Zona et ses douleurs intenses
+- Effets de la radiotherapie (brulures internes)
 
-**Efficacité remarquable :**
-Le soulagement est souvent ressenti en quelques heures. De nombreux hôpitaux orientent les patients vers des coupeurs de feu en complément des soins médicaux.
+**IMPORTANT - En cas de brulure :**
+Consultez d'abord un medecin ou les urgences si necessaire. Le magnetisme intervient EN COMPLEMENT des soins medicaux, jamais a la place.
 
-**En cas de brûlure :**
-1. Refroidissez sous l'eau froide 15 min
-2. Contactez Jean-François immédiatement
-3. Il peut agir à distance, même en urgence
+**Comment Jean-Francois peut aider :**
+Une fois la prise en charge medicale faite, Jean-Francois peut "couper le feu" a distance sur photo pour soulager la douleur. De nombreux hopitaux orientent les patients vers des coupeurs de feu en complement.
 
-📞 **09 55 55 44 62**`
+**Contact : 09 55 55 44 62**`
   },
 
   // Problemes traites

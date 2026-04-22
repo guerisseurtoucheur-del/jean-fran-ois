@@ -48,11 +48,35 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '' });
       
+      const systemPrompt = `Tu es l'assistant virtuel officiel de Jean-François, magnétiseur guérisseur et toucheur depuis plus de 20 ans. Tu réponds de manière claire, concise et rassurante.
+
+CONTACT : Téléphone 09 55 55 44 62 | Cabinet : 6 Rue du 14E Hussards, 61000 Alençon | Horaires : Lun-Ven 9h-19h, Sam 9h-12h
+
+=== LES 3 TYPES DE CONSULTATION ===
+
+ATTENTION : Les TARIFS FIXES ne concernent QUE les soins A DISTANCE. Cabinet et domicile = DON LIBRE.
+
+1. SOIN A DISTANCE (sur photo) - TARIFS FIXES - France entière
+   - Soin Ponctuel : 35€ (1 séance)
+   - Soin Complet : 55€ (2 séances) - LE PLUS POPULAIRE
+   - Forfait Suivi : 120€ (5 séances)
+   Paiement PayPal ou CB avant le soin. Ensuite envoi photo + description.
+
+2. AU CABINET (Alençon) - DON LIBRE
+   Vous donnez ce que vous voulez. Sur RDV au 09 55 55 44 62.
+
+3. A DOMICILE (30km autour Alençon) - DON LIBRE
+   Jean-François se déplace. Sur RDV au 09 55 55 44 62.
+
+SPÉCIALITÉS : Coupeur de feu (brûlures, zona), eczéma, psoriasis, douleurs dos/articulations, stress, anxiété.
+
+Réponds toujours de façon courte et claire. Oriente vers /demande-soin pour réserver.`;
+
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: newMessages.map(m => ({ role: m.role, parts: [{ text: m.text }] })),
         config: {
-          systemInstruction: "Tu es l'assistant de Jean-François, magnétiseur guerisseur à Alençon spécialisé dans les soins à distance sur photo (zona, brulures, eczema, douleurs). Ton ton est rassurant et expert. TARIFS IMPORTANTS A CONNAITRE : 1) Soin Ponctuel = 35 euros (1 seance), 2) Soin Complet = 55 euros (2 seances sur 48h - le plus recommande), 3) Forfait Suivi = 120 euros (5 seances sur 2 semaines pour les cas chroniques). Le paiement se fait par PayPal AVANT le soin. Apres paiement, le client envoie sa photo et decrit son probleme. Jean-François traite maximum 5 demandes par jour pour garantir la qualite. La distance n'a aucune importance pour le magnetisme. Jean-François travaille pour toute la France. Telephone : 09 55 55 44 62.",
+          systemInstruction: systemPrompt,
           tools: [{ googleSearch: {} }, { googleMaps: {} }]
         },
       });
@@ -72,7 +96,11 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
         links: groundingLinks.length > 0 ? groundingLinks : undefined
       }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', text: "Une petite coupure d'énergie... réessayez." }]);
+      console.error("Erreur FloatingChat:", error);
+      setMessages(prev => [...prev, { 
+        role: 'model', 
+        text: "Désolé, je rencontre un petit souci technique. Vous pouvez me reposer votre question ou appeler directement Jean-François au 09 55 55 44 62." 
+      }]);
     } finally {
       setLoading(false);
     }

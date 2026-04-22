@@ -229,6 +229,12 @@ Oui, Jean-Francois peut vous aider pour les problemes de peau : eczema, psoriasi
 **Douleurs chroniques :**
 Oui, il peut soulager : mal de dos, sciatique, cervicales, arthrose, tendinites, migraines, douleurs articulaires...
 
+**Dents des bebes :**
+Oui, Jean-Francois soulage les douleurs de dentition des bebes. Le magnetisme apaise la douleur et calme l'enfant naturellement.
+
+**Douleurs gastriques :**
+Oui, il intervient sur les troubles digestifs : douleurs gastriques, maux de ventre, crampes, reflux...
+
 **Troubles emotionnels :**
 Oui, il accompagne : stress, anxiete, insomnie, burn-out, fatigue chronique, depression legere...
 
@@ -239,6 +245,51 @@ Oui, c'est meme sa specialite ! Brulures, zona, coups de soleil, effets de la ra
 Oui, en complement de vos traitements : chimio, cicatrisation, convalescence...
 
 N'hesitez pas a decrire votre situation pour un avis personnalise.
+**Contact : 09 55 55 44 62**`
+  },
+
+  // Dents des bebes
+  dentsBebes: {
+    keywords: ['dent', 'dents', 'bebe', 'bébé', 'bebes', 'bébés', 'dentition', 'pousse', 'gencive', 'nourrisson', 'enfant'],
+    response: `**Oui, Jean-Francois soulage les douleurs de dentition des bebes !**
+
+La poussee dentaire est souvent une periode difficile pour les bebes et leurs parents. Le magnetisme permet d'apaiser naturellement la douleur et de calmer l'enfant.
+
+**Comment ca marche ?**
+Jean-Francois peut intervenir :
+- En presentiel au cabinet ou a domicile (autour d'Alencon)
+- A distance sur photo (toute la France)
+
+Un soin sur photo du bebe peut rapidement soulager les douleurs liees a la poussee des dents.
+
+**Tarifs :**
+- Cabinet/Domicile : don libre
+- A distance : 35€ la seance
+
+**Contact : 09 55 55 44 62**`
+  },
+
+  // Douleurs gastriques
+  gastrique: {
+    keywords: ['gastrique', 'estomac', 'ventre', 'digestion', 'digestif', 'crampe', 'reflux', 'intestin', 'ballonnement', 'nausee'],
+    response: `**Oui, Jean-Francois intervient sur les troubles gastriques et digestifs !**
+
+Le magnetisme peut aider a soulager :
+- Douleurs gastriques et maux d'estomac
+- Crampes abdominales
+- Reflux gastrique
+- Ballonnements
+- Troubles digestifs divers
+- Nausees
+
+**Comment ca marche ?**
+Jean-Francois travaille sur le reequilibrage energetique de la zone abdominale pour soulager les tensions et les douleurs.
+
+**Options de consultation :**
+- Cabinet a Alencon (don libre)
+- A domicile - 30km autour d'Alencon (don libre)
+- A distance sur photo - France entiere (35€, 55€ ou 120€)
+
 **Contact : 09 55 55 44 62**`
   }
 };

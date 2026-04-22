@@ -256,6 +256,38 @@ export default function RootLayout({
               "datePublished": "2026-01-12"
             },
             {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Emilie C." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Mon bebe de 8 mois souffrait enormement de ses poussees dentaires. Une seance sur photo et il etait apaise. Je recommande vivement pour les dents des bebes !",
+              "datePublished": "2026-02-18"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Laurent M." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Des douleurs gastriques depuis des annees, aucun medicament ne fonctionnait vraiment. Apres 2 seances avec Jean-Francois, un soulagement incroyable. Merci !",
+              "datePublished": "2026-03-05"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Stephanie R." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Ma petite fille faisait ses dents et pleurait toutes les nuits. Jean-Francois a travaille a distance sur photo, le resultat a ete immediat. Un vrai miracle pour les parents epuises !",
+              "datePublished": "2026-01-28"
+            },
+            {
+              "@type": "Review",
+              "itemReviewed": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" },
+              "author": { "@type": "Person", "name": "Patrick H." },
+              "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+              "reviewBody": "Problemes de digestion et crampes d'estomac chroniques. Jean-Francois m'a aide a retrouver un confort digestif que je n'avais plus depuis longtemps.",
+              "datePublished": "2026-02-10"
+            },
+            {
               "@type": "Person",
               "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#person",
               "name": "Jean-Francois",

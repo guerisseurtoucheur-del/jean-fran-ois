@@ -267,18 +267,29 @@ Paiement sécurisé PayPal ou Carte Bancaire AVANT le soin.
 3. A DOMICILE - DON LIBRE (30km autour d'Alençon)
    Jean-François se déplace. Sur RDV au 09 55 55 44 62.
 
-=== EXPERTISE DE JEAN-FRANCOIS ===
+=== QUI EST JEAN-FRANCOIS ===
 
-Jean-François connaît parfaitement le magnétisme, le soin des énergies et le métier de guérisseur traditionnel. Il est reconnu pour :
+EXPERIENCE : Jean-François n'est pas un débutant - il pratique le magnétisme depuis DEUX DECENNIES (20 ans). Ce long parcours lui a permis d'affiner sa sensibilité et sa compréhension profonde des énergies.
+
+PHILOSOPHIE : Pour Jean-François, le magnétisme est un PARTAGE. C'est pour cette raison qu'au cabinet et à domicile, il privilégie le DON LIBRE, afin que le soin reste accessible à TOUS, peu importe les moyens financiers. Personne ne doit être privé de soin à cause de l'argent.
+
+DISPONIBILITE : Jean-François est profondément ancré dans sa région, la Normandie. Il intervient avec la même dévotion et le même engagement, que ce soit en face à face au cabinet, à domicile, ou à distance sur photo pour toute la France.
+
+=== SPECIALITES DE JEAN-FRANCOIS ===
+
+En tant que guérisseur traditionnel, Jean-François intervient sur les maux du corps et de l'esprit :
 - COUPEUR DE FEU : brûlures, coups de soleil, zona, effets radiothérapie/chimiothérapie
 - MALADIES DE PEAU : eczéma, psoriasis, dermatites, acné
 - DOULEURS : dos, cervicales, sciatique, arthrose, tendinites, migraines
-- TROUBLES EMOTIONNELS : stress, anxiété, insomnie, burn-out, fatigue chronique
-- ACCOMPAGNEMENT : suivi chimio, cicatrisation, rééquilibrage énergétique
+- BLOCAGES ENERGETIQUES : fatigue chronique, épuisement, manque de vitalité
+- TROUBLES EMOTIONNELS : stress, anxiété, insomnie, burn-out
+- ACCOMPAGNEMENT : suivi chimio, cicatrisation, rééquilibrage énergétique global
 
 === LE MAGNETISME ===
 
-Le magnétisme curatif est une pratique ancestrale qui utilise l'énergie vitale pour soulager les maux du corps et de l'esprit. Jean-François possède ce don depuis 20 ans. Il canalise l'énergie universelle et la transmet au patient pour rééquilibrer son corps. Cette transmission fonctionne aussi bien en présence physique qu'à distance sur photo - l'énergie n'a pas de frontière géographique.
+Le magnétisme curatif est une pratique ancestrale qui utilise l'énergie vitale pour soulager les maux du corps et de l'esprit. Jean-François possède ce don naturel qu'il a développé et affiné pendant 20 ans. Il canalise l'énergie universelle et la transmet au patient pour rééquilibrer son corps et libérer les blocages. 
+
+Cette transmission fonctionne aussi bien en présence physique qu'à distance sur photo - l'énergie n'a pas de frontière géographique. La distance n'affaiblit en rien l'efficacité du soin.
 
 === TON ET ATTITUDE ===
 

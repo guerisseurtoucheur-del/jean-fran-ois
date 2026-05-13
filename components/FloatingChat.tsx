@@ -493,7 +493,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
                 <p className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold opacity-70">Expert Magnétisme</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors active:bg-white/20"><X size={18} /></button>
+            <button onClick={() => setIsOpen(false)} aria-label="Fermer le chat" className="p-2 hover:bg-white/10 rounded-full transition-colors active:bg-white/20"><X size={18} /></button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4 bg-stone-50 overscroll-contain" ref={scrollRef}>
@@ -558,6 +558,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
               <button 
                 onClick={handleSend} 
                 disabled={loading} 
+                aria-label="Envoyer le message"
                 className="p-3 bg-[#b45334] text-white rounded-full hover:bg-[#9a4429] active:bg-[#8b3a25] transition-all flex-shrink-0 touch-manipulation disabled:opacity-50"
               >
                 {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
@@ -576,6 +577,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
 
       <button 
         onClick={() => setIsOpen(!isOpen)} 
+        aria-label={isOpen ? "Fermer le chat" : "Ouvrir le chat assistant"}
         className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(180,83,52,0.5)] transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto group z-10 touch-manipulation
           ${isOpen 
             ? 'bg-stone-900 text-white' 

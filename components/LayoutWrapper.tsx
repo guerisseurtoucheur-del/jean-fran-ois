@@ -91,7 +91,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               <span className="text-[10px] font-bold uppercase tracking-wider">09 55 55 44 62</span>
             </a>
             
-            <button onClick={() => setIsMenuOpen(true)} className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-all">
+            <button onClick={() => setIsMenuOpen(true)} aria-label="Ouvrir le menu" className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-all">
               <Menu size={22} />
             </button>
           </div>
@@ -103,7 +103,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         <div className="fixed inset-0 z-[200] bg-white/98 backdrop-blur-xl flex flex-col p-6 overflow-y-auto">
           <div className="flex justify-between items-center mb-12">
             <span className="text-2xl font-serif font-bold text-stone-900">Menu</span>
-            <button onClick={() => setIsMenuOpen(false)} className="w-12 h-12 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-600">
+            <button onClick={() => setIsMenuOpen(false)} aria-label="Fermer le menu" className="w-12 h-12 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-600">
               <X size={24} />
             </button>
           </div>

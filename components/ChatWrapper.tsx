@@ -1,7 +1,13 @@
 'use client'
 
-import FloatingChat from './FloatingChat'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
+
+// Chargement dynamique du chatbot pour ameliorer les performances
+const FloatingChat = dynamic(() => import('./FloatingChat'), {
+  ssr: false,
+  loading: () => null
+})
 
 export default function ChatWrapper() {
   const router = useRouter()

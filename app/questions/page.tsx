@@ -18,6 +18,62 @@ const faqQuestions = [
   "Comment envoyer ma photo ?",
 ]
 
+// Schema FAQ pour Google
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Comment fonctionne le magnetisme a distance ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le magnetisme a distance fonctionne grace a l'energie qui n'a pas de frontiere. Jean-Francois se connecte a votre energie via votre photo et transmet l'energie de guerison. Des milliers de patients en France ont ete soulages a distance avec d'excellents resultats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels problemes le magnetiseur peut-il traiter ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jean-Francois traite de nombreux problemes : zona, brulures (coupeur de feu), eczema, psoriasis, douleurs de dos, sciatique, arthrose, migraines, stress, anxiete, insomnie, dents de bebe, douleurs gastriques, et bien d'autres. Le magnetisme agit en complement de la medecine traditionnelle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien coute une seance de magnetisme ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pour les soins a distance sur photo : 35 euros la seance, 55 euros pour 2 seances (le plus demande), ou 120 euros pour 5 seances. Pour les consultations au cabinet a Alencon ou a domicile : c'est au don libre, vous donnez selon vos moyens."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de temps dure une seance de magnetisme ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Une seance de magnetisme dure generalement entre 20 et 45 minutes selon le probleme traite. Pour les soins a distance, Jean-Francois effectue le soin et vous ressentirez les effets dans les heures qui suivent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment envoyer ma photo pour un soin a distance ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apres avoir choisi votre formule et effectue le paiement sur le site, vous pourrez envoyer une photo recente de vous (visage visible) via le formulaire. Decrivez votre probleme et Jean-Francois effectuera le soin dans les plus brefs delais."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le magnetisme remplace-t-il la medecine ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non, le magnetisme ne remplace jamais la medecine. Il agit en complement de vos traitements medicaux. Jean-Francois recommande toujours de consulter un medecin en priorite. Le magnetisme aide a soulager les symptomes et favorise le mieux-etre."
+      }
+    }
+  ]
+}
+
 export default function QuestionsPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -69,6 +125,10 @@ export default function QuestionsPage() {
 
   return (
     <LayoutWrapper>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900 mb-4">Questions & Reponses</h1>

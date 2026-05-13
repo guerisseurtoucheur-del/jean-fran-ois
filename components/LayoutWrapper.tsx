@@ -180,7 +180,10 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
           </div>
           
           <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[#9a918a] text-xs">2024 Jean-Francois Magnetiseur. Tous droits reserves.</p>
+            <div className="text-center md:text-left">
+              <p className="text-[#9a918a] text-xs">2024 Jean-Francois Magnetiseur. Tous droits reserves.</p>
+              <p className="text-[#9a918a] text-xs mt-1">SIRET : 344 616 412 00062 | TVA : FR6534461641200062</p>
+            </div>
             <a href="https://maps.app.goo.gl/7T8BscaocjerZRNWA" target="_blank" rel="noopener noreferrer" className="text-xs text-[#9a918a] hover:text-[#c9a962] transition-colors">
               Voir sur Google Maps
             </a>

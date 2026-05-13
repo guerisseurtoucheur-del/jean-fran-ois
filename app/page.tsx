@@ -1,26 +1,27 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Globe, MapPin, Zap, ShieldCheck, Phone, Star, Wind, Sparkles, Heart } from 'lucide-react'
 import { citiesData } from '@/data/cities'
 import LayoutWrapper from '@/components/LayoutWrapper'
 
 export default function HomePage() {
-  const relievedCount = useMemo(() => {
+  // Valeur statique pour le SSR, mise a jour cote client
+  const [relievedCount, setRelievedCount] = useState(6500)
+  const [monthlyCount, setMonthlyCount] = useState(45)
+
+  useEffect(() => {
+    // Calcul cote client uniquement pour eviter l'erreur d'hydratation
     const startDate = new Date('2024-01-01')
     const today = new Date()
     const diffTime = Math.abs(today.getTime() - startDate.getTime())
     const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7))
-    return 6450 + (diffWeeks * 6)
-  }, [])
+    setRelievedCount(6450 + (diffWeeks * 6))
 
-  // Compteur mensuel dynamique
-  const monthlyCount = useMemo(() => {
-    const today = new Date()
+    // Compteur mensuel dynamique
     const dayOfMonth = today.getDate()
-    // Simule ~3-4 personnes par jour
-    return Math.floor(dayOfMonth * 3.5) + Math.floor(Math.random() * 5)
+    setMonthlyCount(Math.floor(dayOfMonth * 3.5))
   }, [])
 
   // Temps de reponse moyen (entre 1h30 et 2h30)

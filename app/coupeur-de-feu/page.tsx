@@ -99,6 +99,27 @@ export default function CoupeurDeFeuPage() {
           </div>
         </section>
 
+        {/* Couverture geographique */}
+        <section className="py-20 bg-stone-50">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h2 className="text-3xl font-serif font-bold text-stone-900 mb-6">Un Coupeur de Feu a Distance, Partout en France</h2>
+            <p className="text-lg text-stone-600 mb-4 leading-relaxed">
+              L&apos;energie n&apos;a pas de frontiere : Jean-Francois intervient comme coupeur de feu <strong>a distance sur simple photo</strong>, ou que vous soyez.
+              Que vous cherchiez un coupeur de feu a <strong>Lyon</strong>, Paris, Marseille, Bordeaux, Toulouse, Lille, Nantes ou dans une petite commune,
+              le soin est realise a distance avec la meme efficacite, sans avoir a vous deplacer.
+            </p>
+            <p className="text-lg text-stone-600 mb-8 leading-relaxed">
+              C&apos;est particulierement precieux en cas de brulure urgente ou de brulures de radiotherapie : vous envoyez votre photo, Jean-Francois agit immediatement,
+              sans attendre un rendez-vous en cabinet.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {["Lyon", "Paris", "Marseille", "Bordeaux", "Toulouse", "Lille", "Nantes", "Strasbourg", "Nice", "Rennes"].map((v, i) => (
+                <span key={i} className="px-4 py-2 bg-white rounded-full text-sm font-medium text-stone-700 shadow-sm">Coupeur de feu {v}</span>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="py-20 bg-gradient-to-r from-orange-500 to-red-500 text-white">
           <div className="max-w-4xl mx-auto px-6 text-center">

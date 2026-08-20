@@ -106,6 +106,14 @@ const regionThemes: Record<string, {
     bgLight: "#fafaf9",
     heroStyle: 'classic',
     testimonialStyle: 'featured'
+  },
+  "Monaco": {
+    primary: "#0f2540",
+    secondary: "#c9a227",
+    accent: "#1a3a5c",
+    bgLight: "#f8f6f0",
+    heroStyle: 'elegant',
+    testimonialStyle: 'featured'
   }
 }
 
@@ -235,7 +243,7 @@ export default function CityPageContent({ city }: CityPageContentProps) {
                     </Link>
                   </div>
                 </div>
-                <div className="hidden lg:flex justify-center">
+                <div className="hidden lg:flex flex-col items-center gap-6">
                   <div className="relative">
                     <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
                       <img src="/logo.png" alt="Jean-Francois" className="w-full h-full object-cover" />
@@ -247,6 +255,21 @@ export default function CityPageContent({ city }: CityPageContentProps) {
                       </div>
                     </div>
                   </div>
+                  {city.landmark && (
+                    <div className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-white/15 backdrop-blur border border-white/25 shadow-xl">
+                      <div className="w-24 h-20 rounded-xl overflow-hidden shadow-md flex-shrink-0">
+                        <img
+                          src={city.landmark.image}
+                          alt={`${city.landmark.name} - ${city.name}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white">{city.landmark.name}</p>
+                        <p className="text-xs text-white/70">Soin a distance pour {city.name}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

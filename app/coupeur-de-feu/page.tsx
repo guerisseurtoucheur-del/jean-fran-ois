@@ -8,6 +8,20 @@ export default function CoupeurDeFeuPage() {
   return (
     <LayoutWrapper>
       <div className="min-h-screen bg-white">
+        {/* Bandeau urgence */}
+        <div className="bg-red-600 text-white">
+          <div className="max-w-6xl mx-auto px-6 py-3 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
+            <span className="font-bold text-sm sm:text-base flex items-center gap-2">
+              <Zap size={18} className="fill-white" />
+              Brulure en cours ? Chaque minute compte
+            </span>
+            <a href="tel:0955554462" className="inline-flex items-center gap-2 px-5 py-2 bg-white text-red-600 rounded-full font-bold text-sm hover:shadow-lg transition-all">
+              <Phone size={16} />
+              Appeler maintenant : 09 55 55 44 62
+            </a>
+          </div>
+        </div>
+
         {/* Hero */}
         <section className="relative py-20 bg-gradient-to-br from-orange-500 via-red-500 to-rose-600 text-white overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -29,6 +43,31 @@ export default function CoupeurDeFeuPage() {
                   09 55 55 44 62
                 </a>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Facteur temps - agir vite */}
+        <section className="py-16 bg-white">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-serif font-bold text-stone-900 mb-3">Pourquoi Agir le Plus Vite Possible ?</h2>
+              <p className="text-lg text-stone-600 max-w-2xl mx-auto">En cas de brulure, le facteur temps est decisif. Plus le coupeur de feu intervient tot, plus le soulagement de la douleur et la cicatrisation sont efficaces.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: Zap, delai: "Dans l'heure", desc: "L'ideal : envoyez votre photo des la brulure survenue. La douleur est souvent apaisee tres rapidement." },
+                { icon: Clock, delai: "Dans les 24h", desc: "Tres efficace : le coupeur de feu agit sur la douleur et limite l'apparition des cloques et rougeurs." },
+                { icon: Heart, delai: "Meme apres", desc: "Pour les brulures de radiotherapie ou anciennes, le soin reste utile a chaque etape du traitement." }
+              ].map((item, i) => (
+                <div key={i} className="p-6 bg-orange-50 rounded-2xl border border-orange-100 text-center">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-orange-500 text-white flex items-center justify-center">
+                    <item.icon size={26} />
+                  </div>
+                  <p className="text-xl font-bold text-stone-900 mb-2">{item.delai}</p>
+                  <p className="text-stone-600 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -102,11 +141,12 @@ export default function CoupeurDeFeuPage() {
         {/* Couverture geographique */}
         <section className="py-20 bg-stone-50">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-3xl font-serif font-bold text-stone-900 mb-6">Un Coupeur de Feu a Distance, Partout en France</h2>
+            <h2 className="text-3xl font-serif font-bold text-stone-900 mb-6">Vous Cherchez un Coupeur de Feu Autour de Vous ?</h2>
             <p className="text-lg text-stone-600 mb-4 leading-relaxed">
-              L&apos;energie n&apos;a pas de frontiere : Jean-Francois intervient comme coupeur de feu <strong>a distance sur simple photo</strong>, ou que vous soyez.
+              Pas besoin de trouver un coupeur de feu <strong>pres de chez vous</strong> ou <strong>autour de vous</strong> : Jean-Francois intervient
+              <strong> a distance sur simple photo</strong>, ou que vous soyez, immediatement. C&apos;est souvent plus rapide que de chercher un praticien a proximite.
               Que vous cherchiez un coupeur de feu a <strong>Lyon</strong>, Paris, Marseille, Bordeaux, Toulouse, Lille, Nantes ou dans une petite commune,
-              le soin est realise a distance avec la meme efficacite, sans avoir a vous deplacer.
+              le soin est realise a distance avec la meme efficacite, sans avoir a vous deplacer ni attendre un rendez-vous.
             </p>
             <p className="text-lg text-stone-600 mb-8 leading-relaxed">
               C&apos;est particulierement precieux en cas de brulure urgente ou de brulures de radiotherapie : vous envoyez votre photo, Jean-Francois agit immediatement,
@@ -115,6 +155,28 @@ export default function CoupeurDeFeuPage() {
             <div className="flex flex-wrap justify-center gap-3">
               {["Lyon", "Paris", "Marseille", "Bordeaux", "Toulouse", "Lille", "Nantes", "Strasbourg", "Nice", "Rennes"].map((v, i) => (
                 <span key={i} className="px-4 py-2 bg-white rounded-full text-sm font-medium text-stone-700 shadow-sm">Coupeur de feu {v}</span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Comment ca marche */}
+        <section className="py-20 bg-white">
+          <div className="max-w-5xl mx-auto px-6">
+            <h2 className="text-3xl font-serif font-bold text-stone-900 mb-12 text-center">Comment Recevoir un Soin en Urgence ?</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { num: "1", title: "Envoyez une photo", desc: "Prenez une photo de la brulure (ou de la personne) et envoyez-la via le formulaire ou par telephone." },
+                { num: "2", title: "Jean-Francois agit", desc: "Des reception, il realise le soin de coupeur de feu a distance, sans que vous ayez a vous deplacer." },
+                { num: "3", title: "La douleur s'apaise", desc: "Le soulagement se ressent generalement dans les minutes ou l'heure qui suit l'intervention." }
+              ].map((step, i) => (
+                <div key={i} className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center text-2xl font-bold">
+                    {step.num}
+                  </div>
+                  <h3 className="text-lg font-bold text-stone-900 mb-2">{step.title}</h3>
+                  <p className="text-stone-600 text-sm leading-relaxed">{step.desc}</p>
+                </div>
               ))}
             </div>
           </div>

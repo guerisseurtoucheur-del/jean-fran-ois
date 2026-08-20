@@ -97,7 +97,44 @@ export const citiesData: Record<string, CityData> = {
       { name: "Michel R.", text: "Brûlure de méduse soignée rapidement à distance. Impressionnant.", condition: "Brûlure" },
       { name: "Stéphanie L.", text: "Eczéma estival récurrent enfin maîtrisé grâce à Jean-François.", condition: "Eczéma" }
     ],
-    specificConditions: ["insomnies", "brûlures solaires", "eczéma", "allergies"]
+    specificConditions: ["insomnies", "brûlures solaires", "eczéma", "allergies"],
+    landmark: { name: "Promenade des Anglais", image: "/images/riviera/nice.png" }
+  },
+
+  cannes: {
+    name: "Cannes",
+    slug: "cannes",
+    department: "Alpes-Maritimes",
+    departmentCode: "06",
+    region: "Provence-Alpes-Côte d'Azur",
+    population: "75 000",
+    coordinates: { lat: 43.5528, lng: 7.0174 },
+    nearbyAreas: ["Antibes", "Mandelieu-la-Napoule", "Le Cannet", "Mougins", "Grasse", "Vallauris", "Mouans-Sartoux", "Nice"],
+    localTestimonials: [
+      { name: "Isabelle V.", text: "Entre deux tournages sur la Croisette, le stress me submergeait. Jean-François m'a apporté un calme profond à distance.", condition: "Stress" },
+      { name: "Alexandre D.", text: "Coup de soleil sévère après une journée en mer au large de l'Estérel. La brûlure a été apaisée en quelques heures.", condition: "Brûlure solaire" },
+      { name: "Caroline M.", text: "Mon eczéma s'aggravait avec le sel et le soleil. Depuis les soins, ma peau est enfin apaisée.", condition: "Eczéma" }
+    ],
+    specificConditions: ["stress et anxiété", "brûlures solaires", "eczéma", "troubles du sommeil"],
+    landmark: { name: "La Croisette", image: "/images/riviera/cannes.png" }
+  },
+
+  monaco: {
+    name: "Monaco",
+    slug: "monaco",
+    department: "Principauté",
+    departmentCode: "MC",
+    region: "Monaco",
+    population: "38 000",
+    coordinates: { lat: 43.7384, lng: 7.4246 },
+    nearbyAreas: ["Monte-Carlo", "Beausoleil", "Roquebrune-Cap-Martin", "Menton", "Cap-d'Ail", "La Turbie", "Èze", "Nice"],
+    localTestimonials: [
+      { name: "Laurence de B.", text: "Un rythme de vie intense en Principauté. Les soins de Jean-François m'ont aidée à retrouver un sommeil réparateur, à distance.", condition: "Insomnie" },
+      { name: "Riccardo F.", text: "Douleurs dorsales chroniques liées au stress. Le soulagement a été net et durable après quelques séances.", condition: "Lombalgie" },
+      { name: "Hélène T.", text: "Zona très douloureux traité en urgence sur photo. Le feu a été coupé rapidement, un vrai soulagement.", condition: "Zona" }
+    ],
+    specificConditions: ["stress et surmenage", "insomnies", "zona", "douleurs dorsales"],
+    landmark: { name: "Monte-Carlo", image: "/images/riviera/monaco.png" }
   },
 
   nantes: {

@@ -28,6 +28,10 @@ const villes = [
 
 const faq = [
   {
+    q: "Je cherche un magnetiseur autour de moi, comment faire ?",
+    r: "Plutot que de chercher un magnetiseur pres de chez vous ou autour de vous, vous pouvez faire appel a Jean-Francois qui travaille a distance sur photo, partout en France. C'est souvent plus rapide et plus simple : pas de deplacement, pas d'attente de rendez-vous, le soin peut demarrer des reception de votre demande, ou que vous habitiez.",
+  },
+  {
     q: "Comment un magnetiseur peut-il agir a distance ?",
     r: "Le magnetisme agit sur l'energie de la personne, et l'energie n'est pas limitee par la distance physique. A partir d'une simple photo recente et de votre nom, Jean-Francois se connecte a votre energie pour realiser le soin, exactement comme lors d'une seance en presentiel.",
   },

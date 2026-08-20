@@ -19,6 +19,14 @@ export default function MagnetiseurDouleursGastriquesPage() {
       },
       {
         "@type": "Question",
+        "name": "Le magnetisme peut-il aider en cas de RGO (reflux gastro-oesophagien) ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, de nombreuses personnes souffrant de RGO (reflux gastro-oesophagien) constatent un soulagement des remontees acides et des brulures apres des seances de magnetisme. Jean-Francois travaille sur le reequilibrage energetique de l'estomac et de l'oesophage, en complement de votre suivi medical."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "Combien de seances sont necessaires pour les problemes digestifs ?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -73,7 +81,7 @@ export default function MagnetiseurDouleursGastriquesPage() {
           <div className="max-w-4xl mx-auto px-6">
             <h2 className="text-3xl font-serif font-bold text-stone-900 mb-8 text-center">Troubles Digestifs : Un Mal Repandu</h2>
             <div className="prose prose-lg max-w-none text-stone-600">
-              <p>Les douleurs gastriques touchent des millions de personnes. Stress, alimentation, mode de vie... Les causes sont multiples et les symptomes peuvent etre invalidants : crampes, brulures d&apos;estomac, reflux acide, ballonnements, nausees.</p>
+              <p>Les douleurs gastriques touchent des millions de personnes. Stress, alimentation, mode de vie... Les causes sont multiples et les symptomes peuvent etre invalidants : crampes, brulures d&apos;estomac, reflux acide, <strong>reflux gastro-oesophagien (RGO)</strong>, ballonnements, nausees.</p>
               <p className="mt-4">Le magnetisme agit sur le reequilibrage energetique de tout le systeme digestif. En complement d&apos;un suivi medical et d&apos;une bonne hygiene de vie, il peut apporter un soulagement significatif et durable. Jean-Francois a aide de nombreuses personnes a retrouver un confort digestif.</p>
             </div>
           </div>
@@ -86,7 +94,7 @@ export default function MagnetiseurDouleursGastriquesPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 { title: "Douleurs Gastriques", desc: "Maux d'estomac, crampes, brulures" },
-                { title: "Reflux Gastrique", desc: "Remontees acides, brulures oesophagiennes" },
+                { title: "Reflux (RGO)", desc: "Reflux gastro-oesophagien, remontees acides, brulures" },
                 { title: "Ballonnements", desc: "Ventre gonfle, gaz, inconfort" },
                 { title: "Troubles Intestinaux", desc: "Colon irritable, troubles du transit" }
               ].map((item, i) => (

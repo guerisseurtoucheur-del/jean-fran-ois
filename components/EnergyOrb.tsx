@@ -44,7 +44,7 @@ function AnimatedOrb() {
 
 export default function EnergyOrb() {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none mix-blend-screen opacity-90">
+    <div className="absolute inset-0 z-0 pointer-events-none mix-blend-multiply opacity-60">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} color="#ffffff" />

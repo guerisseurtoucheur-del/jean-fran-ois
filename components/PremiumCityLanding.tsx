@@ -12,6 +12,8 @@ interface PremiumCityLandingProps {
     departement: string;
     region: string;
     description: string;
+    seoTitle?: string;
+    seoText?: string[];
   }
 }
 
@@ -114,13 +116,21 @@ export default function PremiumCityLanding({ city }: PremiumCityLandingProps) {
         {/* SEO TEXT SECTION */}
         <section className="px-6 py-24 bg-[#0a0a0a]">
           <div className="max-w-4xl mx-auto text-white/50 space-y-6 text-sm leading-relaxed">
-            <h3 className="text-xl font-serif text-white/80 mb-4">Un magnétiseur à votre écoute pour {city.nom} ({city.departement})</h3>
-            <p>
-              Vous résidez à {city.nom} ou dans les environs de la région {city.region} et vous cherchez un magnétiseur guérisseur sérieux et expérimenté ? La distance n'est pas un obstacle à la guérison. Jean-François pratique les soins énergétiques sur photo depuis de nombreuses années avec des résultats remarquables.
-            </p>
-            <p>
-              Que ce soit pour soulager le zona, l'eczéma, agir comme coupeur de feu pour des brûlures, ou apaiser des douleurs chroniques et le stress, l'énergie vitale traverse l'espace. Les patients de {city.nom} peuvent ainsi bénéficier de l'expertise de Jean-François sans avoir à se déplacer.
-            </p>
+            <h3 className="text-xl font-serif text-white/80 mb-4">{city.seoTitle || `Un magnétiseur à votre écoute pour ${city.nom} (${city.departement})`}</h3>
+            {city.seoText ? (
+              city.seoText.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))
+            ) : (
+              <>
+                <p>
+                  Vous résidez à {city.nom} ou dans les environs de la région {city.region} et vous cherchez un magnétiseur guérisseur sérieux et expérimenté ? La distance n'est pas un obstacle à la guérison. Jean-François pratique les soins énergétiques sur photo depuis de nombreuses années avec des résultats remarquables.
+                </p>
+                <p>
+                  Que ce soit pour soulager le zona, l'eczéma, agir comme coupeur de feu pour des brûlures, ou apaiser des douleurs chroniques et le stress, l'énergie vitale traverse l'espace. Les patients de {city.nom} peuvent ainsi bénéficier de l'expertise de Jean-François sans avoir à se déplacer.
+                </p>
+              </>
+            )}
           </div>
         </section>
 

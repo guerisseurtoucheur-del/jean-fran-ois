@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `Magnétiseur ${city.nom} (${city.departement}) - Jean-François Guérisseur`,
+    title: city.seoTitle || `Magnétiseur ${city.nom} (${city.departement}) - Jean-François Guérisseur`,
     description: `Découvrez les soins énergétiques de Jean-François à ${city.nom}. Magnétiseur guérisseur et coupeur de feu avec plus de 20 ans d'expérience. Soins à distance très efficaces.`,
     alternates: {
       canonical: `https://www.jean-francois-magnetiseur-guerisseur.com/${slug}`,

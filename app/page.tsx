@@ -269,7 +269,7 @@ export default function HomePage() {
               <h2 className="text-4xl font-serif font-bold text-[#3d3630] mb-4">Questions Frequentes</h2>
               <p className="text-[#6b6259]">Reponses aux questions les plus posees sur le magnetisme a distance</p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-3">
               {[
                 {
                   q: "Comment fonctionne le soin a distance sur photo ?",
@@ -296,7 +296,7 @@ export default function HomePage() {
                   a: "Zona, brulures (coupeur de feu), eczema, douleurs chroniques (dos, articulations), troubles du sommeil, stress et anxiete. Le magnetisme agit sur de nombreux maux."
                 }
               ].map((faq, i) => (
-                <details key={i} className="group bg-white rounded-2xl p-6 cursor-pointer hover:shadow-md transition-all border border-[#4a6741]/10">
+                <details key={i} name="faq-accordion" className="group bg-white rounded-2xl p-6 cursor-pointer hover:shadow-md transition-all border border-[#4a6741]/10">
                   <summary className="flex justify-between items-center font-bold text-[#3d3630] list-none">
                     <span>{faq.q}</span>
                     <span className="text-[#4a6741] group-open:rotate-45 transition-transform text-2xl">+</span>

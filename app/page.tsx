@@ -5,9 +5,6 @@ import Link from 'next/link'
 import { Globe, MapPin, Zap, ShieldCheck, Phone, Star, Wind, Sparkles, Heart } from 'lucide-react'
 import { citiesData } from '@/data/cities'
 import LayoutWrapper from '@/components/LayoutWrapper'
-import dynamic from 'next/dynamic'
-
-const EnergyOrb = dynamic(() => import('@/components/EnergyOrb'), { ssr: false })
 
 export default function HomePage() {
   // Valeur statique pour le SSR, mise a jour cote client
@@ -35,7 +32,8 @@ export default function HomePage() {
       <div className="page-fade">
         {/* Hero Section */}
         <section className="relative min-h-[95vh] flex items-center px-6 overflow-hidden bg-[#faf8f5]">
-          <EnergyOrb />
+          <div className="energy-field w-96 h-96 bg-[#4a6741]/20 -top-20 -left-20"></div>
+          <div className="energy-field w-[500px] h-[500px] bg-[#c9a962]/20 -bottom-40 -right-20" style={{ animationDelay: '2s' }}></div>
 
           <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-16 items-center relative z-10">
             <div className="space-y-10">

@@ -1,0 +1,27 @@
+{
+  "app/page.tsx -> @/components/EnergyOrb": {
+    "id": 3815,
+    "files": [
+      "static/chunks/b536a0f1.0ab3b669cc2b2028.js",
+      "static/chunks/bd904a5c.09cfff597d535288.js",
+      "static/chunks/72c373f8.08e821f9df9d48d7.js",
+      "static/chunks/5140.e39e7201ce509385.js"
+    ]
+  },
+  "components/ChatWrapper.tsx -> ./FloatingChat": {
+    "id": 4915,
+    "files": [
+      "static/chunks/95247769.203b580f16b8ad55.js",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/2258.596495225e7fb1cc.js"
+    ]
+  },
+  "node_modules/@react-three/drei/core/VideoTexture.js -> hls.js": {
+    "id": null,
+    "files": []
+  },
+  "node_modules/@react-three/drei/web/FaceLandmarker.js -> @mediapipe/tasks-vision": {
+    "id": null,
+    "files": []
+  }
+}

@@ -1,0 +1,341 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/blog",
+      "regex": "^/blog(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog(?:/)?$"
+    },
+    {
+      "page": "/blog/coupeur-de-feu-brulures-tradition",
+      "regex": "^/blog/coupeur\\-de\\-feu\\-brulures\\-tradition(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/coupeur\\-de\\-feu\\-brulures\\-tradition(?:/)?$"
+    },
+    {
+      "page": "/blog/difference-magnetiseur-guerisseur-rebouteux",
+      "regex": "^/blog/difference\\-magnetiseur\\-guerisseur\\-rebouteux(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/difference\\-magnetiseur\\-guerisseur\\-rebouteux(?:/)?$"
+    },
+    {
+      "page": "/blog/douleurs-chroniques-magnetiseur-aide",
+      "regex": "^/blog/douleurs\\-chroniques\\-magnetiseur\\-aide(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/douleurs\\-chroniques\\-magnetiseur\\-aide(?:/)?$"
+    },
+    {
+      "page": "/blog/eczema-magnetisme-solution-naturelle",
+      "regex": "^/blog/eczema\\-magnetisme\\-solution\\-naturelle(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/eczema\\-magnetisme\\-solution\\-naturelle(?:/)?$"
+    },
+    {
+      "page": "/blog/magnetisme-arthrose-retrouver-mobilite",
+      "regex": "^/blog/magnetisme\\-arthrose\\-retrouver\\-mobilite(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/magnetisme\\-arthrose\\-retrouver\\-mobilite(?:/)?$"
+    },
+    {
+      "page": "/blog/magnetisme-migraines-soulager-naturellement",
+      "regex": "^/blog/magnetisme\\-migraines\\-soulager\\-naturellement(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/magnetisme\\-migraines\\-soulager\\-naturellement(?:/)?$"
+    },
+    {
+      "page": "/blog/magnetisme-zona-traitement-naturel",
+      "regex": "^/blog/magnetisme\\-zona\\-traitement\\-naturel(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/magnetisme\\-zona\\-traitement\\-naturel(?:/)?$"
+    },
+    {
+      "page": "/blog/soin-energetique-distance-photo-comment-ca-marche",
+      "regex": "^/blog/soin\\-energetique\\-distance\\-photo\\-comment\\-ca\\-marche(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog/soin\\-energetique\\-distance\\-photo\\-comment\\-ca\\-marche(?:/)?$"
+    },
+    {
+      "page": "/coupeur-de-feu",
+      "regex": "^/coupeur\\-de\\-feu(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/coupeur\\-de\\-feu(?:/)?$"
+    },
+    {
+      "page": "/demande-soin",
+      "regex": "^/demande\\-soin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/demande\\-soin(?:/)?$"
+    },
+    {
+      "page": "/espace-patient",
+      "regex": "^/espace\\-patient(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/espace\\-patient(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-a-distance",
+      "regex": "^/magnetiseur\\-a\\-distance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-a\\-distance(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-alencon",
+      "regex": "^/magnetiseur\\-alencon(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-alencon(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-angers",
+      "regex": "^/magnetiseur\\-angers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-angers(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-bordeaux",
+      "regex": "^/magnetiseur\\-bordeaux(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-bordeaux(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-brest",
+      "regex": "^/magnetiseur\\-brest(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-brest(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-cannes",
+      "regex": "^/magnetiseur\\-cannes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-cannes(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-coliques-bebe",
+      "regex": "^/magnetiseur\\-coliques\\-bebe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-coliques\\-bebe(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-dents-bebe",
+      "regex": "^/magnetiseur\\-dents\\-bebe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-dents\\-bebe(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-dijon",
+      "regex": "^/magnetiseur\\-dijon(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-dijon(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-douleurs-dos",
+      "regex": "^/magnetiseur\\-douleurs\\-dos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-douleurs\\-dos(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-douleurs-gastriques",
+      "regex": "^/magnetiseur\\-douleurs\\-gastriques(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-douleurs\\-gastriques(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-eczema",
+      "regex": "^/magnetiseur\\-eczema(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-eczema(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-grenoble",
+      "regex": "^/magnetiseur\\-grenoble(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-grenoble(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-le-havre",
+      "regex": "^/magnetiseur\\-le\\-havre(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-le\\-havre(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-lille",
+      "regex": "^/magnetiseur\\-lille(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-lille(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-lyon",
+      "regex": "^/magnetiseur\\-lyon(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-lyon(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-marseille",
+      "regex": "^/magnetiseur\\-marseille(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-marseille(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-monaco",
+      "regex": "^/magnetiseur\\-monaco(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-monaco(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-montpellier",
+      "regex": "^/magnetiseur\\-montpellier(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-montpellier(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-nantes",
+      "regex": "^/magnetiseur\\-nantes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-nantes(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-nice",
+      "regex": "^/magnetiseur\\-nice(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-nice(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-paris",
+      "regex": "^/magnetiseur\\-paris(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-paris(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-reims",
+      "regex": "^/magnetiseur\\-reims(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-reims(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-rennes",
+      "regex": "^/magnetiseur\\-rennes(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-rennes(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-strasbourg",
+      "regex": "^/magnetiseur\\-strasbourg(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-strasbourg(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-stress-anxiete",
+      "regex": "^/magnetiseur\\-stress\\-anxiete(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-stress\\-anxiete(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-toulon",
+      "regex": "^/magnetiseur\\-toulon(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-toulon(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-toulouse",
+      "regex": "^/magnetiseur\\-toulouse(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-toulouse(?:/)?$"
+    },
+    {
+      "page": "/magnetiseur-zona",
+      "regex": "^/magnetiseur\\-zona(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/magnetiseur\\-zona(?:/)?$"
+    },
+    {
+      "page": "/merci",
+      "regex": "^/merci(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/merci(?:/)?$"
+    },
+    {
+      "page": "/paiement",
+      "regex": "^/paiement(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/paiement(?:/)?$"
+    },
+    {
+      "page": "/presentation",
+      "regex": "^/presentation(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/presentation(?:/)?$"
+    },
+    {
+      "page": "/questions",
+      "regex": "^/questions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/questions(?:/)?$"
+    },
+    {
+      "page": "/qui-suis-je",
+      "regex": "^/qui\\-suis\\-je(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/qui\\-suis\\-je(?:/)?$"
+    },
+    {
+      "page": "/soin-magnetisme",
+      "regex": "^/soin\\-magnetisme(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/soin\\-magnetisme(?:/)?$"
+    },
+    {
+      "page": "/toucheur",
+      "regex": "^/toucheur(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/toucheur(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

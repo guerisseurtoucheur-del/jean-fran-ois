@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Globe, MapPin, Phone, Star, Sparkles, ShieldCheck } from 'lucide-react'
+import { Globe, MapPin, Phone, Star, Sparkles, ShieldCheck, Activity } from 'lucide-react'
 import { citiesData } from '@/data/cities'
 import { newCities } from '@/data/newCities'
 import LayoutWrapper from '@/components/LayoutWrapper'
@@ -64,15 +64,25 @@ export default function HomePage() {
                 Jean-François, magnétiseur guérisseur et toucheur expert. Je soulage vos maux par le souffle et l'énergie, <strong>que vous soyez à Paris, Lyon, Marseille ou partout en France.</strong>
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-5 pt-4">
-                <Link href="/demande-soin" className="px-10 py-5 bg-[#c9a962] text-stone-900 rounded-2xl font-bold text-lg hover:bg-[#e5d397] transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(201,169,98,0.3)]">
-                  <span>Démarrer un soin sur photo</span>
-                  <Sparkles size={20} />
+              <div className="flex flex-col gap-4 pt-4">
+                {/* Nouveau Bouton Bilan 3D */}
+                <Link href="/bilan-energetique" className="w-full px-6 py-5 bg-gradient-to-r from-[#c9a962] to-[#b59858] text-stone-900 rounded-2xl font-bold text-lg hover:brightness-110 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(201,169,98,0.4)] relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-700 -translate-x-full skew-x-12"></div>
+                  <Activity size={24} className="animate-pulse flex-shrink-0" />
+                  <span className="text-center sm:text-left leading-tight">Diagnostic 3D gratuit de vos Chakras</span>
                 </Link>
-                <a href="tel:0955554462" className="px-10 py-5 border border-white/20 bg-white/5 backdrop-blur-md text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">
-                  <Phone size={20} />
-                  <span>Appel direct</span>
-                </a>
+                
+                {/* Boutons secondaires */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link href="/demande-soin" className="flex-1 px-4 py-4 border border-white/20 bg-white/10 backdrop-blur-md text-white rounded-2xl font-bold text-base hover:bg-white/20 transition-all flex items-center justify-center gap-2">
+                    <Sparkles size={18} />
+                    <span>Soin sur photo</span>
+                  </Link>
+                  <a href="tel:0955554462" className="flex-1 px-4 py-4 border border-white/10 bg-white/5 backdrop-blur-md text-white/80 rounded-2xl font-bold text-base hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                    <Phone size={18} />
+                    <span>Appel direct</span>
+                  </a>
+                </div>
               </div>
             </div>
             

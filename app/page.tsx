@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Globe, MapPin, Phone, Star, Sparkles, ShieldCheck } from 'lucide-react'
 import { citiesData } from '@/data/cities'
+import { newCities } from '@/data/newCities'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import HeroEnergyField from '@/components/homepage/HeroEnergyField'
 
@@ -200,6 +201,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-6">
             <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-[#c9a962]">Rayonnement énergétique national - Cliquez pour découvrir</p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {/* Anciennes villes */}
               {Object.values(citiesData).map(city => (
                 <Link 
                   key={city.slug} 
@@ -207,6 +209,16 @@ export default function HomePage() {
                   className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
                 >
                   Magnétiseur {city.name}
+                </Link>
+              ))}
+              {/* Nouvelles villes */}
+              {newCities.map(city => (
+                <Link 
+                  key={city.slug} 
+                  href={`/${city.slug}`}
+                  className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
+                >
+                  Magnétiseur {city.nom}
                 </Link>
               ))}
             </div>

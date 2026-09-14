@@ -236,7 +236,246 @@ export const newCities = [
     seoTitle: 'Magnétiseur Monaco | Guérisseur et soins premium',
     seoText: [
       "L'exigence des résidents de la Principauté de Monaco s'applique également au choix de leurs thérapies complémentaires. Jean-François, fort de plus de 20 ans d'expérience, propose un magnétisme curatif de très haute qualité. Son don, vérifié par de nombreux témoignages, permet de travailler sur la globalité de l'être, en désamorçant les tensions psychiques et physiques accumulées.",
-      "Faire appel à un guérisseur coupeur de feu pour traiter une inflammation, une réaction allergique cutanée ou les effets d'une radiothérapie devient très simple grâce aux soins à distance. Depuis Monte-Carlo, il vous suffit de transmettre vos informations pour que le processus vibratoire s'engage. L'énergie vitale est dirigée avec précision, offrant des résultats souvent immédiats, dans la plus stricte confidentialité."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-geneve', 
+    nom: 'Genève', 
+    departement: 'Canton de Genève', 
+    region: 'Suisse', 
+    description: 'Magnétiseur à distance pour la région de Genève : sérénité et rééquilibrage.',
+    seoTitle: 'Magnétiseur Genève (Suisse) | Soin énergétique à distance',
+    seoText: [
+      "Dans l'effervescence intellectuelle et professionnelle de Genève, le stress et le surmenage peuvent rapidement créer des blocages corporels profonds. Jean-François propose un accompagnement énergétique sur mesure, sans que vous n'ayez à franchir la frontière. Son don de magnétisme transcende les distances pour cibler précisément l'origine de vos maux.",
+      "L'efficacité du soin sur photo n'est plus à prouver : l'énergie vitale agit instantanément pour soulager les migraines, les troubles digestifs et les douleurs chroniques. Que vous résidiez près du Lac Léman ou dans le cœur historique, retrouvez une harmonie physique et mentale grâce à un guérisseur authentique et dévoué."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-lausanne', 
+    nom: 'Lausanne', 
+    departement: 'Canton de Vaud', 
+    region: 'Suisse', 
+    description: 'Guérisseur pour les résidents de Lausanne, soins énergétiques profonds.',
+    seoTitle: 'Magnétiseur Lausanne | Guérisseur traditionnel à distance',
+    seoText: [
+      "Lausanne, capitale olympique tournée vers le bien-être, abrite de nombreuses personnes en quête de solutions de santé naturelles. Le magnétisme traditionnel de Jean-François s'inscrit parfaitement dans cette démarche. Par son intervention à distance, il canalise le fluide universel pour dissiper l'anxiété et apaiser les inflammations articulaires.",
+      "Les témoignages de patients suisses soulignent la puissance de ce travail énergétique. En agissant comme coupeur de feu ou rebouteux vibratoire, il aide votre corps à déclencher ses propres mécanismes d'auto-guérison, vous permettant de retrouver un sommeil réparateur et une clarté d'esprit optimale face au lac Léman."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-bruxelles', 
+    nom: 'Bruxelles', 
+    departement: 'Bruxelles-Capitale', 
+    region: 'Belgique', 
+    description: 'Un magnétiseur reconnu à votre service depuis Bruxelles.',
+    seoTitle: 'Magnétiseur Bruxelles (Belgique) | Soin sur photo et coupeur de feu',
+    seoText: [
+      "Capitale européenne bouillonnante, Bruxelles est une ville où la pression quotidienne est intense. Pour répondre aux besoins des Bruxellois, Jean-François met à disposition son don de guérisseur par le biais de séances à distance. Il n'y a aucune barrière physique pour l'énergie magnétique lorsqu'elle est dirigée avec une intention pure et protectrice.",
+      "Que ce soit pour des problèmes dermatologiques résistants (eczéma, zona) ou pour un épuisement psychologique, l'imposition des mains virtuelle agit au cœur de vos cellules. Recevez ce fluide bienfaisant confortablement installé chez vous, et laissez la résonance énergétique restaurer votre équilibre intérieur."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-liege', 
+    nom: 'Liège', 
+    departement: 'Province de Liège', 
+    region: 'Belgique', 
+    description: 'Soulagement de vos douleurs à Liège par le magnétisme.',
+    seoTitle: 'Magnétiseur Liège | Soulagement par l\'énergie à distance',
+    seoText: [
+      "La Cité ardente, Liège, possède une énergie unique, mais ses habitants ne sont pas à l'abri des déséquilibres physiques ou émotionnels. Le magnétisme curatif offre une voie de guérison alternative et complémentaire d'une grande douceur. Jean-François pratique ce don ancestral avec une éthique rigoureuse, en traitant chaque personne de manière holistique.",
+      "Le travail sur photographie permet d'établir une connexion vibratoire puissante, supprimant les douleurs articulaires, les lombalgies ou le stress chronique. Retrouvez votre vitalité originelle grâce à une méthode naturelle qui a fait ses preuves depuis des siècles."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-luxembourg', 
+    nom: 'Luxembourg', 
+    departement: 'Luxembourg', 
+    region: 'Grand-Duché', 
+    description: 'Rééquilibrage énergétique complet pour les résidents du Luxembourg.',
+    seoTitle: 'Magnétiseur Luxembourg | Guérison et bien-être à distance',
+    seoText: [
+      "Au cœur de l'Europe, le Grand-Duché de Luxembourg concentre une population exigeante à la recherche de soins alternatifs fiables. Le magnétiseur Jean-François répond à cette attente grâce à des protocoles de soins à distance hautement efficaces. Le fluide magnétique ne connaît pas les frontières et agit directement sur vos champs subtils.",
+      "Idéal pour apaiser les brûlures (coupeur de feu), les migraines tenaces ou les états dépressifs, son intervention réaligne vos chakras. Offrez-vous le luxe d'une thérapie énergétique sans contrainte de déplacement, avec des résultats tangibles et durables."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-montreal', 
+    nom: 'Montréal', 
+    departement: 'Québec', 
+    region: 'Canada', 
+    description: 'Un magnétiseur français accessible depuis Montréal, Québec.',
+    seoTitle: 'Magnétiseur Montréal (Québec) | Soin énergétique transatlantique',
+    seoText: [
+      "L'océan Atlantique n'est pas un obstacle pour le fluide magnétique. De plus en plus de résidents de Montréal et du Québec font appel à Jean-François pour bénéficier de son don authentique. Le rythme de vie nord-américain exige une énergie constante, et les blocages peuvent vite devenir handicapants au quotidien.",
+      "Le soin sur photo permet une intervention ciblée pendant votre sommeil (décalage horaire favorable) ou lors de vos moments de repos. Rééquilibrez vos énergies, soulagez vos maux de dos et dissipez l'anxiété hivernale grâce à ce savoir-faire traditionnel français reconnu."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-quebec', 
+    nom: 'Québec', 
+    departement: 'Capitale-Nationale', 
+    region: 'Canada', 
+    description: 'Soins magnétiques à distance pour la ville de Québec.',
+    seoTitle: 'Magnétiseur Québec | Guérisseur et coupeur de feu',
+    seoText: [
+      "Dans la magnifique ville de Québec, la recherche de thérapies naturelles et ancestrales est en pleine expansion. Jean-François apporte son expertise de magnétiseur et coupeur de feu directement chez vous, par la puissance du soin à distance. Cette méthode, fondée sur la résonance quantique, est d'une efficacité redoutable.",
+      "Qu'il s'agisse de soulager les effets secondaires de traitements lourds, d'apaiser des problèmes de peau récurrents ou de lever des blocages émotionnels profonds, l'énergie universelle agit comme un baume réparateur sur l'ensemble de votre corps et de votre esprit."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-noumea', 
+    nom: 'Nouméa', 
+    departement: 'Province Sud', 
+    region: 'Nouvelle-Calédonie', 
+    description: 'Rééquilibrage de vos énergies vitales depuis Nouméa.',
+    seoTitle: 'Magnétiseur Nouméa | Soin à distance Nouvelle-Calédonie',
+    seoText: [
+      "Vivre à Nouméa offre un cadre idyllique, mais l'isolement insulaire peut parfois limiter l'accès à des praticiens énergétiques spécialisés. Grâce à la radiesthésie et au magnétisme sur support photographique, Jean-François se connecte à votre champ vibratoire avec la même intensité que si vous étiez dans son cabinet.",
+      "Le décalage horaire permet souvent d'effectuer le soin pendant que vous dormez, optimisant ainsi la réceptivité de votre organisme. Libérez-vous des tensions accumulées, des chocs émotionnels et des douleurs chroniques grâce à une transmission d'énergie pure et bienveillante."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-papeete', 
+    nom: 'Papeete', 
+    departement: 'Îles du Vent', 
+    region: 'Polynésie française', 
+    description: 'Guérisseur magnétiseur pour les résidents de Tahiti.',
+    seoTitle: 'Magnétiseur Papeete (Tahiti) | Soulagement énergétique',
+    seoText: [
+      "Au cœur de la Polynésie, la tradition du soin par le souffle et l'énergie résonne avec la culture locale (le Mana). Jean-François propose ses services de magnétiseur aux habitants de Papeete et des îles environnantes. Son don s'affranchit totalement de la distance kilométrique séparant la métropole de Tahiti.",
+      "Spécialiste des affections cutanées rebelles, des douleurs inflammatoires et des nœuds psychologiques, il rétablit le courant vital dans votre organisme. L'harmonie intérieure est restaurée, favorisant un bien-être global et une sensation de légèreté immédiate."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-fort-de-france', 
+    nom: 'Fort-de-France', 
+    departement: 'Martinique', 
+    region: 'Martinique', 
+    description: 'Votre magnétiseur guérisseur accessible depuis la Martinique.',
+    seoTitle: 'Magnétiseur Fort-de-France | Guérison à distance Martinique',
+    seoText: [
+      "La chaleur et l'humidité de la Martinique peuvent exacerber certaines douleurs articulaires ou dermatologiques. À Fort-de-France, de plus en plus de personnes se tournent vers le magnétisme pour soulager leurs maux de manière 100% naturelle. Jean-François utilise la photo comme pont énergétique pour agir sur vos maux.",
+      "Ce soin à distance est d'une grande profondeur. Il permet non seulement d'atténuer les symptômes physiques, mais aussi de purifier l'aura et de réaligner les chakras. Retrouvez votre vitalité et votre sérénité grâce à une approche humaine, empathique et puissante."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-pointe-a-pitre', 
+    nom: 'Pointe-à-Pitre', 
+    departement: 'Guadeloupe', 
+    region: 'Guadeloupe', 
+    description: 'Magnétisme traditionnel pour les habitants de Guadeloupe.',
+    seoTitle: 'Magnétiseur Pointe-à-Pitre | Soin énergétique en Guadeloupe',
+    seoText: [
+      "À Pointe-à-Pitre comme dans toute la Guadeloupe, la demande pour des guérisseurs authentiques est forte. Le magnétisme à distance s'impose comme la solution idéale pour bénéficier d'un soin de haute qualité sans contrainte géographique. L'énergie vitale canalisée par Jean-François traverse les océans sans perdre de sa force.",
+      "Interventions sur les zonas, les sciatiques, ou encore pour couper le feu : les applications sont vastes. Le travail vibratoire relance la circulation des méridiens et dissout les poches de stress, offrant à votre corps l'impulsion nécessaire pour se régénérer."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-saint-denis-reunion', 
+    nom: 'Saint-Denis', 
+    departement: 'La Réunion', 
+    region: 'La Réunion', 
+    description: 'Votre magnétiseur à La Réunion, soins profonds par l\'énergie.',
+    seoTitle: 'Magnétiseur Saint-Denis (Réunion) | Soin sur photo',
+    seoText: [
+      "L'île de La Réunion, terre de métissage et d'énergies intenses, est particulièrement réceptive aux thérapies vibratoires. Depuis Saint-Denis, vous pouvez facilement consulter Jean-François pour un soin magnétique complet. Il suffit d'une photo récente pour que la connexion s'établisse et que le nettoyage énergétique commence.",
+      "Cette approche est très prisée pour apaiser le stress, traiter les brûlures et dénouer les tensions musculaires chroniques. Le fluide transmis agit comme un catalyseur de guérison, respectant le rythme de votre corps et rééquilibrant votre boussole intérieure."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-versailles', 
+    nom: 'Versailles', 
+    departement: 'Yvelines', 
+    region: 'Île-de-France', 
+    description: 'Excellence du magnétisme curatif pour la ville de Versailles.',
+    seoTitle: 'Magnétiseur Versailles | Guérisseur et toucheur Yvelines',
+    seoText: [
+      "Dans l'écrin majestueux de Versailles, la sérénité n'est pas toujours au rendez-vous face aux défis de la vie moderne. Le stress accumulé peut se cristalliser sous forme de maux de dos, de migraines ou d'insomnies. Jean-François propose un magnétisme curatif à distance d'une efficacité remarquable pour lever ces blocages.",
+      "Le soin énergétique purifie les corps subtils et relance la dynamique d'auto-guérison. De nombreux résidents des Yvelines font appel à ce don traditionnel pour surmonter des passages difficiles, qu'ils soient d'ordre physique ou psychologique, en toute discrétion."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-toulon', 
+    nom: 'Toulon', 
+    departement: 'Var', 
+    region: 'Provence-Alpes-Côte d\'Azur', 
+    description: 'Soulagement énergétique sous le soleil de Toulon.',
+    seoTitle: 'Magnétiseur Toulon | Soin naturel à distance dans le Var',
+    seoText: [
+      "Entre mer et montagne, Toulon offre un cadre de vie magnifique, mais les douleurs articulaires et les coups de fatigue n'épargnent personne. Le magnétisme traditionnel est une réponse holistique qui prend en compte la personne dans sa globalité. L'intervention à distance de Jean-François est une véritable bouffée d'oxygène vibratoire.",
+      "En agissant sur les méridiens et les centres d'énergie, il dissipe les stagnations responsables de vos maux. Que vous souffriez d'un zona douloureux ou d'une baisse de moral, le fluide magnétique vient réchauffer, apaiser et guérir vos blessures invisibles."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-annecy', 
+    nom: 'Annecy', 
+    departement: 'Haute-Savoie', 
+    region: 'Auvergne-Rhône-Alpes', 
+    description: 'Guérisseur magnétiseur pour les habitants d\'Annecy.',
+    seoTitle: 'Magnétiseur Annecy | Équilibre et vitalité en Haute-Savoie',
+    seoText: [
+      "L'air pur des montagnes d'Annecy est bénéfique, mais lorsque le corps signale une détresse intérieure (douleur, angoisse, problème de peau), un rééquilibrage énergétique devient essentiel. Grâce au magnétisme sur photo, Jean-François se met au diapason de votre fréquence vibratoire pour extraire les énergies usagées.",
+      "Cette pratique ancestrale, reconnue pour son efficacité sur les brûlures et les inflammations, permet de retrouver une fluidité corporelle. Les Annéciens apprécient la douceur et la puissance de ce soin qui restaure l'harmonie sans aucun déplacement nécessaire."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-rouen', 
+    nom: 'Rouen', 
+    departement: 'Seine-Maritime', 
+    region: 'Normandie', 
+    description: 'Soins magnétiques puissants pour la région de Rouen.',
+    seoTitle: 'Magnétiseur Rouen | Soulagement à distance en Normandie',
+    seoText: [
+      "Capitale historique de la Normandie, Rouen est une ville dynamique où le rythme quotidien peut engendrer une grande fatigue nerveuse. Le magnétisme est une méthode douce qui vient contrecarrer ce stress en rechargeant vos batteries intérieures. Jean-François maîtrise l'art de diriger le fluide vital à distance pour un effet apaisant immédiat.",
+      "Les blocages émotionnels et les douleurs récurrentes (arthrose, maux de ventre) réagissent très bien à cette thérapie. En traitant la racine énergétique du problème, le guérisseur permet à votre corps de retrouver son fonctionnement optimal et naturel."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-tours', 
+    nom: 'Tours', 
+    departement: 'Indre-et-Loire', 
+    region: 'Centre-Val de Loire', 
+    description: 'Magnétiseur à Tours : apaisez vos maux par l\'énergie.',
+    seoTitle: 'Magnétiseur Tours | Guérisseur traditionnel Val de Loire',
+    seoText: [
+      "Au cœur de la douceur tourangelle, il arrive que l'on se sente désaxé, envahi par des douleurs inexpliquées ou un sentiment d'oppression. Le rôle de Jean-François est de nettoyer votre aura et de revitaliser vos organes défaillants grâce au don du magnétisme. Le travail sur photo garantit une efficacité totale.",
+      "Que ce soit pour vous accompagner lors de traitements médicaux lourds en coupant le feu des radiothérapies, ou pour vous débarrasser d'un zona persistant, l'énergie transmise restaure la paix cellulaire. Une méthode authentique pour les habitants de Tours."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-perpignan', 
+    nom: 'Perpignan', 
+    departement: 'Pyrénées-Orientales', 
+    region: 'Occitanie', 
+    description: 'Retrouvez votre équilibre énergétique depuis Perpignan.',
+    seoTitle: 'Magnétiseur Perpignan | Soin énergétique à distance',
+    seoText: [
+      "Sous le soleil catalan de Perpignan, la vitalité devrait être au beau fixe. Pourtant, les aléas de la vie créent des failles dans notre bouclier énergétique. Jean-François, guérisseur expérimenté, utilise le magnétisme pour colmater ces brèches et relancer une circulation fluide dans votre corps subtil.",
+      "Le soin sur photographie est particulièrement indiqué pour les personnes souffrant de fibromyalgie, de troubles du sommeil ou d'affections cutanées rebelles. Ressentez les bienfaits d'un alignement parfait et d'une purification profonde sans quitter le confort de votre foyer."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-avignon', 
+    nom: 'Avignon', 
+    departement: 'Vaucluse', 
+    region: 'Provence-Alpes-Côte d\'Azur', 
+    description: 'Magnétisme et guérison à distance pour Avignon.',
+    seoTitle: 'Magnétiseur Avignon | Guérisseur et coupeur de feu Vaucluse',
+    seoText: [
+      "La Cité des Papes regorge d'histoire, mais vos propres mémoires corporelles peuvent parfois se transformer en douleurs chroniques. Le magnétisme aide à libérer ces mémoires cellulaires enfouies. Jean-François pratique ce déblocage à distance, en se connectant à votre essence via une photographie récente.",
+      "Ce travail énergétique dissipe les lourdeurs, soulage le dos et le ventre, et agit comme un puissant anti-stress naturel. De nombreux Avignonnais témoignent d'un renouveau total après quelques séances, retrouvant la clarté mentale et l'absence de douleurs physiques."
+    ]
+  },
+  { 
+    slug: 'magnetiseur-ajaccio', 
+    nom: 'Ajaccio', 
+    departement: 'Corse-du-Sud', 
+    region: 'Corse', 
+    description: 'Soin magnétique traditionnel pour l\'Île de Beauté.',
+    seoTitle: 'Magnétiseur Ajaccio (Corse) | Guérison et énergie vitale',
+    seoText: [
+      "La Corse, île de force et de traditions, abrite depuis toujours la croyance en la puissance du magnétisme (signadore). Jean-François s'inscrit dans cette lignée de guérisseurs authentiques en proposant ses dons à distance pour les habitants d'Ajaccio et de toute la Corse. Le fluide énergétique traverse la Méditerranée pour vous rejoindre.",
+      "Excellent pour apaiser les inflammations articulaires, les zonas, ou pour lever le mauvais œil psychologique (choc émotionnel), ce soin revitalise vos chakras. Offrez-vous un soulagement profond et durable grâce à une pratique bienveillante et mystique."
     ]
   }
 ]

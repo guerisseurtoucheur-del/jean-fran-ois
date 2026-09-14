@@ -441,7 +441,7 @@ const IntegratedChatbot: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl">
-      <div className="p-4 sm:p-6 bg-[#b45334]/80 backdrop-blur-md text-white flex items-center gap-3">
+      <div className="p-4 sm:p-6 bg-[#c9a962]/80 backdrop-blur-md text-white flex items-center gap-3">
         <Globe size={20} className="animate-pulse" />
         <div>
           <p className="font-serif font-bold text-sm sm:text-base">Assistant Jean-François</p>

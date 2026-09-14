@@ -4,7 +4,7 @@ export const newCities = [
     nom: 'Biarritz',
     departement: 'Pyrénées-Atlantiques',
     region: 'Nouvelle-Aquitaine',
-    description: 'Découvrez le pouvoir guérisseur de l\'énergie sur la côte basque.',
+    description: "Découvrez le pouvoir guérisseur de l'énergie sur la côte basque.",
     seoTitle: 'Magnétiseur Guérisseur à Biarritz | Soins énergétiques à distance',
     seoText: [
       "Si vous habitez sur la côte basque et que vous recherchez une solution douce pour apaiser vos maux, le magnétisme traditionnel offre une réponse naturelle. L'océan et l'air marin de Biarritz sont propices au ressourcement, mais parfois, un accompagnement énergétique est nécessaire pour débloquer des tensions ancrées. Jean-François, fort de son don transmis depuis des générations, travaille sur les flux d'énergie pour rétablir votre harmonie globale.",
@@ -28,7 +28,7 @@ export const newCities = [
     nom: 'Annecy',
     departement: 'Haute-Savoie',
     region: 'Auvergne-Rhône-Alpes',
-    description: 'Retrouvez l\'harmonie du corps et de l\'esprit entre lac et montagnes.',
+    description: "Retrouvez l'harmonie du corps et de l'esprit entre lac et montagnes.",
     seoTitle: 'Magnétiseur Annecy | Soins à distance et magnétisme',
     seoText: [
       "Entre le lac d'Annecy et ses montagnes majestueuses, l'environnement savoyard incite à l'équilibre. Toutefois, lorsque la maladie ou la douleur s'installe (migraines, zona, douleurs de dos), il devient indispensable de relancer la dynamique d'auto-guérison du corps. Jean-François met à profit sa sensibilité énergétique pour aider les Annéciens à retrouver leur pleine santé, par le biais d'un magnétisme puissant et bienveillant.",
@@ -39,8 +39,8 @@ export const newCities = [
     slug: 'magnetiseur-aix-en-provence',
     nom: 'Aix-en-Provence',
     departement: 'Bouches-du-Rhône',
-    region: 'Provence-Alpes-Côte d\\'Azur',
-    description: 'Soulagez vos douleurs avec l\'aide d\'un magnétiseur expérimenté sous le soleil de Provence.',
+    region: "Provence-Alpes-Côte d'Azur",
+    description: "Soulagez vos douleurs avec l'aide d'un magnétiseur expérimenté sous le soleil de Provence.",
     seoTitle: 'Magnétiseur Aix-en-Provence | Coupeur de feu à distance',
     seoText: [
       "L'énergie circule en toute chose, et lorsqu'elle se bloque, les inflammations apparaissent. À Aix-en-Provence et dans tout le pays d'Aix, les personnes souffrant de maux inexpliqués ou de brûlures intenses (radiothérapie, coups de soleil, accidents domestiques) peuvent faire appel à l'expertise d'un coupeur de feu. L'action de Jean-François s'effectue instantanément, soulageant la sensation de chaleur cuisante à distance.",
@@ -73,10 +73,10 @@ export const newCities = [
   },
   { 
     slug: 'magnetiseur-lyon-presquile',
-    nom: 'Lyon Presqu\\'île',
+    nom: "Lyon Presqu'île",
     departement: 'Rhône',
     region: 'Auvergne-Rhône-Alpes',
-    description: 'L\'énergie du magnétisme pour soulager le stress et les douleurs articulaires.',
+    description: "L'énergie du magnétisme pour soulager le stress et les douleurs articulaires.",
     seoTitle: 'Magnétiseur Lyon | Séances de magnétisme à distance',
     seoText: [
       "La métropole lyonnaise peut être source de grandes tensions nerveuses. L'accumulation de stress se traduit souvent par des somatisations : maux d'estomac, ulcères, ou tensions musculaires persistantes. Pour les résidents de Lyon, l'alternative d'un soin énergétique à distance se présente comme une solution d'apaisement idéale. Jean-François aide le corps à évacuer les toxines énergétiques accumulées.",
@@ -99,11 +99,11 @@ export const newCities = [
     slug: 'magnetiseur-cannes-croisette',
     nom: 'Cannes Croisette',
     departement: 'Alpes-Maritimes',
-    region: 'Provence-Alpes-Côte d\\'Azur',
-    description: 'Rééquilibrez vos énergies avec des soins à distance d\'une rare intensité.',
+    region: "Provence-Alpes-Côte d'Azur",
+    description: "Rééquilibrez vos énergies avec des soins à distance d'une rare intensité.",
     seoTitle: 'Magnétiseur Cannes | Apaisement et énergies',
     seoText: [
-      "Sur la Côte d'Azur, la lumière et le climat de Cannes sont favorables au bien-être, mais ne protègent pas des aléas de la vie (chocs émotionnels, blessures sportives, inflammations). Le recours à un magnétiseur expérimenté permet d'intervenir là où la médecine traditionnelle s'arrête parfois, en travaillant sur les corps subtils et le réalignement des chakras des patients cannois.",
+      "Sur la Côte d\'Azur, la lumière et le climat de Cannes sont favorables au bien-être, mais ne protègent pas des aléas de la vie (chocs émotionnels, blessures sportives, inflammations). Le recours à un magnétiseur expérimenté permet d'intervenir là où la médecine traditionnelle s'arrête parfois, en travaillant sur les corps subtils et le réalignement des chakras des patients cannois.",
       "L'expertise de Jean-François s'étend au soulagement immédiat des brûlures en tant que coupeur de feu, une pratique très recherchée dans les Alpes-Maritimes pour atténuer les effets secondaires des rayons. Sans aucun déplacement physique, le patient ressent l'action du fluide, prouvant que l'intention curative est une force physique mesurable à distance."
     ]
   },
@@ -111,7 +111,7 @@ export const newCities = [
     slug: 'magnetiseur-saint-tropez',
     nom: 'Saint-Tropez',
     departement: 'Var',
-    region: 'Provence-Alpes-Côte d\\'Azur',
+    region: "Provence-Alpes-Côte d'Azur",
     description: 'Le magnétisme traditionnel au service de votre santé et de votre apaisement.',
     seoTitle: 'Magnétiseur Saint-Tropez | Guérisseur et soins sur photo',
     seoText: [
@@ -183,8 +183,8 @@ export const newCities = [
     slug: 'magnetiseur-avignon',
     nom: 'Avignon',
     departement: 'Vaucluse',
-    region: 'Provence-Alpes-Côte d\\'Azur',
-    description: 'La puissance de l\'énergie pour dénouer vos tensions musculaires et nerveuses.',
+    region: "Provence-Alpes-Côte d'Azur",
+    description: "La puissance de l'énergie pour dénouer vos tensions musculaires et nerveuses.",
     seoTitle: 'Magnétiseur Avignon | Soins sur photographie',
     seoText: [
       "Cité d'histoire, Avignon est aussi une terre propice aux réceptivités subtiles. Les blocages énergétiques qui provoquent insomnies, migraines ou angoisses y sont traités avec un grand taux de réussite grâce au magnétisme. Le praticien se connecte à la fréquence vibratoire du consultant pour nettoyer les pollutions astrales et redonner au corps sa force naturelle.",
@@ -208,7 +208,7 @@ export const newCities = [
     nom: 'Bruxelles',
     departement: 'Belgique',
     region: 'Région de Bruxelles-Capitale',
-    description: 'L\'expertise d\'un magnétiseur français accessible depuis la Belgique.',
+    description: "L'expertise d'un magnétiseur français accessible depuis la Belgique.",
     seoTitle: 'Magnétiseur Bruxelles | Soins énergétiques en Belgique',
     seoText: [
       "La réputation des magnétiseurs et coupeurs de feu français dépasse très largement les frontières. De nombreux patients situés à Bruxelles et dans toute la Belgique choisissent le savoir-faire de Jean-François pour surmonter des pathologies persistantes. L'avantage du soin par photographie est qu'il abolit les distances : l'onde magnétique se transmet avec une absolue pureté depuis la France.",
@@ -232,7 +232,7 @@ export const newCities = [
     nom: 'Monaco Monte-Carlo',
     departement: 'Monaco',
     region: 'Principauté de Monaco',
-    description: 'L\'excellence du magnétisme curatif traditionnel.',
+    description: "L'excellence du magnétisme curatif traditionnel.",
     seoTitle: 'Magnétiseur Monaco | Guérisseur et soins premium',
     seoText: [
       "L'exigence des résidents de la Principauté de Monaco s'applique également au choix de leurs thérapies complémentaires. Jean-François, fort de plus de 20 ans d'expérience, propose un magnétisme curatif de très haute qualité. Son don, vérifié par de nombreux témoignages, permet de travailler sur la globalité de l'être, en désamorçant les tensions psychiques et physiques accumulées.",
@@ -280,7 +280,7 @@ export const newCities = [
     departement: 'Province de Liège',
     region: 'Belgique',
     description: 'Soulagement de vos douleurs à Liège par le magnétisme.',
-    seoTitle: 'Magnétiseur Liège | Soulagement par l\'énergie à distance',
+    seoTitle: "Magnétiseur Liège | Soulagement par l'énergie à distance",
     seoText: [
       "La Cité ardente, Liège, possède une énergie unique, mais ses habitants ne sont pas à l'abri des déséquilibres physiques ou émotionnels. Le magnétisme curatif offre une voie de guérison alternative et complémentaire d'une grande douceur. Jean-François pratique ce don ancestral avec une éthique rigoureuse, en traitant chaque personne de manière holistique.",
       "Le travail sur photographie permet d'établir une connexion vibratoire puissante, supprimant les douleurs articulaires, les lombalgies ou le stress chronique. Retrouvez votre vitalité originelle grâce à une méthode naturelle qui a fait ses preuves depuis des siècles."
@@ -375,7 +375,7 @@ export const newCities = [
     nom: 'Saint-Denis',
     departement: 'La Réunion',
     region: 'La Réunion',
-    description: 'Votre magnétiseur à La Réunion, soins profonds par l\'énergie.',
+    description: "Votre magnétiseur à La Réunion, soins profonds par l'énergie.",
     seoTitle: 'Magnétiseur Saint-Denis (Réunion) | Soin sur photo',
     seoText: [
       "L'île de La Réunion, terre de métissage et d'énergies intenses, est particulièrement réceptive aux thérapies vibratoires. Depuis Saint-Denis, vous pouvez facilement consulter Jean-François pour un soin magnétique complet. Il suffit d'une photo récente pour que la connexion s'établisse et que le nettoyage énergétique commence.",
@@ -398,7 +398,7 @@ export const newCities = [
     slug: 'magnetiseur-toulon',
     nom: 'Toulon',
     departement: 'Var',
-    region: 'Provence-Alpes-Côte d\\'Azur',
+    region: "Provence-Alpes-Côte d'Azur",
     description: 'Soulagement énergétique sous le soleil de Toulon.',
     seoTitle: 'Magnétiseur Toulon | Soin naturel à distance dans le Var',
     seoText: [
@@ -411,7 +411,7 @@ export const newCities = [
     nom: 'Annecy',
     departement: 'Haute-Savoie',
     region: 'Auvergne-Rhône-Alpes',
-    description: 'Guérisseur magnétiseur pour les habitants d\'Annecy.',
+    description: "Guérisseur magnétiseur pour les habitants d'Annecy.",
     seoTitle: 'Magnétiseur Annecy | Équilibre et vitalité en Haute-Savoie',
     seoText: [
       "L'air pur des montagnes d'Annecy est bénéfique, mais lorsque le corps signale une détresse intérieure (douleur, angoisse, problème de peau), un rééquilibrage énergétique devient essentiel. Grâce au magnétisme sur photo, Jean-François se met au diapason de votre fréquence vibratoire pour extraire les énergies usagées.",
@@ -435,7 +435,7 @@ export const newCities = [
     nom: 'Tours',
     departement: 'Indre-et-Loire',
     region: 'Centre-Val de Loire',
-    description: 'Magnétiseur à Tours : apaisez vos maux par l\'énergie.',
+    description: "Magnétiseur à Tours : apaisez vos maux par l'énergie.",
     seoTitle: 'Magnétiseur Tours | Guérisseur traditionnel Val de Loire',
     seoText: [
       "Au cœur de la douceur tourangelle, il arrive que l'on se sente désaxé, envahi par des douleurs inexpliquées ou un sentiment d'oppression. Le rôle de Jean-François est de nettoyer votre aura et de revitaliser vos organes défaillants grâce au don du magnétisme. Le travail sur photo garantit une efficacité totale.",
@@ -458,7 +458,7 @@ export const newCities = [
     slug: 'magnetiseur-avignon',
     nom: 'Avignon',
     departement: 'Vaucluse',
-    region: 'Provence-Alpes-Côte d\\'Azur',
+    region: "Provence-Alpes-Côte d'Azur",
     description: 'Magnétisme et guérison à distance pour Avignon.',
     seoTitle: 'Magnétiseur Avignon | Guérisseur et coupeur de feu Vaucluse',
     seoText: [
@@ -471,7 +471,7 @@ export const newCities = [
     nom: 'Ajaccio',
     departement: 'Corse-du-Sud',
     region: 'Corse',
-    description: 'Soin magnétique traditionnel pour l\'Île de Beauté.',
+    description: "Soin magnétique traditionnel pour l'Île de Beauté.",
     seoTitle: 'Magnétiseur Ajaccio (Corse) | Guérison et énergie vitale',
     seoText: [
       "La Corse, île de force et de traditions, abrite depuis toujours la croyance en la puissance du magnétisme (signadore). Jean-François s'inscrit dans cette lignée de guérisseurs authentiques en proposant ses dons à distance pour les habitants d'Ajaccio et de toute la Corse. Le fluide énergétique traverse la Méditerranée pour vous rejoindre.",
@@ -553,12 +553,12 @@ export const newCities = [
   ,{ 
     slug: 'magnetiseur-dijon',
     nom: 'Dijon',
-    departement: 'Côte-d\'Or',
+    departement: "Côte-d'Or",
     region: 'Bourgogne-Franche-Comté',
     description: "Soins magnétiques et énergétiques à distance pour les habitants de Dijon.",
-    seoTitle: "Magnétiseur Dijon (Côte-d'Or) | Guérisseur à distance",
+    seoTitle: "Magnétiseur Dijon (Côte-d\'Or) | Guérisseur à distance",
     seoText: [
-      "La vie moderne à Dijon (Côte-d'Or) peut parfois générer un stress profond, affectant tant le corps que l'esprit. C'est ici que le magnétisme traditionnel révèle tout son potentiel.",
+      "La vie moderne à Dijon (Côte-d\'Or) peut parfois générer un stress profond, affectant tant le corps que l'esprit. C'est ici que le magnétisme traditionnel révèle tout son potentiel.",
       "Le fluide transmis lors de la séance permet de relancer la circulation des énergies dans vos chakras. Les résultats sont souvent stupéfiants sur les problèmes de peau (eczéma, psoriasis) et les chocs émotionnels. Rejoignez les nombreuses personnes de la région Bourgogne-Franche-Comté qui ont déjà retrouvé l'équilibre grâce au magnétisme traditionnel et protecteur."
     ]
   }
@@ -757,7 +757,7 @@ export const newCities = [
   ,{ 
     slug: 'magnetiseur-argenteuil',
     nom: 'Argenteuil',
-    departement: 'Val-d\'Oise',
+    departement: "Val-d'Oise",
     region: 'Île-de-France',
     description: "Soins magnétiques et énergétiques à distance pour les habitants de Argenteuil.",
     seoTitle: "Magnétiseur Argenteuil (Val-d'Oise) | Guérisseur à distance",
@@ -950,7 +950,7 @@ export const newCities = [
     slug: 'magnetiseur-antibes',
     nom: 'Antibes',
     departement: 'Alpes-Maritimes',
-    region: 'Provence-Alpes-Côte d\'Azur',
+    region: "Provence-Alpes-Côte d'Azur",
     description: "Soins magnétiques et énergétiques à distance pour les habitants de Antibes.",
     seoTitle: "Magnétiseur Antibes (Alpes-Maritimes) | Guérisseur à distance",
     seoText: [
@@ -1142,7 +1142,7 @@ export const newCities = [
     slug: 'magnetiseur-la-seyne-sur-mer',
     nom: 'La Seyne-sur-Mer',
     departement: 'Var',
-    region: 'Provence-Alpes-Côte d\'Azur',
+    region: "Provence-Alpes-Côte d'Azur",
     description: "Soins magnétiques et énergétiques à distance pour les habitants de La Seyne-sur-Mer.",
     seoTitle: "Magnétiseur La Seyne-sur-Mer (Var) | Guérisseur à distance",
     seoText: [
@@ -1177,7 +1177,7 @@ export const newCities = [
   ,{ 
     slug: 'magnetiseur-sarcelles',
     nom: 'Sarcelles',
-    departement: 'Val-d\'Oise',
+    departement: "Val-d'Oise",
     region: 'Île-de-France',
     description: "Soins magnétiques et énergétiques à distance pour les habitants de Sarcelles.",
     seoTitle: "Magnétiseur Sarcelles (Val-d'Oise) | Guérisseur à distance",

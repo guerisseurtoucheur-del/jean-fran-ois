@@ -209,29 +209,36 @@ export default function HomePage() {
         {/* SEO CITIES LINKS */}
         <section className="py-20 bg-[#111] text-white/40 border-t border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.4em] mb-12 text-center text-[#c9a962]">Rayonnement énergétique national - Cliquez pour découvrir</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {/* Anciennes villes */}
-              {Object.values(citiesData).map(city => (
-                <Link 
-                  key={city.slug} 
-                  href={`/magnetiseur-${city.slug}`}
-                  className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
-                >
-                  Magnétiseur {city.name}
-                </Link>
-              ))}
-              {/* Nouvelles villes */}
-              {newCities.map(city => (
-                <Link 
-                  key={city.slug} 
-                  href={`/${city.slug}`}
-                  className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
-                >
-                  Magnétiseur {city.nom}
-                </Link>
-              ))}
-            </div>
+            <details className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-md">
+              <summary className="px-6 py-5 text-sm font-bold uppercase tracking-wider text-white/80 cursor-pointer list-none flex justify-center items-center gap-4 group-open:text-[#c9a962] transition-colors">
+                <span>Voir les 100 villes couvertes par le cabinet (Rayonnement National & International)</span>
+                <span className="text-xl transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <div className="px-6 pb-6 pt-2">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {/* Anciennes villes */}
+                  {Object.values(citiesData).map(city => (
+                    <Link 
+                      key={city.slug} 
+                      href={`/magnetiseur-${city.slug}`}
+                      className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
+                    >
+                      Magnétiseur {city.name}
+                    </Link>
+                  ))}
+                  {/* Nouvelles villes */}
+                  {newCities.map(city => (
+                    <Link 
+                      key={city.slug} 
+                      href={`/${city.slug}`}
+                      className="text-[10px] uppercase font-bold tracking-widest hover:text-white hover:bg-white/10 transition-all cursor-pointer text-center border border-white/5 hover:border-[#c9a962] py-3 rounded-xl"
+                    >
+                      Magnétiseur {city.nom}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </details>
           </div>
         </section>
 

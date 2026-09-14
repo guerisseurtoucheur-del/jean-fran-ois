@@ -3,7 +3,7 @@
 import React, { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { OrbitControls, Float, Trail } from '@react-three/drei'
+import { OrbitControls, Float, Line } from '@react-three/drei'
 
 interface ChakraBodyProps {
   activeChakraIndex: number | null
@@ -99,15 +99,8 @@ function ConnectionLine() {
     return [new THREE.Vector3(0, -3.5, 0), new THREE.Vector3(0, 3.5, 0)]
   }, [])
   
-  const lineGeometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry().setFromPoints(points)
-    return geo
-  }, [points])
-
   return (
-    <line geometry={lineGeometry}>
-      <lineBasicMaterial color="#c9a962" transparent opacity={0.2} linewidth={2} />
-    </line>
+    <Line points={points} color="#c9a962" lineWidth={2} transparent opacity={0.2} />
   )
 }
 

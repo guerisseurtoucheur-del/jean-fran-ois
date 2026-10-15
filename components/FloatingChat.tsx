@@ -485,7 +485,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
     <div className="fixed bottom-20 right-3 md:bottom-6 md:right-6 z-[999] flex flex-col items-end pointer-events-none">
       {isOpen && (
         <div className="mb-3 w-[calc(100vw-24px)] sm:w-[400px] h-[calc(100vh-140px)] sm:h-[550px] max-h-[600px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl border border-stone-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 pointer-events-auto">
-          <div className="p-4 sm:p-6 bg-[#b45334] text-white flex justify-between items-center">
+          <div className="p-4 sm:p-6 bg-[#c9a962] text-stone-900 flex justify-between items-center">
             <div className="flex items-center gap-2 sm:gap-3">
               <Globe size={16} className="animate-pulse" />
               <div>
@@ -493,20 +493,20 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
                 <p className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold opacity-70">Expert Magnétisme</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} aria-label="Fermer le chat" className="p-2 hover:bg-white/10 rounded-full transition-colors active:bg-white/20"><X size={18} /></button>
+            <button onClick={() => setIsOpen(false)} aria-label="Fermer le chat" className="p-2 hover:bg-black/10 rounded-full transition-colors active:bg-black/20"><X size={18} /></button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4 bg-stone-50 overscroll-contain" ref={scrollRef}>
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className="max-w-[90%] space-y-2">
-                  <div className={`p-4 rounded-2xl text-xs leading-relaxed whitespace-pre-line ${m.role === 'user' ? 'bg-[#b45334] text-white shadow-lg' : 'bg-white text-stone-800 border border-stone-100 shadow-sm'}`}>
+                  <div className={`p-4 rounded-2xl text-xs leading-relaxed whitespace-pre-line ${m.role === 'user' ? 'bg-[#c9a962] text-stone-900 shadow-lg' : 'bg-white text-stone-800 border border-stone-100 shadow-sm'}`}>
                     {m.text}
                   </div>
                   {m.links && (
                     <div className="flex flex-wrap gap-2">
                       {m.links.map((link, idx) => (
-                        <a key={idx} href={link.uri} target="_blank" rel="noopener" className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-[9px] font-bold text-[#b45334] hover:bg-[#b45334]/10 shadow-sm">
+                        <a key={idx} href={link.uri} target="_blank" rel="noopener" className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-[9px] font-bold text-[#c9a962] hover:bg-[#c9a962]/10 shadow-sm">
                           <ExternalLink size={10} /> {link.title}
                         </a>
                       ))}
@@ -559,7 +559,7 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
                 onClick={handleSend} 
                 disabled={loading} 
                 aria-label="Envoyer le message"
-                className="p-3 bg-[#b45334] text-white rounded-full hover:bg-[#9a4429] active:bg-[#8b3a25] transition-all flex-shrink-0 touch-manipulation disabled:opacity-50"
+                className="p-3 bg-[#c9a962] text-stone-900 rounded-full hover:bg-[#b59858] active:bg-[#a3864a] transition-all flex-shrink-0 touch-manipulation disabled:opacity-50"
               >
                 {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
               </button>
@@ -581,12 +581,12 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ onNavigate }) => {
         className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-[0_20px_50px_rgba(180,83,52,0.5)] transition-all duration-500 hover:scale-110 active:scale-95 pointer-events-auto group z-10 touch-manipulation
           ${isOpen 
             ? 'bg-stone-900 text-white' 
-            : 'bg-gradient-to-br from-[#c45d3a] via-[#b45334] to-[#8b3a25] text-white ring-4 ring-white shadow-[#b45334]/50'}`}
+            : 'bg-gradient-to-br from-[#e5d397] via-[#c9a962] to-[#b59858] text-stone-900 ring-4 ring-white shadow-[#c9a962]/50'}`}
       >
         {!isOpen && (
           <>
-            <span className="absolute -inset-2 rounded-full bg-[#c45d3a] animate-ping opacity-30"></span>
-            <span className="absolute -inset-4 rounded-full bg-[#b45334]/10 animate-pulse"></span>
+            <span className="absolute -inset-2 rounded-full bg-[#c9a962] animate-ping opacity-30"></span>
+            <span className="absolute -inset-4 rounded-full bg-[#c9a962]/10 animate-pulse"></span>
           </>
         )}
         

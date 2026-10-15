@@ -95,10 +95,10 @@ export default function HomePage() {
                   <img src="/logo.png" alt="Jean-Francois Magnetiseur" className="w-full h-full object-cover" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4 p-4 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl">
-                  <h3 className="text-base font-serif font-bold text-stone-800">&quot;La distance est une illusion&quot;</h3>
-                  <p className="text-stone-500 text-xs italic mt-1">Mon travail energetique vous rejoint instantanement.</p>
-                </div>
+              </div>
+              <div className="mt-4 p-4 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl">
+                <h3 className="text-base font-serif font-bold text-stone-800">&quot;La distance est une illusion&quot;</h3>
+                <p className="text-stone-500 text-xs italic mt-1">Mon travail energetique vous rejoint instantanement.</p>
               </div>
             </div>
 
@@ -116,10 +116,10 @@ export default function HomePage() {
                   <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent"></div>
-                <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl">
-                  <h3 className="text-xl font-serif font-bold text-stone-800 mb-2">&quot;La distance est une illusion&quot;</h3>
-                  <p className="text-stone-500 text-xs italic">Mon travail energetique vous rejoint instantanement sur simple envoi de votre photo.</p>
-                </div>
+              </div>
+              <div className="mt-6 w-full max-w-md p-6 bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl">
+                <h3 className="text-xl font-serif font-bold text-stone-800 mb-2">&quot;La distance est une illusion&quot;</h3>
+                <p className="text-stone-500 text-xs italic">Mon travail energetique vous rejoint instantanement sur simple envoi de votre photo.</p>
               </div>
             </div>
           </div>

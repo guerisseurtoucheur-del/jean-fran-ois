@@ -103,12 +103,11 @@ export default function HomePage() {
                     <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4" type="video/mp4" />
                     <img src="/logo.png" alt="Jean-François Magnétiseur" className="w-full h-full object-cover" />
                   </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-8 left-8 right-8 p-6 bg-black/50 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl">
-                    <h3 className="text-xl font-serif font-bold text-white mb-2">"La distance est une illusion"</h3>
-                    <p className="text-white/60 text-sm italic">Mon travail énergétique vous rejoint instantanément, où que vous soyez.</p>
-                  </div>
                 </div>
+              </div>
+              <div className="mt-6 w-full max-w-md p-6 bg-black/50 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl">
+                <h3 className="text-xl font-serif font-bold text-white mb-2">&quot;La distance est une illusion&quot;</h3>
+                <p className="text-white/60 text-sm italic">Mon travail energetique vous rejoint instantanement sur simple envoi de votre photo.</p>
               </div>
             </div>
 

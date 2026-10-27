@@ -180,7 +180,11 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
             </div>
           </div>
           
-          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="mt-16 text-center text-sm leading-relaxed text-[#c9c1b8] max-w-3xl mx-auto">
+            Le magnétisme est une pratique complémentaire qui ne remplace en aucun cas un avis, un diagnostic ou un traitement médical. Consultez toujours votre médecin avant de prendre rendez-vous et ne stoppez jamais un traitement en cours.
+          </p>
+
+          <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-center md:text-left">
               <p className="text-[#9a918a] text-xs">2024 Jean-Francois Magnetiseur. Tous droits reserves.</p>
               <p className="text-[#9a918a] text-xs mt-1">SIRET : 344 616 412 00062 | TVA : FR6534461641200062</p>

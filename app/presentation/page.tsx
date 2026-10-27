@@ -20,9 +20,27 @@ export const metadata: Metadata = {
   },
 }
 
+const videoSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/presentation#video",
+  "name": "Jean-Francois Magnetiseur Guerisseur - Presentation",
+  "description": "Decouvrez Jean-Francois, magnetiseur guerisseur specialise dans les soins energetiques a distance sur photo. Coupeur de feu, traitement du zona, eczema et douleurs chroniques partout en France.",
+  "thumbnailUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/logo.png",
+  "uploadDate": "2024-01-01",
+  "contentUrl": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/jean-francois-magnetiseur-guerisseur_video-NLOPDOs77bOl491U2cfIJSUXAeijtj.MP4",
+  "embedUrl": "https://www.jean-francois-magnetiseur-guerisseur.com/presentation",
+  "duration": "PT30S",
+  "publisher": { "@id": "https://www.jean-francois-magnetiseur-guerisseur.com/#business" }
+}
+
 export default function PresentationPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+      />
       {/* Hero Video Section */}
       <section className="py-12 md:py-20">
         <div className="max-w-5xl mx-auto px-6">
